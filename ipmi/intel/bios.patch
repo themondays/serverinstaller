@@ -1,0 +1,31 @@
+--- /tmp/bios.ini	2013-09-02 16:21:16.829454235 +0200
++++ /tmp/bios.ini	2013-09-02 16:20:54.157454906 +0200
+@@ -243,7 +243,7 @@
+ [BIOS::Server Management::BMC LAN Configuration]
+ 
+ [BIOS::Main]
+-Quiet Boot=Enabled                                 ;Options: Disabled=00: Enabled=01
++Quiet Boot=Disabled                                ;Options: Disabled=00: Enabled=01
+ POST Error Pause=Disabled                          ;Options: Disabled=00: Enabled=01
+ 
+ [BIOS::Advanced]
+@@ -288,8 +288,8 @@
+ PXE 1GbE Option ROM=Enabled                        ;Options: Disabled=00: Enabled=01
+ NIC1 Controller=Enabled                            ;Options: Disabled=00: Enabled=01
+ NIC1 Port1 PXE=Enabled                             ;Options: Disabled=00: Enabled=01
+-NIC2 Controller=Enabled                            ;Options: Disabled=00: Enabled=01
+-NIC2 Port1 PXE=Enabled                             ;Options: Disabled=00: Enabled=01
++NIC2 Controller=Disabled                           ;Options: Disabled=00: Enabled=01
++NIC2 Port1 PXE=Disabled                            ;Options: Disabled=00: Enabled=01
+ 
+ [BIOS::Advanced::USB Configuration]
+ USB Controller=Enabled                             ;Options: Disabled=00: Enabled=01
+@@ -339,6 +339,6 @@
+ Front Panel Lockout=Disabled                       ;Options: Disabled=00: Enabled=01
+ 
+ [BIOS::BootOrder]
+-Hard Drive=1                                       
+-Network Card=2                                     
++Network Card=1                                     
++Hard Drive=2                                       
+ Internal EFI Shell=3                               

@@ -1,0 +1,283 @@
+================================================================================
+       Intel(R) Xeon(R) Processor-Based Server BIOS Development
+================================================================================
+
+ INTEL Product Collaboration and Systems Division
+Intel Corporation
+2111 N.E. 25th Avenue, Hillsboro, OR 97124 USA
+
+================================================================================
+
+DATE    : Dec 26, 2014
+TO      : Intel(R) Xeon(R) Processor-Based Server Platform customers
+SUBJECT : Manageability Engine Release notes for version SPS_03.00.07.018
+
+================================================================================
+                           LEGAL INFORMATION
+================================================================================
+
+Information in this document is provided in connection with Intel Products
+and for the purpose of supporting Intel developed server boards and systems.
+No license, express or implied, by estoppel or otherwise, to any intellectual 
+property rights is granted by this document. Except as provided in Intel's 
+Terms and Conditions of Sale for such products, Intel assumes no liability 
+whatsoever, and Intel disclaims any express or implied warranty, relating to 
+sale and/or use of Intel products including liability or warranties relating 
+to fitness for a particular purpose, merchantability, or infringement of any 
+patent, copyright or other intellectual property right. Intel Corporation 
+may have patents or pending patent applications, trademarks, copyrights, or
+other intellectual property rights that relate to the presented subject matter.
+The furnishing of documents and other materials and information does not 
+provide any license, express or implied, by estoppel or otherwise, to any such
+patents, trademarks, copyrights, or other intellectual property rights.  
+Intel products are not intended for use in medical, life saving, or life 
+sustaining applications. Intel may make changes to specifications and product
+descriptions at any time, without notice.
+
+Intel is a registered trademark of Intel Corporation. 
+
+*Other names and brands are the property of their respective owners.
+
+Copyright (C) 2014 Intel Corporation.
+
+================================================================================
+                              ABOUT THIS RELEASE
+================================================================================
+Build Stamp : ME Firmware             --> 03.00.07.018
+              ME Recovery Boot Loader --> 03.00.07.018
+Build Date  : Dec 23, 2014
+
+================================================================================
+                           Supported Platforms
+================================================================================
+	S1200RP LC/SE/RM/RO
+================================================================================
+                        ME RECOVERY INSTRUCTIONS
+================================================================================
+The Recovery process can be initiated by setting the recovery jumper (called ME
+FRC UPDT Jumper)
+
+The following steps demonstrate this recovery process:
+   1.  Power OFF the system.
+   2.  Switch the ME FRC UPDT jumper. Details regarding the jumper ID and
+       location can be obtained from the Board EPS for that Platform.
+   4.  Power ON the system.
+   5.  Enter Setup and verify Error manager displays 83A0 error code
+   6.  Boot to EfiShell and update ME if necessary
+   7.  AC OFF the system, and revert the ME FRC UPDT jumper position to
+       "normal operation".
+   8.  Power ON the system.
+   9.  Enter setup and verify Error Manager does not display 83A0 error code
+
+Note 1 : ME will continuously monitor recovery jumper. Whenever ME FRC UPDT is
+         asserted ME will immediately switch to recovery mode.  AC Power cycle
+         is required after de-asserting ME FRC UPDT jumper for ME to function
+         normally.
+Note 2 : When MC FRC UPDT jumper is asserted with AC OFF, ME will restore to
+         factory default settings.
+
+
+================================================================================
+				ME FW Capsule INSTALLATION NOTES
+================================================================================
+WARNING:  It is very important to follow these instructions as they are written.
+Failure to update using the proper procedure may cause damage to your system.
+
+!!!!! AC failure during update may cause damage to your system and be unrecoverable !!!!!
+
+
+Please follow the below procedure to update ME using UEFI iFlash32 12.0 Build 4
+   1.  Boot the system to EFI Shell
+   2.  Download ME release package
+   3.  Unzip the ME release package to HD or USB Flash Drive
+   3.  Map the respective storage device in system with the command
+           Shell> map -r
+   4.  Change the Shell to mapped device file system
+           Example: Shell> fs0: (or fs1:)
+   5.  Run the IFlash32 utility on the prompt.
+       Use MEComplete_xx_xx_xx_xxx.cap file when the whole ME Image update is required.
+           fs0:\> IFlash32 [File Name] /u /ni
+   6.  Reboot system after the update is completed.
+
+================================================================================
+			KNOWN ISSUES in 03.00.07.018 release
+================================================================================
+Platform does not go to S3/S4 state in recovery mode
+ME removes data from status registers on PAGE 0
+Wrong value returned from Get Max Allowed Logical Processors command after
+S0->(S4,S3)->S0 transition
+
+================================================================================
+			Issues fixed in 03.00.07.018 release
+================================================================================
+- Fixed: Wrong value returned from Get Max Allowed CPU P-states/T-states while limiting
+		using Total Power Budget
+
+================================================================================
+			Issues fixed in 03.00.07.013 release
+================================================================================
+- Fixed: SPS FW does not make the override for the capability register using BDW ES parts and
+		this results to have ECC, Trifurcation and Dual Dimm per channel OFF.
+
+================================================================================
+			Issues fixed in 03.00.07.012 release
+================================================================================
+- Fixed: Steps to reproduce: 0. Burn new image NMon (SKU NM) AlwaysOn 1. Boot to OS 2.
+		Execute power flows in random way Expected results: Platform should properly
+		execute power flow. Actual results: After 59 iteration ME send E3 00 command
+
+================================================================================
+			Issues fixed in 03.00.05.128 release
+================================================================================
+- Fixed: Bit Reserved16 in PCH Strap 15 is set incorrectly. This change in Flash 
+       Descriptor was introduced in previous release and reverted in this one.
+
+=============================================================================
+			Issues fixed in 03.00.05.110 release
+================================================================================
+- Fixed: Factory Presets and AIM, OCS and OCP MFS files are not readable using MESDC
+       or Diagnostic Service.
+================================================================================
+================================================================================
+			Issues fixed in 03.00.05.068 release
+================================================================================
+- Fixed: "Firmware Update In Progress¡± bit does not set in FW Status register
+         during online update.
+- Fixed: ME-BIOS Interface major and minor version swapped on EFI and DOS.
+- Fixed: The Mode Manager does not support reading power from HSC, when the 
+         LM25066i chip is used.
+- Fixed: After ME reset (Cold Reset command, or any host reset in S0/S1 Only power
+         mode except host warm reset) ME returns incorrect version and CRC of mPhy
+         settings (0). This causes the BIOS to perform (unnecessary) mPhy settings 
+         update in ME, which gets rejected with 0x101E error code while it should
+         be accepted.
+- Fixed: Sporadically on some platforms ME may be reset during host booting due
+         to internal exception.
+- Fixed: ¡°Read mPhy settings¡± HECI message returns ICC_STATUS_FAILURE (0x0001)
+         in ¡°ICC Status¡± field.
+- Fixed: PCH register SECRT98 (SATA Electrical Control Register T98) has improper
+         value due to incorrect mPhy settings value in ME. As a workaround the BIOS 
+         may force update of these settings during boot.
+================================================================================
+			Issues fixed in 03.00.04.209 release
+================================================================================
+- Fixed: Disabling spectrum spread with ICC_SET_SPREAD_SPECTRUM message over HECI
+         causes the BIOS to hang.
+- Fixed: When PSU Status sensors are disabled and one of the PSUs gets disconnected
+         from AC, ME resets due to exception, causing SPS FW Health sensor 0x17 event
+         to be stored in the BMC SEL.
+- Fixed: When Factory Defaults are restored using IPMI command, there is incorrect
+         SPS FW Health sensor 0x17 event sent to the BMC SEL.
+- Fixed: Sometimes Dynamic Core Allocation temporarily parks cores in unexpected
+- Fixed: Sometimes aggressive power policy in Domain Total is not able to limit 
+         power in specified correction time.
+
+================================================================================
+			Issues fixed in 03.00.04.164 release
+================================================================================
+- Fixed: Sometimes Dynamic Core Allocation temporarily parks cores in unexpected
+         cases. 
+- Fixed: Sometimes aggressive power policy in Domain Total is not able to limit
+         power in specified correction time.
+- Fixed: MESDC "ME-BIOS communication" flow test fail even when "BIOS ICC Set 
+         Clock Enable message" test is unchecked. 
+- Fixed: Several lines are doubled in LPTAB_NM.XML.
+- Fixed: Some MESDC SUSRam entry displayed as "Entry Format is unknown". 
+
+================================================================================
+			Issues fixed in 03.00.04.162 release
+================================================================================
+- Fixed: System will shutdown when running Windows* reboot After executing
+         "power button override" flow platform enters Sx state and stops responding.
+         ME configured for operating in S0-only. 
+- Fixed: IPMI: Wrong value of "reading/state unavailable" bit for Get Sensor Reading
+         Command - CPU Thermal Status Sensor.
+- Fixed: ME FW became unresponsive when it put into Recovery mode and no CPU
+         installed on the platform.
+- Fixed: CPU is not being fused properly during first boot after SPI flashing when
+         board and FW are configured for operating in S0-only mode. 
+- Fixed: It is not possible to disable Hotham functionality using BIOS HECI message. 
+- Fixed: Memory and CPU power statistics are always equal 0W. 
+- Fixed: Shutdown action could be interrupted by cold reset when volatile policies 
+         are used. 
+- Fixed: During limiting the power isn't kept in the range of 2.5%
+         (power limit is changed every 2 sec) Invalid statistic values with
+         throttling policy in domain 0x00. 
+- Fixed: MolleteBend-D: GetSensorReading returns not stable values as data field. 
+- Fixed: PeciProxy component hangs after sending CPU PCIConfigRd/Wr command 16 times.
+- Fixed: Dynamic Core Allocation stopped working after a few minutes If cable is
+         removed from backup PSU, power readings are not zeroed. 
+- Fixed: Memory throttling statistics are != 0 when NM does not limit power
+        (just after fw burn).
+- Fixed: Wrong throttling statistic calculation in mode 03 and 0x13. 
+- Fixed: Impossible to create non aggressive police in memory domain. 
+- Fixed: [NM Event] Lack of Operational Capabilities Change (ME Reset and Platform reset). 
+- Fixed: No response for HMRFPO_GETSTATUS command after EOP in Operational Mode. 
+- Fixed: FW health event data=0xA0040B during DC power cycling test. 
+- Fixed: Continuous: After reset from DOS ME goes to M3, HOST goes to Sx. 
+- Fixed: Events from Node Manager Operational Capabilities Change Sensor are 
+         generated when disabled. 
+- Fixed: Settings provided by IPMI command "Set Max Allowed CPU P-state/T-state"
+         are ignored after S0->Sx->S0 transition. 
+- Fixed: De-assertion instead of assertion event is generated for Total domain, when
+         power or temperature readings are lost. 
+- Fixed: "Host Communication Error" is being sent only when the host OS returns to 
+         operating state.
+- Fixed: ME FW sends too many health events when "factory presets" partition is corrupted.
+         Only one event should be sent. 
+- Fixed: The access for PIA_SDR data flash area is not restored after defined flash wear
+         out protection period. This access is locked permanently. 
+
+================================================================================
+			Issues fixed in 03.00.03.082 release
+================================================================================
+- Fixed: The system may not boot when it gets shutdown by "power button override"
+- Fixed: The recovery mode (RCV) jumper does not function correctly. When the 
+         platform boots with RCV on and its gets switched off, the Host does to
+         Sx power state. 
+- Fixed: BIOS: Console redirection to RS-232 doesn't work 
+- Fixed: ME does not send command "ME changed power state" after receiving 
+        "Host Reset With Power Cycle" or while restarting from OS. 
+
+================================================================================
+			Issues fixed in 03.00.03.078 release
+================================================================================
+- Fixed: When MFS is corrupted, ME hangs for more than 60s and doesn't send the 
+         appropriate health event 
+- Fixed: FW does not wake up in operational mode when recovery image is corrupted. 
+- Fixed: ME not operational after cold reset when VSCC table is empty. 
+- Fixed: "OEM ME Power State Change" IPMI frame will be sent twice during Host 
+         Transition from Sx to S0 with the "Flash Override Security Strap" jumper
+         asserted. 
+- Fixed: Some times (randomly, after several dozen continuously performed power cycles),
+         after power button override or host reset with power cycle ME stops responding 
+         to IPMI commands. Still responses to diagnostic commands. 
+- Fixed: Some times when PSU optimization functionality is enabled power under load
+         may not reach it maximum value after Node Manager stops power capping. 
+- Fixed: Unstable power limiting when OEM Power readings are used for delivering 
+         platform power consumption information. 
+- Fixed: Wrong ME FW Status register value when Security strap override jumper asserted.
+         Operating Mode field is not set to 4 "RECOVER_JMPR - Security Strap Override
+         asserted, 
+- Fixed: sometimes during P-state switching power limiting mechanism stops working. 
+- Fixed: Time After Host Reset Policy triggers later than expected. 
+- Fixed: Hotham getSignalsBlockState command makes ME FW unresponsive. 
+- Fixed: Hotham getCrystalsCheckStatus command reports test status as failed in case
+         host has transited from G3 to any other state. 
+- Fixed: The HSC input voltage has a resolution of 1 volt. It should be 0.1 volt. 
+- Fixed: Missing Readings Policy triggers earlier than expected. 
+- Fixed: "NM enabled" bit in Node Manager Firmware Status (NMFS) in HECI-2 HFS Register
+        is never been set properly due to fact that Node Manager using invalid AUX 
+        registers for PTState estimation.
+
+================================================================================
+			Issues fixed in 03.00.02.203 release
+================================================================================
+- Fixed: [OS Install] All OS Installation tests with RSTe mode are blocked Sensor
+         SSB Temp always in upper critical state Sensor P1 MTT state display 
+         incorrectly in EWS
+- Fixed: Failed to read some ME sensors with command "Get sensor reading"
+- Fixed: RSTe OPROM cannot enabled with R006 on Fab 103 board.
+- Fixed: Clock Run Enable for FLEXn option is not accessible. 
+- Fixed: Lack of "DMI Clock Divider"and "DMI Spread Generator Enable" options. 
+Some fields in PCH Straps section should set differently for lpt platform. 

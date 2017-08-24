@@ -1,0 +1,396 @@
+================================================================================
+Intel(R) Xeon(R) Processor-Based Server BIOS Development
+================================================================================
+INTEL Product Collaboration and Systems Division
+Intel Corporation
+2111 N.E. 25th Avenue, Hillsboro, OR 97124 USA
+================================================================================
+DATE    : April 15, 2015
+TO      : Multi-Core Intel(R) Xeon(R) Processor-Based Server Platform customers
+SUBJECT : BIOS Release notes for version R03.01.0002
+================================================================================
+                           LEGAL INFORMATION
+================================================================================
+
+INFORMATION IN THIS DOCUMENT IS PROVIDED IN CONNECTION WITH INTEL PRODUCTS. NO 
+LICENSE, EXPRESS OR IMPLIED, BY ESTOPPEL OR OTHERWISE, TO ANY INTELLECTUAL 
+PROPERTY RIGHTS IS GRANTED BY THIS DOCUMENT. EXCEPT AS PROVIDED IN INTEL'S TERMS 
+AND CONDITIONS OF SALE FOR SUCH PRODUCTS, INTEL ASSUMES NO LIABILITY WHATSOEVER 
+AND INTEL DISCLAIMS ANY EXPRESS OR IMPLIED WARRANTY, RELATING TO SALE AND/OR USE 
+OF INTEL PRODUCTS INCLUDING LIABILITY OR WARRANTIES RELATING TO FITNESS FOR A 
+PARTICULAR PURPOSE, MERCHANTABILITY, OR INFRINGEMENT OF ANY PATENT, COPYRIGHT OR 
+OTHER INTELLECTUAL PROPERTY RIGHT. 
+
+A "Mission Critical Application" is any application in which failure of the Intel 
+Product could result, directly or indirectly, in personal injury or death. SHOULD 
+YOU PURCHASE OR USE INTEL'S PRODUCTS FOR ANY SUCH MISSION CRITICAL APPLICATION, 
+YOU SHALL INDEMNIFY AND HOLD INTEL AND ITS SUBSIDIARIES, SUBCONTRACTORS AND 
+AFFILIATES, AND THE DIRECTORS, OFFICERS, AND EMPLOYEES OF EACH, HARMLESS AGAINST 
+ALL CLAIMS COSTS, DAMAGES, AND EXPENSES AND REASONABLE ATTORNEYS' FEES ARISING OUT 
+OF, DIRECTLY OR INDIRECTLY, ANY CLAIM OF PRODUCT LIABILITY, PERSONAL INJURY, OR 
+DEATH ARISING IN ANY WAY OUT OF SUCH MISSION CRITICAL APPLICATION, WHETHER OR NOT 
+INTEL OR ITS SUBCONTRACTOR WAS NEGLIGENT IN THE DESIGN, MANUFACTURE, OR WARNING OF 
+THE INTEL PRODUCT OR ANY OF ITS PARTS. 
+
+Intel may make changes to specifications and product descriptions at any time, 
+without notice. Designers must not rely on the absence or characteristics of any 
+features or instructions marked "reserved" or "undefined". Intel reserves these for 
+future definition and shall have no responsibility whatsoever for conflicts or 
+incompatibilities arising from future changes to them. The information here is 
+subject to change without notice. Do not finalize a design with this information. 
+
+The products described in this document may contain design defects or errors known 
+as errata which may cause the product to deviate from published specifications. 
+Current characterized errata are available on request. 
+
+Contact your local Intel sales office or your distributor to obtain the latest 
+specifications and before placing your product order. 
+
+Copies of documents which have an order number and are referenced in this document, 
+or other Intel literature, may be obtained by calling 1-800-548-4725, 
+or go to: http://www.intel.com/design/literature.htm
+
+Intel is a registered trademark of Intel Corporation. 
+
+*Other names and brands are the property of their respective owners.
+
+Copyright (C) 2015 Intel Corporation.
+
+================================================================================
+                              ABOUT THIS RELEASE
+================================================================================
+Build Version : S1200RP.86B.03.01.0002
+Build Dater   : April 15, 2015
+
+================================================================================
+                           BIOS COMPONENTS/CONTENTS
+================================================================================
+Processors supported: 
+Intel(R) Xeon processor E3-1200 V3 series
+Intel(R) Xeon processor E3-1200 V4 series
+
+Microcode update versions:
+ 
+Intel(R) Xeon processor E3-1200 V3 series C0 stepping: 0x0000001D  CPUID = 0x306C3   
+Intel(R) Xeon processor E3-1200 V4 series G0 stepping: 0x0000000B  CPUID = 0x40671 
+
+On-Board Component Option ROM Versions:
+Integrated Matrox VGA               : VBE BIOS V3.8 SQ
+1G PXE Option ROM                   : Intel(R) Boot Agent XE v1.5.53.1
+10G PXE Option ROM                  : Intel(R) Boot Agent XE v2.3.24.1
+82599 10G PXE Option ROM            : Intel(R) FCoE Boot v1.8.17
+iSCSI Option ROM                    : Intel(R) iSCSI Remote Boot version 3.0.43
+NIC UEFI Driver                     : E6327X3.EFI
+SATA RAID Option ROM - RSTe         : 4.1.0.1026
+UEFI SATA RAID Option ROM - RSTe    : 4.1.0.1026
+ESRT II FOR SATA                    : A.14.02121826
+Legacy Processor Video              : 5.5.1038
+UEFI Processor Video driver         : 5.5.1032 
+
+Reference Code Version              : 2.5.0
+Memory Reference Code Version       : 1.8.0.3
+v4 Memory Reference Code Version    : 2.5.0.8
+Management Engine Firmware Version  : 03.00.07.018
+ACM                                 : BDW v1.2
+
+================================================================================
+                       SYSTEM FIRMWARE REQUIREMENTS
+================================================================================
+BIOS Update Utility: 
+  UEFI iFlash32 V12.0 build08 
+  
+  Product   Fab Version	  BMC	   FRUSDR    
+S1200V3RPL  G62251-302	  1.03	     1.03
+S1200V3RPS  G62252-302    1.03	     1.03
+	    G62252-305    1.03	     1.03
+S1200V3RPO  G62253-302    1.03	     1.03
+	    G62253-305    1.03	     1.03
+S1200V3RPM  G62254-302    1.03	     1.03
+
+================================================================================
+                           INSTALLATION NOTES
+================================================================================
+
+WARNING:  It is very important to follow these instructions as they are written.
+Failure to update using the proper procedure may cause damage to your system.
+
+A:UEFI iFlash32 
+   1.  Boot the system to EFI Shell
+   2.  Copy IFlash32.efi and BIOS.CAP file to a USB Flash Drive
+       ( Do not use the *Rec.CAP file as it will clear the NVRAM)
+   3.  Map the respective storage device in the system with the command
+	   Shell> map -r
+   4.  Change the Shell to mapped device file system
+	   Example: Shell> fs0: (or fs1:)
+   5.  Run the IFlash32 utility at the prompt
+	   fs0:\> IFlash32 [File Name] /u /ni
+   6.  Either reboot the system and Go into BIOS setup <F2>, reset defaults <F9>
+       and save <F10> or After the BIOS update and before rebooting, 
+       run: fS0:> Iflash32 -rd
+   7.  Reboot the system
+
+B:Backup BIOS update instructions
+   1.  Boot the system to EFI Shell
+   2.  Copy IFlash32.efi and BIOS .CAP file to a USB Flash Drive
+       ( Do not use the *Rec.CAP file as it will clear NVRAM)
+   3.  Map the respective storage device in system with the command
+	   Shell> map -r
+   4.  Change the Shell to mapped device file system
+	   Example: Shell> fs0: (or fs1:)
+   5.  Run the IFlash32 utility on the prompt
+	   fs0:\> IFlash32 [File Name] /u /ni UpdateBackupBios
+   6.  It will update primary BIOS with processed capsule, and the backup BIOS 
+       update will be completed in next normal boot.
+   7.  Reboot the system.
+================================================================================
+                        BIOS RECOVERY INSTRUCTIONS
+================================================================================
+The Recovery process can be initiated by setting the recovery jumper. (called 
+BIOS Recovery Boot Jumper)
+ 
+A BIOS recovery can be accomplished from the backup BIOS region or USB Mass Storage device. 
+Please note that recovery from USB floppy is not supported on this platform. 
+ 
+The recovery media must contain the following files under the root directory:
+   1.  DNL.ROM (optional)
+   2.  UEFI iFlash32 (including IFlash32.efi and ipmi.efi )
+   3.  *Rec.CAP
+   4.  Startup.nsh (update accordingly to use proper *Rec.CAP file)
+ 
+BIOS starts the recovery process by first loading and booting to the recovery image from the 
+backup BIOS region or file (DNL.ROM) on the root directory of the recovery media (USB disk).
+
+This process takes place before any video or console is available. Once the system boots 
+to recovery image, it will boot automatically into EFI Shell to invoke the Startup.nsh 
+script and start the flash update application (IFlash32.efi). IFlash32.efi requires the 
+supporting BIOS Capsule image file (*Rec.CAP). After the update is complete, there will 
+be a message displayed stating that the "BIOS has been updated successfully" indicating 
+the recovery process is finished. The User should then switch the recovery jumper back to
+normal operation and restart the system by performing a power cycle.
+ 
+The following steps demonstrate this recovery process:
+   1.  Power OFF the system.
+   2.  Insert recovery media.(Optional if the backup BIOS region works)
+   3.  Switch the recovery jumper. Details regarding the jumper ID and location
+       can be obtained from the Product Board TPS.
+   4.  Power ON the system.
+   5.  The BIOS POST screen will appear displaying the progress and system automatically 
+       boots to the EFI SHELL.
+   6.  Startup.nsh file executes, and initiates the flash update (IFlash32.efi)
+       with new capsule file (*Rec.CAP). The regular IFlash message will be displayed at
+       the end of the process, once the flash update succeeds.
+   7.  Power OFF the system, and revert the recovery jumper position to "normal".
+   8.  Power ON the system. 
+   9.  Do *NOT* interrupt the BIOS POST during the first boot.
+================================================================================
+                            KNOWN ISSUES/WORKAROUNDS
+================================================================================
+- If you want to install Linux* SUSE* 11 SP2 or boot to a pre-installed Linux* SUSE* 11 SP2 OS, 
+- R02.01.0002 and later version need use command "iflash32 -u RB_R02.0x.xxxxRec.cap UpdateBackupBios -ni" 
+to upgrade from R01.04.0002 and early version. Similarly, R01.04.0002 and early version need use command "iflash32 -u RB_R01.0x.xxxxRec.cap UpdateBackupBios -ni" to downgrade from R02.01.0002 and later version.
+- As security requirement, R03.01.0001 reversion doesn't support capsule downgrade in normal mode.
+- R03.01.0002 is the first BIOS that adds support for Intel(R) Xeon processor E3-1200 V4 series. If you
+   are upgrading from R02.02.0004 or earlier BIOS versions,  you will need to use  
+   a Intel(R) Xeon processor E3-1200 V3 series processor first to boot to EFI shell and use capsule files to update BIOS to R03.01.0002.
+   After flashing with the Intel(R) Xeon processor E3-1200 V3 series processor, you can install
+   the Intel(R) Xeon processor E3-1200 V4 series processor and boot.  
+
+================================================================================
+                              FIXES AND FEATURES ADDED/REMOVED
+================================================================================
+
+
+
+================================================================================
+                                R03.01.0002
+================================================================================
+NOTICE: As security requirement, R03.01.0001 reversion doesn't support capsule downgrade in normal mode.
+NOTICE:  R03.01.0002 is the first BIOS that adds support for Intel(R) Xeon processor E3-1200 V4 series. If you
+   are upgrading from R02.02.0004 or earlier BIOS versions,  you will need to use  
+   a Intel(R) Xeon processor E3-1200 V3 series processor first to boot to EFI shell and use capsule files to update BIOS to R03.01.0002.
+   After flashing with the Intel(R) Xeon processor E3-1200 V3 series processor, you can install
+   the Intel(R) Xeon processor E3-1200 V4 series processor and boot.
+
+
+ -Added: Microcode update 0x0000001D for CPUID = 0x306C3
+ -Added: Microcode update 0x0000000B for CPUID = 0x40671
+
+ -Fixed: The SUT halt at 0x0D when the backup bios was updated at POST stage
+ -Fixed: The type 4 Processor Upgrade Field vaule is incorrect for LGA1150 
+ -Fixed: Cannot log in to BMC Webconsole after set user and password
+ -Fixed: Sleep S3 wake up failed with BDW CPU. 
+ -Fixed: System hangs at 0x9A with BDW CPU when VT-d is enabled   
+ -Fixed: The value of Creator ID/OEM Revision/Creator Revision in FPDT tabl
+ -Fixed: System will automatic resume from S1/S3/S5 after S3 wake on LAN.
+ -Fixed: The maximum length of password don't match with the length of EPS
+ -Fixed: The value at Bit 3 to Bit 7 of Processor Characteristics field
+ -Fixed: The value of current usage field when it is populated for each in
+ -Fixed: Sometimes the system hang at 0x96 with add-on graphic card.
+ -Fixed: SUT will reboot unexpectedly  when run IWVSS  in Win2012R2.
+ -Fixed: TBoot test failed 
+ -Fixed: There are 16 N/A devices in BIOS USB configuratoin tab after usb controller disable
+ 
+ 
+
+
+================================================================================
+                                R02.02.0005
+================================================================================
+NOTICE: Need to use recovery capsule file to downgrade/upgrade between R02.02.0005 and R02.00.0x31/before version BIOS (Including R01.04.0002 and before). 
+  - Fixed: RS25GB008/RS2PI008 RAID cards lost after S3 resume when it plugged into slot4/7.
+  - Fixed: The primary display option doesn't show in the MFG mode.
+  - Fixed: The "Internal Graphics" option displayed on BIOS Setup in MFG mode with no-graphic CPU.
+  - Fixed: NMI activated-system halted when three specific cards plugged into slot 4/6 and SAS_mod slot.
+  - Fixed: [x]incorrect message showed on POST that S1200RPL with two SATA ports @ 3Gbps and 4 SATA ports @6Gbps.
+  - Fixed: The onboard VGA would display after S3 when on board video was set to disabled in BIOS Setup.
+  - Disable ACPI S4 support
+
+================================================================================
+                                R02.02.0004
+================================================================================
+NOTICE: Need to use recovery capsule file to downgrade/upgrade between R02.02.0004 and R02.00.0x31/before version BIOS (Including R01.04.0002 and before). 
+  - Integrate intel-lan_OpROMs_v19.3-rev1.
+
+================================================================================
+                                R02.02.0003
+================================================================================
+NOTICE: Need to use recovery capsule file to downgrade/upgrade between R02.02.0003 and R02.00.0x31/before version BIOS (Including R01.04.0002 and before). 
+  - Fixed: [x]It shows black screen instead of RAID configure information when system POST if set DP output and ESRTII enable.
+
+================================================================================
+                                R02.02.0002
+================================================================================
+NOTICE: Need to use recovery capsule file to downgrade/upgrade between R02.02.0002 and R02.00.0x31/before version BIOS (Including R01.04.0002 and before). 
+  - Fixed: Can't power on SUT when RS2WC080 connect PCIE slot 4 on SE Sku with R02.02.0001.
+  - Fixed: The Zepher with Payload Signature should be hidden if the normal OS is booted.
+  - Fixed: Rainbow Pass BIOS report the unknown PCIE Error SEL, which not following the Spec.
+  - Fixed: It will reboot when shut down in SUSE OS sometimes.
+  - Fixed: USB Boot Priority help text description spell error.
+  - Fixed: Syscfg v12 build 13: BootOrder will be changed before and after running cmd: syscfg /s file.ini /f /b
+  - Fixed: There are four type 9 structures(slot4/5/6/7) in SMBIOS log on RO SKU
+  - Fixed: The BMC KVM couldn't work when USB3.0 support was set to enabled
+
+================================================================================
+                                R02.02.0001
+================================================================================
+NOTICE: Need to use recovery capsule file to downgrade/upgrade between R02.02.0001 and R02.00.0x31/before version BIOS (Including R01.04.0002 and before).  
+  - Updated: Microcode M32306C3_0000001A 
+  - Updated: Enable Processor graphics on Rainbow Pass LC BIOS
+  - Fixed: Error message show incorrect which missing severity under setup.
+  - Fixed: BIOS flash content can be corrupted by fuzzing SMI 0x22 and 0x23, which will brick the system.
+  - Fixed: Sometimes SAS RAID Card ASR6805 512MB can’t be detected when insert in slot6/slot5.
+  - Fixed: Compatibility issue between Rainbow Pass and EXPI9301CT(82574L chip) that many PCIe critical error in SEL
+  - Fixed: Mass Storage Device  option still exit after  setting USB EP Type Ploicy Setting to Policy 1 and Set "Bulk OUT"," Ctrl"," Bulk IN" Item to enable
+  - Fixed: iSCSI 1GbE/10GbE Option ROM turn to NOT gray out after system load default value.
+  - Fixed: [x]OLTM/CLTM not available in BIOS of S1200RP
+  - Fixed: The USB3.0 mass storage device could be detected in port 4 when Rear USB port 1,4  are seted  to ploicy 1
+  - Fixed: USB EP Type Policy setting item can be changed when USB3.0 Support item is not enabled
+  - Fixed: No display from on board DP port in windows when EFI optimized mode enabled
+  - Fixed: An 'enter password' dialog box is not displayed after the administrator password  has been setted
+  - Fixed: After removing cmos battery or clearing CMOS jumper, there are no error message 0012 and 5220
+  - Fixed: SMBIOS type 17 Configured Memory Clock Speed shows 0x000
+  - Fixed: Device manager will show ME and PCI serical port devices when scaning for hardware changed after resuming from S3
+  - Fixed: The option value of memory speed selection in BIOS will be lost after setting its value manually.
+  - Fixed: SOL terminal will be no response in BIOS USB configuratoin tab after usb controller disabled
+  - Fixed: Not prompted for a password to get into the EFI environment after Admin password is installed and EFI shell is the first boot order
+  - Fixed: BIOS flash content can be corrupted 
+================================================================================
+                               R02.01.0004
+================================================================================
+NOTICE:  If BIOS Rev 02.01.0002 is not pre-installed then please install that release first prior to installing this release.
+         The BIOS Rev 02.01.0002 contains a critical update which must be present before installing this release.
+
+- This version enhances the protection of certain UEFI variables as described in 
+	Intel Security Advisory INTEL-SA-00038
+================================================================================
+                                R02.01.0002
+================================================================================
+NOTICE:  Need to use recovery capsule file to downgrade/upgrade between R02.01.0002 
+         and any earlier BIOS versions (incluing R01.04.0002).
+         We recommend the customer to update Backup BIOS at same time and keep 
+         Backup BIOS same as normal BIOS for BIOS R02.01.0002.
+         # ¡°iflash32 ¨Cu R02.01.0002Rec.cap UpdateBackupBios -ni¡±
+         After the BIOS receives request from utility, the backup BIOS update will 
+         be completed in next normal boot. It will show message 
+         "DO NOT REMOVE POWER! Now updating Backup BIOS region......" 
+         in update beginning, after backup update completed, will show ¡°Done¡±.  
+
+  - Fixed: After loading default, the internal Graphics will change from enable to disable
+  - Fixed: After Loading default and boot into Windows server 2012, SUT has yellow 
+           mark in device manager
+  - Fixed: After setting Primary Display as PCI Add-on Card or Onboard Video in BIOS Setup, 
+           there is no display when SUT boots into Windows Server 2012
+  - Fixed: System cannot save Password after clearing Password.
+  - Fixed: Failed flash Me after AC/DC.
+================================================================================
+                                R01.04.0002
+================================================================================
+Note: This BIOS version is able to support more CPUs which are listed in Processor
+      support list on support.intel.com
+
+- Fixed: Unexpected event logged when heating the PCH with heat gun.
+- Fixed: The system will hang at POST Code 0xB2 with add-on video card after "Primary Display" 
+         BIOS setting is changed to "Onboard Video".
+- Fixed: If process cannot support VT-d, Intel(R) VT for directed I/O Option is visible.
+- Fixed: The NIC1/NIC2 controller option cannot be saved to "Disabled" in BIOS setup menu.
+- Fixed: Internal Graphic of the Intel(R) Processor G1820T doesn't work on the Intel(R) Server Board S1200V3RPM.
+- Fixed: The read/write speed of USB3.0 device cannot reache the right speed when connected to USB3.0 port.
+- Fixed: If AC lost occurs during BIOS update, the system may not be recovered via BIOS recovery method.
+- Fixed: When windows running in S3+S5 mode and shutting down the system, the system will reboot.
+- Fixed: Sometimes the system will reboot after shutting down the system in windows.
+================================================================================
+                                R01.04.0001
+================================================================================
+- Added: Microcode 0x00000017 update
+- Added: ESRT2 legacy oprom update
+- Added: iSCSI v2.8.25 legacy oprom update
+- Added: RSTe legacy oprom and efi driver update
+- Added: Code enhancement for SRIOV support
+- Added: iGFX GOP UEFI driver update
+- Added: PCI Enumeration Complete Protocol support
+- Fixed: Slot4 PCIe device lost issue
+- Fixed: Windows 2008 R2 blue screen issue when Adaptec* 6805 controller installed in slot 7
+- Fixed: Processor1 P1 MTT - Upper Fatal error on VMWare ESXi 5.1 U1
+- Fixed: Wrong SMBIOS type 41 records for Ethernet
+- Fixed: "Turbo Boost" and "SpeedStep" don't work under Windows 2012
+================================================================================
+                                R01.03.0005
+================================================================================
+- Fixed: PCIe device lost issue on slot4.
+================================================================================
+                                R01.03.0004
+================================================================================
+vSystem can't boot into an OS or UEFI using Intel(R) Pentium(R) processors.
+- Fixed: Red Hat* Linux* RHEL 6.4 32bit cannot be installed with 1GB DIMMs installed.
+- Fixed: Corrected help text for "USB 3.0 support".
+- Fixed: RAID mode incorrectly listed as "RST" - changed to "RSTe".
+- Fixed: "9266" error is reported with certain add-in video adapters.
+
+Other:
+Added:	 TXT ACM V1.3 integration.
+Updated: Video BIOS updated to version 2170
+
+================================================================================
+                                R01.02.0004
+================================================================================
+- Fixed: Signed driver check test fails due to an unknown device found in Windows 2012 WHQL
+         (Windows Hardware Quality Labs) certification.
+
+================================================================================
+                                R01.02.0002
+================================================================================
+- Fixed: Memory DIMM will sometimes starts throttling, even in good thermal conditions.
+- Fixed: System can't wake up from S3 via power button/USB device/Lan.
+- Fixed: System power consumption cannot be limited by Node Manager.
+- Fixed: BIOS version is not be updated accordingly in server management remote console.
+
+Other:
+ - Updated RSTe UEFI/Legacy OPROM to 3.7
+    
+================================================================================
+                                R01.01.0006
+================================================================================
+- First production BIOS release.
+ 
+
+[END OF RELEASE NOTES]

@@ -1,0 +1,336 @@
+===============================================================================
+        Intel(R) Server Platform S1200RP Integrated BMC Firmware Release Notes       
+===============================================================================
+Intel Product Collaboration and Systems Division
+Intel Corporation
+2111 N.E. 25th Avenue, Hillsboro, OR 97124 USA
+
+===============================================================================
+DATE:       02 Sep, 2014
+
+TO:         Intel(R) Server Board S1200RP customers
+
+SUBJECT:    Integrated BMC(R) firmware 01.12.6784 release notes
+===============================================================================
+                               LEGAL INFORMATION
+===============================================================================
+Information in this document is provided in connection with Intel products. 
+No license, express or implied, by estoppel or otherwise, to any intellectual 
+property rights is granted by this document. Except as provided in Intel's 
+Terms and Conditions of Sale for such products, Intel assumes no liability 
+whatsoever, and Intel disclaims any express or implied warranty, relating to 
+sale and/or use of Intel products including liability or warranties relating 
+to fitness for a particular purpose, merchantability, or infringement of any 
+patent, copyright or other intellectual property right. Intel Corporation may 
+have patents or pending patent applications, trademarks, copyrights, or other 
+intellectual property rights that relate to the presented subject matter.  
+The furnishing of documents and other materials and information does not 
+provide any license, express or implied, by estoppel or otherwise, to any 
+such patents, trademarks, copyrights, or other intellectual property rights.  
+Intel products are not intended for use in medical, life saving, or life 
+sustaining applications. Intel may make changes to specifications and product 
+descriptions at any time, without notice.
+
+Intel is a registered trademark of Intel Corporation. 
+
+*Other names and brands are the property of their respective owners.
+
+Copyright (c) 2014 Intel Corporation.
+
+A portion of this firmware is open source code.
+The OSS source code that the customer is entitled to per OSS license has been
+posted on the Intel support website at the following link:
+
+http://downloadcenter.intel.com/Detail_Desc.aspx?agr=Y&DwnldID=21081
+
+
+This open source code falls under the GPL 2.0 license, please see the license
+at the following link:
+
+http://www.opensource.org/licenses/gpl-2.0.php  
+
+
+===============================================================================
+                            ABOUT THIS RELEASE PACKAGE
+===============================================================================
+Source file: BMC_i_0112r6784.bin
+Update script: fwUpdateBMC.nsh
+
+REVISION INFORMATION RETURNED BY GET DEVICE ID COMMAND:
+Operational mode:   01.12.6784
+
+UBoot mode:         1.16
+Device ID:          0x21
+Manufacturer ID:    0x000157
+
+Other version/revision information:
+PSU Model          H/W revision      FW Version 
+DPS 460KB A          01F               3.09.31
+
+HSBP FW:            1.10
+Root/OS/WWW:        9.19
+FWPIAUPD Utility:   12.0-Build3
+
+MD5 checksum of BMC_i_0112r6784.bin: 55c1d1ff26e95e81ac8150db6c2f4304
+===============================================================================
+                         IMPORTANT INSTALLATION NOTES
+===============================================================================
+The following update process must be followed to ensure a trouble free updating
+of your baseboard.  The order is important to minimize any issues for status
+checking as different components are initialized.
+1.  BMC firmware
+2.  BIOS
+3.  Manageability Engine (ME) firmware
+4.  FRU/SDR package specific to the baseboard.
+5.  NIC EEPROM
+
+===============================================================================
+                            INSTALLATION PROCEDURE
+===============================================================================
+1.  Copy the entire contents of the .zip archive file to the
+    storage medium of your choice. This can be a hard disk, floppy disk
+    or USB flash drive.
+    All of the files in the zip archive must reside in the same directory.
+
+
+2.  Boot to EFI and then run the fwUpdateBMC.nsh script file to update the
+    Integrated BMC.
+
+    Modification of the update script with your own command line parameters is
+    not supported and doing so is at your own risk!
+
+
+3.  Install latest available FRU/SDR package specific to the platform.
+
+===============================================================================
+                     FIRMWARE UPGRADE/DOWNGRADE PROCEDURES
+===============================================================================
+Upgrade of BMC FW from version 01.12.6784 to later versions will be documented
+in the release notes for those versions.  Check for any special instructions before
+you perform the update.
+
+Always observe caution when downgrading firmware.
+
+===============================================================================
+                        KNOWN ISSUES/WORKAROUNDS/REQUIREMENTS
+===============================================================================
+- This BMC FW update package is to be used only on PCSD server baseboards and
+  does NOT support customer reference boards (CRB) or silicon reference
+  platforms (SRP).
+  Contact your Intel(R) representative to determine where to download the BMC
+  FW for these products.
+
+- The BMC FW image file in this package is to be used only with the provided
+  FWPIAUPD update utility.
+
+- Using the FW image file with a SPI flash device programmer will result in a
+  non-functional system.
+
+- If you need to run multi-session stress for SOL, setup timeout of each
+  session to be longer than 99ms.
+
+===============================================================================
+                     FIRMWARE RECOVERY PROCEDURE
+===============================================================================
+The Recovery process can be initiated by setting the recovery jumper (called 
+BMC Force Update Jumper) to the recovery position.
+
+The jumper is normally in the normal/de-asserted position. The system must be
+completely powered off (A/C power removed) before the jumper is moved.
+
+After power is re-applied and the firmware update is complete, the system must
+be powered off again and the jumper must be returned to the de-asserted
+position before normal operation can begin.
+
+A BMC recovery can be accomplished from a USB flash drive. 
+1.  Copy the entire contents of the .zip archive file to the
+    storage USB flash drive.
+    All of the files in the zip archive must reside in the same directory.
+    Root directory is recommended.
+    
+2.  Remove A/C power from the system and wait 30 seconds.
+
+3.  Move the BMC Force Update Jumper to the recovery position. 
+    Details regarding the jumper ID and location can be obtained from the
+    Board EPS for that Platform.
+
+4.  Insert the USB flash drive.
+
+5.  Reapply A/C power to the system and power on the system.
+
+6.  The BIOS POST screen will appear displaying the progress press F6 to
+    select boot options. At the boot option menu select to boot to the
+    EFI SHELL.
+
+7.  Switch to the directory where you stored the update files and then run
+    the fwUpdateBMC.nsh script file to update the Integrated BMC.
+
+    Modification of the update script with your own command line parameters is
+    not supported and doing so is at your own risk!
+
+8.  Remove A/C power from the system and wait 30 seconds.
+
+9.  Move the BMC Force Update Jumper to the normal position.
+
+10. Reapply A/C power to the system and power on the system.
+
+===============================================================================
+                                ISSUES FIXED
+===============================================================================
+                                01.12.6784:
+===============================================================================
+- Fixed:  Can't get the last entry when bmc event log is 100%
+- Fixed:  FW update will fail with OS based utility (OFU), failure rate is 20% 
+          with USB mode and 40% with KCS mode.
+- Fixed:  Sometimes FRB2 will be triggered after resuming from S3.
+- Fixed:  IPv6 can't get IP address via DHCP server.
+- Fixed:  After turning off then turning on the KVM/SSH/EWS/IPMI over lan 
+          services using Control BMC Services command, IPMI over lan service
+	  was still available.
+- Fixed:  In the EWS page "Security Settings", when click the "Enable" label of 
+          "SSH", "HTTP/HTTPS" and "IPMI over LAN", it will disable or enable the 
+	  "Force HTTPS" option.
+- Fixed:  There are assert and de-assert events logged for sensor HDD Status -
+          Device Faulty during DC cycle stress test.
+- Fixed:  There'll be a warning message for SEL is full after force update BMC
+- Fixed:  There's no SEL indicate the FW has been updated successfully when update BMC.
+- Fixed:  The SEL log event ID began at 512 the rather than starting from 1.
+- Fixed:  SEL log Timestamp message incorrect after AC cycle or BMC reset.
+- Fixed:  Updated to newer Openssl code version 0.9.8za .
+==============================================================================
+                                01.11.5801:
+===============================================================================
+- Fixed: Updated Java Signatures files in BMC to support requirement changes of JAVA
+===============================================================================
+                                01.10.5637
+===============================================================================
+- Fixed: The BMC may corrupt within 10 DC cycles on the Intel(R) Server board S1200V3RPM.
+===============================================================================
+                                01.09.5544
+===============================================================================
+- Fixed: Nothing displayed on Embedded Web Server while logging in it with IPv6
+         address (stateless ICMPv6 discovery).
+- Fixed: BMC email alerts refused by some servers
+- Fixed: Cannot set link-local gateway for BMC Network Management Interface
+         using IPv6.
+- Fixed: BMC Web Console session not maintained with power cycle.
+- Fixed: Add X-Frame-Options to prevent cross-frame scripting.
+- Fixed: Browser auto-complete enabled before authentication.
+- Fixed: Web Console not defaulting to English when another non-English browser
+         is detected.
+- Fixed: Update SDR of S1200RP to version 1.06.
+- Added: Add ability to disable IPMI over LAN (RMCP/RMCP) from command line or
+         web page.
+===============================================================================
+                                01.08.5091
+===============================================================================
+- Fixed: No video display in BMC KVM console when SUT wakes up from S1 or S3
+         in Win2012.
+	
+===============================================================================
+                                01.07.5021
+===============================================================================
+- Fixed: After a BMC reset or BMC update a BMC watchdog SEL event is logged and
+         system will be in degraded state. Status LED will be green blinking.
+
+===============================================================================
+                                01.06.4994
+===============================================================================
+- Fixed: Update SDR of S1200RP to version 1.05.
+- Fixed: BMC update failing after 4 consecutive firmware updates.
+         BMC will no longer stay in recovery mode (uboot) after four
+         consecutive firmware updates.
+- Fixed: Repeated Pwr Unit Redund warning SEL entries when AC power removed
+         from either PS1 or PS2.
+- Fixed: Corrected Embedded Web Server help text for Serial Over LAN
+- Fixed: Updated Embedded Web Console Mouse Mode text
+- Fixed: JViewer always shows "Error reading video data" popup and a black
+         screen when mouse mode is set to relative and JViewer tries to hide
+         the cursor.
+- Fixed: The UBoot code detects a bad CRC of the Ram Image when attempting to
+         boot after getting a cold reset.
+
+===============================================================================
+                                01.05.4775
+===============================================================================
+-Fixed: Change Intel(R)RMM in EWS into RMM Dedicated Mgmt.
+-Fixed: The LCD Screen display is not clear while scrolling error events.
+-Fixed: LAN leash lost event is shown during DC cycle testing.
+-Fixed: Px DIMM Thrm Mrgn and Px DIMM Thrm Trip not decoding DIMM number
+        correctly in the Embedded Web Server SEL text log.
+-Fixed: Embedded Web Server SEL text log not decoding BIOS update versions
+        correctly.
+-Fixed: There are assert events for Mem Err Sensor 0x28 - 'DIMM Thrm Mrgn 1'
+        sensor and 'SPS FW Health' sensor after updating ME firmware.
+
+===============================================================================
+                                01.04.4674
+===============================================================================
+-Fixed: Update SDR of S1200RP to version 1.04.
+-Fixed: The BMC version information not displaying as expected in Embedded Web
+        Server after entering firmware transfer mode..
+-Fixed: The host power status show inconsistently betweeen system information
+        page and server power control page in Embedded Web Server when system
+        is in S1 or S3.
+-Fixed: There are assert and de-assert events logged for PCH temp sensor 0x22 -
+        low critical and low non-critical during DC cycle stress test.
+-Fixed: System status LED is incorrect and there is no assert event logged for
+        DIMM thermal trip after DIMM thermal trip is triggered.
+-Fixed: Multiple KVM socket error and media redirection errors.
+-Fixed: Integrated BMC Web Console Keyboard Macro Cltrl+Alt+F1 not working as expected.
+
+===============================================================================
+                                01.03.4595
+===============================================================================
+-Fixed: Update SDR of S1200RP to version 1.03.
+-Fixed: RGMII signal integrity test failed on S1200RP.
+-Fixed: BMC shared NIC cannot be pinged successfully after BMC shared NIC IP
+        address is set in BIOS setup.
+-Fixed: The Web Console Event Log page uses IBMC.
+
+===============================================================================
+                                01.02.4452
+===============================================================================
+-Fixed: Update SDR of S1200RP to version 1.02.
+-Fixed: DIMM margin resolution isn't right when saving DIMM inventory into
+        extend SEL.
+-Fixed: There are four BIOS recovery boot entries in the SEL for a recovery
+        boot,only two are expected.
+-Fixed: When recovery jumper is connected to 1-2 pin(normal mode), system
+        always boots from recovery mode after programming a new BIOS offline.
+-Fixed: BMC shared NIC cannot be pinged successfully after run VLAN id set/get
+        stress test from VLAN id 0 to 4094.
+-Fixed: Source of DIMM event does not show in the SEL extended data.
+
+===============================================================================
+                                01.01.4412
+===============================================================================
+-Fixed: Update SDR of S1200RP to version 1.01.
+-Fixed: Change resolution of DIMM temp sensor reading.
+-Fixed: SUT is reset even when the timer action is "none" after getting a
+        Watchdog timeout.
+-Fixed: Sensor reading/state for DIMM Thermal Margin 1 is unavailable.
+-Fixed: Fail to generate system debug log in Embedded Web Server.
+        - Refreshing the page shows the debug log is available
+-Fixed: Embedded Web Server Power Policy numbers cannot be set to 255. Per the
+        help information 255 should be valid.
+-Fixed: There are unnecessary event logged for sensor Voltage BB +5.0V STBY
+        (#0xD3) lower non-critical during AC cycle test.
+-Fixed: Message shows as "undefined" with ff in Embedded Web Server SEL page
+        when SEL is full.
+-Fixed: Intel(R) Hybrid Cloud cannot get session ID when use BMC
+        username/password with special characters.
+
+===============================================================================
+                                01.00.4348
+===============================================================================
+Initial Production BMC Release
+-Fixed: Update SDR of S1200RP to version 1.00.
+-Fixed: Count of currently enabled users is changed even after the command to
+        "set user access" failed.
+-Fixed: Wrong completion code returned after issuing "Get DIMM information"
+        IPMI OEM command.
+-Fixed: Incorrect response when testing the timer Interrupt-Action Interaction
+        when setting pre-interrupt as NMI.
+-Fixed: Add user, modify user and delete user function in Embedded Web Server
+        causing pop-up error windows.

@@ -1,0 +1,756 @@
+================================================================================
+Intel(R) Server Platform S1200V3RP System Firmware Update Package for 
+Intel(R) One Boot Flash Update Utility, Windows* Preboot Execution Environment
+================================================================================
+Intel Enterprise Platform & Services Division - Marketing
+Intel Corporation
+2111 N.E. 25th Avenue, Hillsboro, OR 97124 USA
+================================================================================
+DATE    : Dec 18, 2015
+TO      : Intel(R) Server Board S1200V3RP
+SUBJECT : Release Notes for System Firmware Update Package 
+================================================================================
+                              ABOUT THIS RELEASE
+================================================================================
+BIOS   : R03.03.0003
+ME     : R03.00.07.024
+BMC    : 01.14.9309
+FRUSDR : 1.08
+================================================================================
+                           Support Platforms and Dependency
+================================================================================
+This update package is for Intel(R) Server Board S1200V3RPM_RPL_RPO
+
+Intel(R) Server Platform S1200V3RP family Processors supported: 
+  Intel(R) Xeon(R) Processor E3-1200 V3 series
+  Intel(R) Xeon(R) processor E3-1200 V4 series
+  
+Microcode update versions:
+
+Intel(R) Xeon processor E3-1200 V3 series C0 version: 0x0000001D CPUID = 0x306C3 
+Intel(R) Xeon processor E3-1200 V4 series G0 version: 0x0000000B CPUID = 0x40671 
+
+On-Board Component Option ROM Versions:
+Integrated Matrox VGA               : VBE BIOS V3.8 SQ
+1G PXE Option ROM                   : Intel(R) Boot Agent XE v1.5.53.1
+10G PXE Option ROM                  : Intel(R) Boot Agent XE v2.3.24.1
+82599 10G PXE Option ROM            : Intel(R) FCoE Boot v1.8.17
+iSCSI Option ROM                    : Intel(R) iSCSI Remote Boot version 3.0.43
+NIC UEFI Driver                     : E6327X3.EFI
+SATA RAID Option ROM - RSTe         : 4.1.0.1026
+UEFI SATA RAID Option ROM - RSTe    : 4.1.0.1026
+ESRT II FOR SATA                    : A.14.02121826
+Legacy Processor Video              : 5.5.1038
+UEFI Processor Video driver         : 5.5.1032 
+
+Reference Code Version              : 2.7.1
+Memory Reference Code Version       : 1.8.0.3
+v4 Memory Reference Code Version    : 2.7.1.0
+Management Engine Firmware Version  : 03.00.07.024
+ACM                                 : BDW v1.2
+
+The following update process must be followed to ensure a trouble free update.
+1.	BMC firmware
+2.	BIOS
+3.	Manageability Engine (ME) firmware
+4.	FRUSDR
+
+================================================================================
+                           INSTALLATION NOTES
+================================================================================
+This package can be updated using one of the following methods:
+ - Windows* or Linux* operating system using Intel(R) One-boot Flash Update (OFU)
+   V11.0 Build 14 or later)
+ - Windows* Preboot Execution Environment (WinPE)
+
+To update from Windows* and Linux* or operating systems using the Intel(R) One Boot
+Flash Update Utility (OFU)
+
+Intel(R) One boot Flash Update utility can be downloaded from http://downloadcenter.intel.com/
+and it is part of the "BIOS, Firmware Update & Configuration Utilities" for 
+Windows* and Linux*. Please refer to Intel OFU user guide about the details of 
+installation and usage of OFU.
+
+Use OFU to update system firmware by the following steps:
+- Install OFU on Windows* or Linux* system
+- Download the latest firmware update package from http://downloadcenter.intel.com/
+- Unzip package to a folder
+- Run the following command in Windows* command line/Linux* terminal window:
+  <OFU install folder name>:\flashupdt -u  <package folder name>\flashupdt.cfg
+                       
+To update from Windows* Preboot Execution Environment (WinPE)
+
+The System Firmware Update Package can be inserted to Windows* PE customized image 
+for creating a bootable Windows* PE CD. User is able to update system firmware from 
+customized WinPE CD by the following steps:
+- Boot server with customized WinPE CD
+- Run script "WinPE21_x64_Update.bat" or "WinPE20_x86_Update.bat" 
+  (name may be varied depends on your own customization)
+  
+Note:
+1. The Intel(R) OFU utility is case sensitive. Therefore, when you transfer the 
+Firmware Update Package using USB flash drive from a Microsoft Windows* system to a Linux
+environment, you must first extract under the Linux* environment. Otherwise, you 
+will need to mount the USB flash drive manually with 'vfat' option under Linux to avoid 
+conversion from upper case to lower case and vice versa.
+
+2. To make Intel(R) OFU utility run properly under x86 or x64 OS, you have to read
+OFU release notes on known issues for OFU installation.
+
+3. In this SFUP package, Intel only provide batch file "WinPE_x86_Update.bat"
+for WinPE2.0 32 bit solution "WinPE_x64_Update.bat" for WinPE2.1/3.0 64 bit 
+solution as an example. Please refer to white paper "White Paper-Intel Server 
+Utilities Procedure for WinPE.pdf" for details on building your own customized 
+WinPE CD.
+
+4. Windows PE 2.0 - built from Windows Vista SP1 32bit or EM64T
+5. Windows PE 2.1 - built from Windows Vista SP1 or Windows Server 2008, EM64T
+6. Windows PE 3.1 - built from Windows Server 2008R2, EM64T
+7. Microsoft IPMI driver is loaded by default from WinPE CD, if you want to use 
+Intel IPMI driver instead of MS IPMI driver for firmware update, you can un-install
+Microsoft IPMI driver by:
+                Devicesetup.exe ¨Cv remove *IPI0001
+                Note: IPI0001 is the device ID for Microsoft IPMI driver.
+
+================================================================================
+                        BIOS RECOVERY INSTRUCTIONS
+================================================================================
+
+The Recovery process can be initiated by setting the recovery jumper. (called 
+BIOS Recovery Boot Jumper)
+ 
+A BIOS recovery can be accomplished from the backup BIOS region or USB Mass Storage device. 
+Please note that recovery from USB floppy is not supported on this platform. 
+ 
+The recovery media must contain the following files under the root directory:
+   1.  UEFI iFlash32 (including IFlash32.efi and ipmi.efi )
+   2.  *Rec.CAP
+   3.  Startup.nsh (update accordingly to use proper *Rec.CAP file)
+ 
+BIOS starts the recovery process by first loading and booting to the recovery image from the 
+backup BIOS region.
+
+This process takes place before any video or console is available. Once the system boots 
+to recovery image, it will boot automatically into EFI Shell to invoke the Startup.nsh 
+script and start the flash update application (IFlash32.efi). IFlash32.efi requires the 
+supporting BIOS Capsule image file (*Rec.CAP). After the update is complete, there will 
+be a message displayed stating that the "BIOS has been updated successfully" indicating 
+the recovery process is finished. The User should then switch the recovery jumper back to
+normal operation and restart the system by performing a power cycle.
+ 
+The following steps demonstrate this recovery process:
+   1.  Power OFF the system.
+   2.  Insert recovery media.(Optional if the backup BIOS region works)
+   3.  Switch the recovery jumper. Details regarding the jumper ID and location
+       can be obtained from the Product Board TPS.
+   4.  Power ON the system.
+   5.  The BIOS POST screen will appear displaying the progress and system automatically 
+       boots to the EFI SHELL.
+   6.  Startup.nsh file executes, and initiates the flash update (IFlash32.efi)
+       with new capsule file (*Rec.CAP). The regular IFlash message will be displayed at
+       the end of the process, once the flash update succeeds.
+   7.  Power OFF the system, and revert the recovery jumper position to "normal".
+   8.  Power ON the system. 
+   9.  Do *NOT* interrupt the BIOS POST during the first boot.
+
+================================================================================
+                            KNOWN ISSUES/WORKAROUNDS
+================================================================================
+- If you want to install Linux* SUSE* 11 SP2 or boot to a pre-installed Linux* SUSE* 11 SP2 OS, 
+- R02.01.0002 and later version need use command "iflash32 -u RB_R02.0x.xxxxRec.cap UpdateBackupBios -ni" 
+  to upgrade from R01.04.0002 and early version. Similarly, R01.04.0002 and early version need use command 
+  "iflash32 -u RB_R01.0x.xxxxRec.cap UpdateBackupBios -ni" to downgrade from R02.01.0002 and later version.
+- As security requirement, R03.01.0001 reversion doesn't support capsule downgrade in normal mode.
+- R03.01.0002 is the first BIOS that adds support for Intel(R) Xeon processor E3-1200 V4 series. If you
+  are upgrading from R02.02.0004 or earlier BIOS versions,  you will need to use a Intel(R) Xeon processor E3-1200 V3 
+  series processor first to boot to EFI shell and use capsule files to update BIOS to R03.01.0002.
+  After flashing with the Intel(R) Xeon processor E3-1200 V3 series processor, you can install
+  the Intel(R) Xeon processor E3-1200 V4 series processor and boot.  
+
+
+===============================================================================
+                            IMPORTANT NOTICE
+================================================================================
+
+   - [Notice]Need use recovery capsule file to downgrade/upgrade between R02.00.0x32 and before version BIOS (Including R01.04.0002 and before).
+   - [Notice]R02.01.0002 and later version need use command "iflash32 -u RB_R02.0x.xxxxRec.cap UpdateBackupBios -ni" to upgrade from R01.04.0002 and early version. 
+             Similarly, R01.04.0002 and early version need use command "iflash32 -u RB_R01.0x.xxxxRec.cap UpdateBackupBios -ni" to downgrade from R02.01.0002 and later version.
+   - [Notice]As security requirement, R03.01.0001 reversion and later version doesn't support capsule downgrade to R03.00.0x43 and previous reversion(Including R02.02.0005 and before) in normal mode.
+   - [Notice]As security requirement, R03.03.0003 reversion and later version doesn't support capsule downgrade to R03.02.0004 and previous reversion(Including R02.02.0005 and before) in normal mode.  
+   - [Notice] Added a cold reset to ensure boot completion after Backup BIOS update trigged.
+================================================================================
+                              FIXES AND FEATURES ADDED/REMOVED
+================================================================================
+================================================================================
+================================================================================
+                                R03.03.0003
+================================================================================
+NOTICE: 
+  1. Capsule update method: If previous BIOS version is R02.02.0004 and earlier version, need use E3-1200 V3 CPU part boot to EFI shell, 
+     and use capsule files update BIOS to R03.03.0003 and update ME to 3.0.7.24,then replace with E3-1200 V4 CPU part to power on. 
+  - EPSD100251166:System will auto reset when run Trusted Boot - measured launch(TBOOT) test
+  - ESS RC V119_03 integration
+  - [Security]Implemented BIOS lock before PCI bus emulation
+  - EPSD100249332:[RBP-RM] Virtual Machine can't POST with E3-1200 V4 CPU after you install RemoteFX 3D video adapter
+  - EPSD100250117: BIOS update script does not check BIOS update failure, cause ME updated to latest version and does not match with on board old BIOS(startup Stript updated)
+  - EPSD100250117:[RBP] 4k monitor issue with E3-1200 CPU (Win2k12R2)
+
+  
+================================================================================
+                                R03.02.0003
+================================================================================
+NOTICE:  R03.02.0003 supports the Intel(R) Xeon processor E3-1200 V4 series. If you
+   are upgrading from R02.02.0005 or earlier BIOS versions,  you will need to use  
+   a Intel(R) Xeon processor E3-1200 V3 series processor first to boot to EFI shell and use capsule files to update BIOS to R03.01.0002.
+   After flashing with the Intel(R) Xeon processor E3-1200 V3 series processor, you can install
+   the Intel(R) Xeon processor E3-1200 V4 series processor and boot.
+  - Added: Microcode update 0x0000000D for CPUID = 0x40671
+  - Fixed:  Variable can't be set or deleted in EFI Shell via EFI shell commands-----intermittent issue
+  - Fixed:  [BMC_BDW]There're some SMI timeout event logs when run DC cycle
+  - Fixed:  Nvidia 06G-P4-2790-KR X16 card hang at 0x15 during POST with BIOS PV RC1
+
+  - Fixed:  The PCIE Oprom Control options are expected to be invisible in UEF
+  - Fixed:  L3 cache Associativity of SMBIOS type 7
+  - Fixed:  sysinfo_log.txt file does not match with Bios information
+  - Fixed:  The SUT hang at 0x0E with CPU QJ6G when 3 wrong password attempt
+  - Fixed:  Gen3 card working on Gen2 on LC/RO/RM slot 6 when no other device populated.
+  - Fixed:  Hyper -V installation on S1200V3RP system fail on R03.02.0002 while no this issue on R03.02.0001. the issue also happened on Vmware ESXi5.5
+
+================================================================================
+                                R03.01.0002
+================================================================================
+NOTICE: As security requirement, R03.01.0002 and later revision doesn't support capsule downgrade to R02.02.0005 and previous revision in normal mode. It only supports capsule downgrade in Recovery mode.
+
+NOTICE:  R03.01.0002 is the first BIOS that adds support for Intel(R) Xeon processor E3-1200 V4 series. If you are upgrading from R02.02.0005 or earlier BIOS versions,  you will need to use a Intel(R) Xeon processor E3-1200 V3 series processor first to boot to EFI shell and use capsule files to update BIOS to R03.01.0002.
+   After flashing with the Intel(R) Xeon processor E3-1200 V3 series processor, you can install
+   the Intel(R) Xeon processor E3-1200 V4 series processor and boot.
+
+
+ -Added: Microcode update 0x0000001D for CPUID = 0x306C3
+ -Added: Microcode update 0x0000000B for CPUID = 0x40671
+
+ -Fixed: The SUT halt at 0x0D when the backup bios was updated at POST stage
+ -Fixed: The type 4 Processor Upgrade Field vaule is incorrect for LGA1150 
+ -Fixed: Cannot log in to BMC Webconsole after set user and password
+ -Fixed: Sleep S3 wake up failed with BDW CPU. 
+ -Fixed: System hangs at 0x9A with BDW CPU when VT-d is enabled   
+ -Fixed: The value of Creator ID/OEM Revision/Creator Revision in FPDT tabl
+ -Fixed: System will automatic resume from S1/S3/S5 after S3 wake on LAN.
+ -Fixed: The maximum length of password don't match with the length of EPS
+ -Fixed: The value at Bit 3 to Bit 7 of Processor Characteristics field
+ -Fixed: The value of current usage field when it is populated for each in
+ -Fixed: Sometimes the system hang at 0x96 with add-on graphic card.
+ -Fixed: SUT will reboot unexpectedly  when run IWVSS  in Win2012R2.
+ -Fixed: TBoot test failed 
+ -Fixed: There are 16 N/A devices in BIOS USB configuratoin tab after usb controller disable
+================================================================================ 
+                              R02.02.0005
+================================================================================
+NOTICE: Need to use recovery capsule file to downgrade/upgrade between R02.02.0005 and R02.00.0x31/before version BIOS (Including R01.04.0002 and before). 
+  - Fixed: RS25GB008/RS2PI008 RAID cards lost after S3 resume when it plugged into slot4/7.
+  - Fixed: The primary display option doesn't show in the MFG mode.
+  - Fixed: The "Internal Graphics" option displayed on BIOS Setup in MFG mode with no-graphic CPU.
+  - Fixed: NMI activated-system halted when three specific cards plugged into slot 4/6 and SAS_mod slot.
+  - Fixed: [x]incorrect message showed on POST that S1200RPL with two SATA ports @ 3Gbps and 4 SATA ports @6Gbps.
+  - Fixed: The onboard VGA would display after S3 when on board video was set to disabled in BIOS Setup.
+  - Disable ACPI S4 support
+================================================================================
+                                R02.02.0004
+================================================================================
+NOTICE: Need to use recovery capsule file to downgrade/upgrade between R02.02.0004 and R02.00.0x31/before version BIOS (Including R01.04.0002 and before). 
+  - Integrate intel-lan_OpROMs_v19.3-rev1.
+
+================================================================================
+                                R02.02.0003
+================================================================================
+NOTICE: Need to use recovery capsule file to downgrade/upgrade between R02.02.0003 and R02.00.0x31/before version BIOS (Including R01.04.0002 and before). 
+  - Fixed: [x]It shows black screen instead of RAID configure information when system POST if set DP output and ESRTII enable.
+
+================================================================================
+                                R02.02.0002
+================================================================================
+NOTICE: Need to use recovery capsule file to downgrade/upgrade between R02.02.0002 and R02.00.0x31/before version BIOS (Including R01.04.0002 and before). 
+  - Fixed: Can't power on SUT when RS2WC080 connect PCIE slot 4 on SE Sku with R02.02.0001.
+  - Fixed: The Zepher with Payload Signature should be hidden if the normal OS is booted.
+  - Fixed: S1200RP BIOS report the unknown PCIE Error SEL, which not following the Spec.
+  - Fixed: It will reboot when shut down in SUSE OS sometimes.
+  - Fixed: USB Boot Priority help text description spell error.
+  - Fixed: Syscfg v12 build 13: BootOrder will be changed before and after running cmd: syscfg /s file.ini /f /b
+  - Fixed: There are four type 9 structures(slot4/5/6/7) in SMBIOS log on RO SKU
+  - Fixed: The BMC KVM couldn't work when USB3.0 support was set to enabled
+
+================================================================================
+                                R02.02.0001
+================================================================================
+NOTICE: Need to use recovery capsule file to downgrade/upgrade between R02.02.0001 and R02.00.0x31/before version BIOS (Including R01.04.0002 and before).  
+  - Updated: Microcode M32306C3_0000001A 
+  - Updated: Enable Processor graphics on S1200RP LC BIOS
+  - Fixed: Error message show incorrect which missing severity under setup.
+  - Fixed: BIOS flash content can be corrupted by fuzzing SMI 0x22 and 0x23, which will brick the system.
+  - Fixed: Sometimes SAS RAID Card ASR6805 512MB can’t be detected when insert in slot6/slot5.
+  - Fixed: Compatibility issue between S1200RP and EXPI9301CT(82574L chip) that many PCIe critical error in SEL
+  - Fixed: Mass Storage Device  option still exit after  setting USB EP Type Ploicy Setting to Policy 1 and Set "Bulk OUT"," Ctrl"," Bulk IN" Item to enable
+  - Fixed: iSCSI 1GbE/10GbE Option ROM turn to NOT gray out after system load default value.
+  - Fixed: [x]OLTM/CLTM not available in BIOS of S1200RP
+  - Fixed: The USB3.0 mass storage device could be detected in port 4 when Rear USB port 1,4  are seted  to ploicy 1
+  - Fixed: USB EP Type Policy setting item can be changed when USB3.0 Support item is not enabled
+  - Fixed: No display from on board DP port in windows when EFI optimized mode enabled
+  - Fixed: An 'enter password' dialog box is not displayed after the administrator password  has been setted
+  - Fixed: After removing cmos battery or clearing CMOS jumper, there are no error message 0012 and 5220
+  - Fixed: SMBIOS type 17 Configured Memory Clock Speed shows 0x000
+  - Fixed: Device manager will show ME and PCI serical port devices when scaning for hardware changed after resuming from S3
+  - Fixed: The option value of memory speed selection in BIOS will be lost after setting its value manually.
+  - Fixed: SOL terminal will be no response in BIOS USB configuratoin tab after usb controller disabled
+  - Fixed: Not prompted for a password to get into the EFI environment after Admin password is installed and EFI shell is the first boot order
+  - Fixed: BIOS flash content can be corrupted 
+================================================================================
+                               R02.01.0004
+================================================================================
+NOTICE:  If BIOS Rev 02.01.0002 is not pre-installed then please install that release first prior to installing this release.
+         The BIOS Rev 02.01.0002 contains a critical update which must be present before installing this release.
+
+- This version enhances the protection of certain UEFI variables as described in 
+	Intel Security Advisory INTEL-SA-00038
+================================================================================
+                                R02.01.0002
+================================================================================
+NOTICE: Need to use recovery capsule file to downgrade/upgrade between R02.01.0002 
+        and any earlier BIOS versions (incluing R01.04.0002).  
+      We recommend the customer to update Backup BIOS at same time and keep 
+         Backup BIOS same as normal BIOS for BIOS R02.01.0002.
+         # ¡°iflash32 ¨Cu R02.01.0002Rec.cap UpdateBackupBios -ni¡±
+         After the BIOS receives request from utility, the backup BIOS update will 
+         be completed in next normal boot. It will show message 
+         "DO NOT REMOVE POWER! Now updating Backup BIOS region......" 
+         in update beginning, after backup update completed, will show ¡°Done¡±.  
+  - Fixed: After loading default, the internal Graphics will change from enable to disable
+  - Fixed: After Loading default and boot into Windows server 2012, SUT has yellow 
+           mark in device manager
+  - Fixed: After setting Primary Display as PCI Add-on Card or Onboard Video in BIOS Setup, 
+           there is no display when SUT boots into Windows Server 2012
+  - Fixed: System cannot save Password after clearing Password.
+  - Fixed: Failed flash Me after AC/DC.
+================================================================================
+                                R01.04.0002
+================================================================================
+Note: This BIOS version is able to support more CPUs which are listed in Processor
+      support list on support.intel.com
+
+- Fixed: Unexpected event logged when heating the PCH with heat gun.
+- Fixed: The system will hang at POST Code 0xB2 with add-on video card after "Primary Display" 
+         BIOS setting is changed to "Onboard Video".
+- Fixed: If process cannot support VT-d, Intel(R) VT for directed I/O Option is visible.
+- Fixed: The NIC1/NIC2 controller option cannot be saved to "Disabled" in BIOS setup menu.
+- Fixed: Internal Graphic of the Intel(R) Processor G1820T doesn't work on the Intel(R) Server Board S1200V3RPM.
+- Fixed: The read/write speed of USB3.0 device cannot reache the right speed when connected to USB3.0 port.
+- Fixed: If AC lost occurs during BIOS update, the system may not be recovered via BIOS recovery method.
+- Fixed: When windows running in S3+S5 mode and shutting down the system, the system will reboot.
+- Fixed: Sometimes the system will reboot after shutting down the system in windows.
+================================================================================
+                                R01.04.0001
+================================================================================
+- Added: Microcode 0x00000017 update
+- Added: ESRT2 legacy oprom update
+- Added: iSCSI v2.8.25 legacy oprom update
+- Added: RSTe legacy oprom and efi driver update
+- Added: Code enhancement for SRIOV support
+- Added: iGFX GOP UEFI driver update
+- Added: PCI Enumeration Complete Protocol support
+- Fixed: Slot4 PCIe device lost issue
+- Fixed: Windows 2008 R2 blue screen issue when Adaptec* 6805 controller installed in slot 7
+- Fixed: Processor1 P1 MTT - Upper Fatal error on VMWare ESXi 5.1 U1
+- Fixed: Wrong SMBIOS type 41 records for Ethernet
+- Fixed: "Turbo Boost" and "SpeedStep" don't work under Windows 2012
+
+================================================================================
+                                R01.03.0005
+================================================================================
+- Fixed: PCIe device lost issue on slot4.
+
+
+================================================================================
+                                R01.03.0004
+================================================================================
+- Fixed: System can't boot into an OS or UEFI using Intel(R) Pentium(R) processors.
+- Fixed: Red Hat* Linux* RHEL 6.4 32bit cannot be installed with 1GB DIMMs installed.
+- Fixed: Corrected help text for "USB 3.0 support".
+- Fixed: RAID mode incorrectly listed as "RST" - changed to "RSTe".
+- Fixed: "9266" error is reported with certain add-in video adapters.
+
+Other:
+Added:	 TXT ACM V1.3 integration.
+Updated: Video BIOS updated to version 2170
+
+================================================================================
+                                R01.02.0004
+================================================================================
+- Fixed: Signed driver check test fails due to an unknown device found in Windows 2012 WHQL
+         (Windows Hardware Quality Labs) certification.
+
+================================================================================
+                                R01.02.0002
+================================================================================
+- Fixed: Memory DIMM will sometimes starts throttling, even in good thermal conditions.
+- Fixed: System can't wake up from S3 via power button/USB device/Lan.
+- Fixed: System power consumption cannot be limited by Node Manager.
+- Fixed: BIOS version is not be updated accordingly in server management remote console.
+
+Others:
+ - Updated RSTe UEFI/Legacy OPROM to 3.7
+ 
+================================================================================
+                                R01.01.0006
+================================================================================
+- First production BIOS release.
+
+================================================================================
+             ME Changes in 03.00.07.024
+================================================================================
+- Fixed: Platform does not go to S3/S4 state in recovery mode
+- Fixed: Wrong value returned from Get Max Allowed Logical Processors command after
+         S0->(S4,S3)->S0 transition
+
+================================================================================
+			  ME Changes in 03.00.07.018
+================================================================================
+- Fixed: Wrong value returned from Get Max Allowed CPU P-states/T-states while limiting
+		using Total Power Budget
+
+================================================================================
+===============================================================================
+			ME Changes in 03.00.07.013
+================================================================================
+- Fixed: SPS FW does not make the override for the capability register using BDW ES parts and
+		this results to have ECC, Trifurcation and Dual Dimm per channel OFF.
+
+================================================================================
+			ME Changes in 03.00.07.012 
+================================================================================
+- Fixed: Steps to reproduce: 0. Burn new image NMon (SKU NM) AlwaysOn 1. Boot to OS 2.
+		Execute power flows in random way Expected results: Platform should properly
+		execute power flow. Actual results: After 59 iteration ME send E3 00 command
+		
+================================================================================
+			  ME Changes in 03.00.05.128
+================================================================================
+- Fixed: Bit Reserved16 in PCH Strap 15 is set incorrectly. This change in Flash 
+       Descriptor was introduced in previous release and reverted in this one.
+
+=============================================================================
+			ME Changes in 03.00.05.110
+================================================================================
+- Fixed: Factory Presets and AIM, OCS and OCP MFS files are not readable using MESDC
+       or Diagnostic Service.
+	   
+================================================================================
+			  ME Changes in 03.00.05.068
+================================================================================   
+- Fixed: "Firmware Update In Progress¡± bit does not set in FW Status register
+         during online update.
+- Fixed: ME-BIOS Interface major and minor version swapped on EFI and DOS.
+- Fixed: The Mode Manager does not support reading power from HSC, when the 
+         LM25066i chip is used.
+- Fixed: After ME reset (Cold Reset command, or any host reset in S0/S1 Only power
+         mode except host warm reset) ME returns incorrect version and CRC of mPhy
+         settings (0). This causes the BIOS to perform (unnecessary) mPhy settings 
+         update in ME, which gets rejected with 0x101E error code while it should
+         be accepted.
+- Fixed: Sporadically on some platforms ME may be reset during host booting due
+         to internal exception.
+- Fixed: ¡°Read mPhy settings¡± HECI message returns ICC_STATUS_FAILURE (0x0001)
+         in ¡°ICC Status¡± field.
+- Fixed: PCH register SECRT98 (SATA Electrical Control Register T98) has improper
+         value due to incorrect mPhy settings value in ME. As a workaround the BIOS 
+         may force update of these settings during boot.
+================================================================================
+			  ME Changes in 03.00.04.209
+================================================================================   
+- Fixed: Disabling spectrum spread with ICC_SET_SPREAD_SPECTRUM message over HECI
+         causes the BIOS to hang.
+- Fixed: When PSU Status sensors are disabled and one of the PSUs gets disconnected
+         from AC, ME resets due to exception, causing SPS FW Health sensor 0x17 event
+         to be stored in the BMC SEL.
+- Fixed: When Factory Defaults are restored using IPMI command, there is incorrect
+         SPS FW Health sensor 0x17 event sent to the BMC SEL.
+- Fixed: Sometimes Dynamic Core Allocation temporarily parks cores in unexpected
+- Fixed: Sometimes aggressive power policy in Domain Total is not able to limit 
+         power in specified correction time.
+
+
+
+
+===============================================================================
+                               BMC Changes i 01.14.9309:
+===============================================================================
+-Fixed: The BMC Lan IP cannot ping successful with new S1200RP MB.
+-Update openssl from 0.9.8zf to 0.9.8zg to add fix for CVE-2015-1789.
+-Fixed: Firefox version 38.0 or higher breaks with system with RMM4 and RMM3.
+
+
+
+===============================================================================
+                               BMC Changes in 01.13.8619:
+===============================================================================
+- Fixed: CPU CATERR occurs after sending peci command IA32_MC10_CTL and 
+       IA32_MC10_CTL2. 
+===============================================================================
+                               BMC Changes in 01.13.8129:
+===============================================================================
+
+- Fixed: Therm Ctrl sensor's reading from CPU can be 100 percent by chance with a
+       certain type of CPU.
+       
+===============================================================================
+                               BMC Changes in 01.13.7782:
+===============================================================================
+- Fixed:  [x]Axacore report S1200RP board takes 5+ minutes to boot.  Seems
+          to have something to do with initialization of the BMC at startup.
+- Fixed:  The content of "About" button is still in English when using the 
+          Chinese Browser.
+- Fixed:  FWPIAUPD_v13.1.3:Can’t upgrade BMC to the same version with “No down rev?
+          parameter on Denlow
+- Fixed:  RMM4 dedicated NIC on the S2600WP may no responding after disabled 
+          onboard NIC around 2 hours
+- Fixed:  After insert the IHC certificate file,get session id always failed.
+- Fixed:  EWS login failed during run DC cycle with ITAS.
+- Fixed:  The response of "Get DIMM Information" is wrong.
+- Fixed:  "syscfg /cr rank "2 1" " does not take effect on S1200RP.
+- Fixed:  the copyright's timestamp and sign shown in KVM window's help menu is 
+          incorrect.
+- Fixed:  The copyright duration shown in EWS's "About" information is incorrect.
+- Upgrade OpenSSL to 0.9.8zf.
+
+===============================================================================
+                               BMC Changes in 01.13.7321:
+===============================================================================
+- Fixed:  There'll be error event log for P1 Thermal Trip when press the button 
+          to power off the SUT. And the probability is very high.
+- Fixed:  There'll be error event logs for P1 Therm Ctrl% high non-critical and 
+          high critical when press the button to power off the SUT.
+- Fixed:  SYS STS LED  is solid amber when system shutdown.
+- Update OpenSSL code to 0.9.8zc
+
+===============================================================================
+                                BMC Changes in 01.12.6784:
+===============================================================================
+- Fixed:  Can't get the last entry when bmc event log is 100%
+- Fixed:  FW update will fail with OS based utility (OFU), failure rate is 20% 
+          with USB mode and 40% with KCS mode.
+- Fixed:  Sometimes FRB2 will be triggered after resuming from S3.
+- Fixed:  IPv6 can't get IP address via DHCP server.
+- Fixed:  After turning off then turning on the KVM/SSH/EWS/IPMI over lan 
+          services using Control BMC Services command, IPMI over lan service
+	  was still available.
+- Fixed:  In the EWS page "Security Settings", when click the "Enable" label of 
+          "SSH", "HTTP/HTTPS" and "IPMI over LAN", it will disable or enable the 
+	  "Force HTTPS" option.
+- Fixed:  There are assert and de-assert events logged for sensor HDD Status -
+          Device Faulty during DC cycle stress test.
+- Fixed:  There'll be a warning message for SEL is full after force update BMC
+- Fixed:  There's no SEL indicate the FW has been updated successfully when update BMC.
+- Fixed:  The SEL log event ID began at 512 the rather than starting from 1.
+- Fixed:  SEL log Timestamp message incorrect after AC cycle or BMC reset.
+- Fixed:  Updated to newer Openssl code version 0.9.8za .
+
+===============================================================================
+                                BMC Changes in 01.11.5801:
+===============================================================================
+- Fixed: Updated Java Signatures files in BMC to support requirement changes of JAVA
+
+===============================================================================
+                                BMC Changes in 01.10.5637
+===============================================================================
+- Fixed: The BMC may corrupt within 10 DC cycles on the Intel(R) Server board S1200V3RPM.
+
+==============================================================================
+                                BMC Changes in 01.09.5544
+===============================================================================
+- Fixed: Nothing displayed on Embedded Web Server while logging in it with IPv6
+         address (stateless ICMPv6 discovery).
+- Fixed: BMC email alerts refused by some servers
+- Fixed: Cannot set link-local gateway for BMC Network Management Interface
+         using IPv6.
+- Fixed: BMC Web Console session not maintained with power cycle.
+- Fixed: Add X-Frame-Options to prevent cross-frame scripting.
+- Fixed: Browser auto-complete enabled before authentication.
+- Fixed: Web Console not defaulting to English when another non-English browser
+         is detected.
+- Fixed: Update SDR of S1200RP to version 1.06.
+- Added: Add ability to disable IPMI over LAN (RMCP/RMCP) from command line or
+         web page.
+
+
+===============================================================================
+                                BMC Changes in 01.08.5091
+===============================================================================
+- Fixed: No video display in BMC KVM console when SUT wakes up from S1 or S3
+         in Win2012.
+	
+===============================================================================
+                                BMC Changes in 01.07.5021
+===============================================================================
+- Fixed: After a BMC reset or BMC update a BMC watchdog SEL event is logged and
+         system will be in degraded state. Status LED will be green blinking.
+
+===============================================================================
+                                BMC Changes in 01.06.4994
+===============================================================================
+- Fixed: Update SDR of S1200RP to version 1.05.
+- Fixed: BMC update failing after 4 consecutive firmware updates.
+         BMC will no longer stay in recovery mode (uboot) after four
+         consecutive firmware updates.
+- Fixed: Repeated Pwr Unit Redund warning SEL entries when AC power removed
+         from either PS1 or PS2.
+- Fixed: Corrected Embedded Web Server help text for Serial Over LAN
+- Fixed: Updated Embedded Web Console Mouse Mode text
+- Fixed: JViewer always shows "Error reading video data" popup and a black
+         screen when mouse mode is set to relative and JViewer tries to hide
+         the cursor.
+- Fixed: The UBoot code detects a bad CRC of the Ram Image when attempting to
+         boot after getting a cold reset.
+
+===============================================================================
+                               BMC Changes in 01.05.4775
+===============================================================================
+-Fixed: Change Intel(R)RMM in EWS into RMM Dedicated Mgmt.
+-Fixed: The LCD Screen display is not clear while scrolling error events.
+-Fixed: LAN leash lost event is shown during DC cycle testing.
+-Fixed: Px DIMM Thrm Mrgn and Px DIMM Thrm Trip not decoding DIMM number
+        correctly in the Embedded Web Server SEL text log.
+-Fixed: Embedded Web Server SEL text log not decoding BIOS update versions
+        correctly.
+-Fixed: There are assert events for Mem Err Sensor 0x28 - 'DIMM Thrm Mrgn 1'
+        sensor and 'SPS FW Health' sensor after updating ME firmware.
+
+
+===============================================================================
+                                BMC Changes in 01.04.4674
+===============================================================================
+-Fixed: Update SDR to version 1.04.
+-Fixed: The BMC version information not displaying as expected in Embedded Web
+        Server after entering firmware transfer mode..
+-Fixed: The host power status show inconsistently betweeen system information
+        page and server power control page in Embedded Web Server when system
+        is in S1 or S3.
+-Fixed: There are assert and deassert events logged for PCH temp sensor 0x22 -
+        low critical and low non-critical during DC cycle stress test.
+-Fixed: System status LED is incorrect and there is no assert event logged for
+        DIMM thermal trip after DIMM thermal trip is triggered.
+-Fixed: Multiple KVM socket error and media redirection errors.
+-Fixed: Integrated BMC Web Console Keyboard Macro Cltrl+Alt+F1 not working as expected.
+
+===============================================================================
+                                BMC Changes in 01.03.4595
+===============================================================================
+-Fixed: Update SDR to version 1.03.
+-Fixed: RGMII signal integrity test failed on S1200RP.
+-Fixed: BMC shared NIC cannot be pinged successfully after BMC shared NIC IP
+        address is set in BIOS setup.
+-Fixed: The Web Console Event Log page uses IBMC.
+
+===============================================================================
+                                BMC Changes in 01.02.4452
+===============================================================================
+-Fixed: Update SDR to version 1.02.
+-Fixed: DIMM margin resolution isn't right when saving DIMM inventory into
+        extend SEL.
+-Fixed: There are four BIOS recovery boot entries in the SEL for a recovery
+        boot,only two are expected.
+-Fixed: When recovery jumper is connected to 1-2 pin(normal mode), system
+        always boots from recovery mode after programming a new BIOS offline.
+-Fixed: BMC shared NIC cannot be pinged successfully after run VLAN id set/get
+        stress test from VLAN id 0 to 4094.
+-Fixed: Source of DIMM event does not show in the SEL extended data.
+
+===============================================================================
+                                BMC Changes in 01.01.4412
+===============================================================================
+-Fixed: Update SDR to version 1.01.
+
+-Fixed: Change resolution of DIMM temp sensor reading.
+-Fixed: SUT is reset even when the timer action is "none" after getting a
+        Watchdog timeout.
+-Fixed: Sensor reading/state for DIMM Thermal Margin 1 is unavailable.
+-Fixed: Fail to generate system debug log in Embedded Web Server.
+        - Refreshing the page shows the debug log is available
+-Fixed: Embedded Web Server Power Policy numbers cannot be set to 255. Per the
+        help information 255 should be valid.
+-Fixed: There are unnecessary event logged for sensor Voltage BB +5.0V STBY
+        (#0xD3) lower non-critical during AC cycle test.
+-Fixed: Message shows as "undefined" with ff in Embedded Web Server SEL page
+        when SEL is full.
+-Fixed: Intel(R) Hybrid Cloud cannot get session ID when use BMC
+        username/password with special characters.
+
+================================================================================
+				BMC Changes in Release 00.14.4348
+================================================================================
+01.00.4348:
+- Count of currently enabled users still is changed even failed to enable users without 
+ name setting with command "set user access".
+- Wrong completion code returned by issuing "Get DIMM information" IPMI OEM command.
+- Failed to check the timer Interrupt-Action Interaction when settting pre-interrupt as NMI.
+- Lan configuration information and User configuration information change to default value
+
+ after updating BMC FW ver:00.19.4290.
+===============================================================================
+                          BMC Changes in Release R0014
+===============================================================================
+- Initial Version
+===============================================================================
+                           FRUSDR Changes in release 1.08
+===============================================================================
+ - Fixed-The sensor reading of P1 MTT is always 0 in EWS(Intel(R) Integrated BMC Web Console)
+
+=============================================================================
+                           FRUSDR Changes in release 1.07
+=============================================================================
+ - Update system Fan1 to FSC domain2, system Fan2 to domain0 in other chassis to align with schematic.
+
+=============================================================================
+                           FRUSDR Changes in release 1.06
+=============================================================================
+ - update FRUSDR utility to 12.0 build5
+=============================================================================
+                           FRUSDR Changes in release 1.05
+=============================================================================
+ - Sensor 0xc0 name is inconsistent between EWS and EPS.
+
+=============================================================================
+                           FRUSDR Changes in release 1.04
+=============================================================================
+ - Fixed the issue of System status LED show green blinking when unplug the front panel
+
+===============================================================================
+			   FRUSDR Changes in release 1.03
+===============================================================================
+- Initial version
+
+=============================================================================
+                            LEGAL INFORMATION
+=============================================================================
+Information in this document is provided in connection with Intel products. 
+No license, express or implied, by estoppel or otherwise, to any intellectual 
+property rights is granted by this document. Except as provided in Intel's 
+Terms and Conditions of Sale for such products, Intel assumes no liability 
+whatsoever, and Intel disclaims any express or implied warranty, relating to 
+sale and/or use of Intel products including liability or warranties relating 
+to fitness for a particular purpose, merchantability, or infringement of any 
+patent, copyright or other intellectual property right. Intel Corporation may 
+have patents or pending patent applications, trademarks, copyrights, or other 
+intellectual property rights that relate to the presented subject matter.  
+The furnishing of documents and other materials and information does not 
+provide any license, express or implied, by estoppel or otherwise, to any 
+such patents, trademarks, copyrights, or other intellectual property rights.  
+Intel products are not intended for use in medical, life saving, or life 
+sustaining applications. Intel may make changes to specifications and product 
+descriptions at any time, without notice.
+
+Intel is a registered trademark of Intel Corporation. 
+*Other names and brands are the property of their respective owners.
+Copyright (c) 2016 Intel Corporation.
+
+A portion of this firmware is open source code, which falls under the
+GPL 2.0 license.  
+
+[END OF RELEASE NOTES]

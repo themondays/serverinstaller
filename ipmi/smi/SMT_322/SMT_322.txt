@@ -1,0 +1,695 @@
+IPMI Firmware Release Note
+----------------------------
+Filename:	SMT_322.bin	ver3.22 Date: 01-29-2015
+
+Fix the issue# 59469, "SMTP port Number isn't preserve after flash IPMI."
+
+======================================================================================
+Filename:	SMT_321.bin	ver3.21 Date: 01-16-2015
+
+Fix the issue that Power Consumption is not correctly reporting.
+Validation: Using SMCIPMITool, issue nm20 statistics 1 0 0
+
+======================================================================================
+
+Filename:	SMT_320.bin	ver3.20 Date: 11-17-2014
+
+1. Add SMC RAKP cmd.
+
+2. On SMTP web page, fix the issue that error pop up message randomly display forever.
+   Validation: Input invalid value on SMTP port number and click on Port Number. 
+   Verify that pop up message only show up once time.
+
+3. Correct the display information on the use of Cipher 0.
+   Validation: Use ipmitool lan print to check "Cipher Suite Priv Max"
+
+4. For SSL, disable the SSLv3.
+
+5. [Active Directory Setup] Allow space enter in AD Group Name.
+
+6. Fix the commands for those "Restore To Default"  
+   Validation: Please verify the usage of 0x30 0x40, 0x30 0x41, 0x30 0x42 again.
+
+======================================================================================
+
+Filename:	SMT_319.bin	ver3.19 Date: 09-12-2014
+
+1. Add SDR replacement in firmware update page.
+
+2. Fix the bug that PS status is incorrectly reported.
+
+======================================================================================
+
+Filename:	SMT_318.bin	ver3.18 Date: 09-03-2014
+
+1. [X7SPA, X7SPT, X7SB3, X8SIT, X7SB3, X8STI-3F, X8SIL, X8SII, X8SIA, X8SIU]
+   Correct the calculation of fan speed reading.
+
+2. Add the time stamp to iKVM and Library jar files.
+   Suggestion of Validation Step:
+   Resource at http://docs.oracle.com/javase/tutorial/deployment/jar/verify.html
+
+3. [Network Time Protocol] Disable status queries and restrict informational access.
+   Validation: Perform the following commands. The expected result is none of these can return valid information.
+   ntpq -c rv <IP>
+   ntpdc -c sysinfo <IP>
+   ntpdc -n -c monlist <IP>
+
+4. Fix the issue that Java iKVM Viewer is hang when open file dialog is performed
+   in virtual storage on Mac OS.
+
+5. On upgrade page, add the progress bar to indicate the status of upgrading.
+
+======================================================================================
+Filename:	SMT_317.bin	ver3.17 Date: 08-06-2014
+
+1. [H8SML] Fix the issue that the detection of CPU temp Low, Medium, High is 
+           not functioning properly.
+
+======================================================================================
+
+Filename:	SMT_316.bin	ver3.16 Date: 06-30-2014
+
+1. [Feature Upgrade] Upgrade SSL, SMTP and Webserver.
+   Validation Suggestion: Check all functionalities of SSL, SMTP, and Webserver.
+
+2. [Function Update]
+   Preserve network setting when fw update.
+   Validation Suggestion: After a firmware upgrade, check if any network settings is preserved.
+
+3. Fix the mouse mode privilege problem with operator.
+
+4. [X7SPA] Fix the issue that LAN connection is not working.
+
+5. [SSL] Add the checking of mismatch key of certifcation against key.
+   Validation Suggestion: Upload different key of certification or key.
+
+======================================================================================
+
+Filename:	SMT_315.bin	ver3.15 Date: 06-23-2014
+
+[Security Update]
+i.  Add encryption on default password.
+ii. Remove UPnP service.
+
+======================================================================================
+
+Filename:	SMT_314.bin	ver3.14 Date: 01-15-2014
+
+1. [H8DGG] Fix the issues that GPU reading value goes below negative value.
+
+2. Fix the failure of login while using AD server with user doman name
+   more than 16 characters
+
+3. Add RAKP to the menu.
+[Validation]
+a. Once RAKP on the web is enable, SMCIPMITool only can be used to run any IPMI command.
+   [Note] SMCIPMITool 2.6.4 version with rakp set to on in SMCIPMItool.properties
+b. Use ipmitool to run any IPMI command, none of the command can be run.
+c. Turn the OEM RAKP off, observe that ipmitool can be used.
+
+======================================================================================
+Filename:	SMT_313.bin	ver3.13 Date: 01-02-2014
+
+1. Fix the issue that LAN Interface cannot be saved on the Web.
+
+2. [H8SML/H8SME] Fix the issues that sensor is missing.
+
+3. Description:  IPMI BMCs being abused for NTP amplification DDoS attacks
+   NTP respond to all queries, so an attacker can potentially DDOS the IPMI by sending queries
+   Affected functions:  NTP function 
+   Validation : 
+    Run the follow command to see if any statistics reported  from ipmi fw. 
+    ntpdc -c monlist <IPMI IP-address>
+
+4. Add feature of SMC OEM RMCP, available on Miscellaneous->RAKP web page.
+[Validation]
+a. Once RAKP on the web is enable, SMCIPMITool only can be used to run any IPMI command.
+   [Note] SMCIPMITool 2.6.4 version with rakp set to on in SMCIPMItool.properties
+b. Use ipmitool to run any IPMI command, none of the command can be run.
+c. Turn the RAKP off, observe that ipmitool can be used.
+
+5. [H8DGG] Add K20X, K20, K40, K520, K10, K2, K1, P2400, and K340X GPU Temp monitor.
+
+======================================================================================
+Filename:	SMT_312.bin	ver3.12 Date: 12-19-2013
+
+1. [Release Note Revised on SMT_311]: # is allow.
+   Fix the security issue: Don't allow inputing the special
+   characters on the user name and password field.
+[Validation Steps]
+a. can't input the following characters on the user page(adding or modifying).
+,; &'"<>\=$|^?*~`()[]{}
+
+2. Fix the number of MAC address displayed on the web.
+
+3. Remove BIOS Update on the web.
+
+4. On network configuration web page, remove link status info.
+
+5. Fix the issue that SOL is not working over SMASH.
+[Validation Step]
+a. Login to SMASH, and launch SOL to check if SOL output is correctly display.
+b. exit the SMASH.
+c. Repeat Step a to Step b for 5 times, verify that SOL is working everytime.
+
+6. Fix the issue that, when using I.E broswer, on Radius Web Page, the settings
+   values are intermittenly missing.
+
+7. Fix the issue that some valid character is not accepted on LDAP web page.
+
+======================================================================================
+
+
+Filename:	SMT_311.bin	ver3.11 Date: 12-06-2013
+
+1. Fix the issues that GUID is missing.
+2. Fix the issue that power consumption page is shown up on the web.
+3. Fix the security issue: Don't allow inputing the special characters on the user name and password field.
+
+[validation steps]
+1. can't input the following characters on the user page(adding or modifying).
+,; &'"<>\=$|^?#*~`()[]{}
+
+======================================================================================
+
+Filename:	SMT_310.bin	ver3.10 Date: 11-15-2013
+
+Upgrade code base to security code base.
+Full validation is recommended.
+
+======================================================================================
+
+
+Filename:	SMT_260.bin	ver2.60 Date: 08-12-2013
+
+[H8DGG] Add K2/K340/K520 GPU support.
+
+======================================================================================
+
+Filename:	SMT_259.bin	ver2.59 Date: 05-29-2013
+
+1. [H8SME]
+	a. Remove discovery of ME in BMC SDR.
+	b.Fix the issue of power down gracefully.
+
+======================================================================================
+
+Filename:	SMT_258.bin	ver2.58 Date: 04-24-2013
+
+1.Fix the SMASH functionalities.
+
+======================================================================================
+
+Filename:	SMT_257.bin	ver2.57 Date: 03-18-2013
+
+1. [H8SME] Remove -12V, Fan2~Fan5 sensor reading (IssueID: 44388)
+
+======================================================================================
+Filename:	SMT_256.bin	ver2.56 Date: 02-11-2013
+
+1. [H8SME] 
+	a. Add a feature of HDD detection 
+	b. Fix the issue that mouse mode cannot be restored from IPMI configuration.
+	c. Remove chassis intrusion monitoring.
+
+======================================================================================
+
+Filename:	SMT_255.bin	ver2.55 Date: 01-17-2013
+
+1. Prevent user key in invalid data in SMTP page.
+
+Note: Please clear web cache.
+
+======================================================================================
+
+Filename:	SMT_254.bin	ver2.54 Date: 12-21-2012
+
+1. [H8SME] Add sensor support.
+
+======================================================================================
+
+Filename:	SMT_253.bin	ver2.53 Date: 11-27-2012
+
+1. [H8SML] Fix the issue of sensor monitoring.
+2. Fix the issue of IP address rention while VLAN is being initialized.
+
+======================================================================================
+
+Filename:	SMT_252.bin	ver2.52 Date: 07-30-2012
+
+1. Add feature of Preservation of LAN setting while Restore To Defualt is performed.
+
+======================================================================================
+
+Filename:	SMT_251.bin	ver2.51 Date: 07-16-2012
+
+1.Add Swiss Keyboad of KVM.
+
+2. Fix Case# SM1112223242:
+Issue: It cannot be login using Active Directory if Domain Controller Server Address 1 off-line.
+
+======================================================================================
+
+Filename:	SMT_250.bin	ver2.50 Date: 04-19-2012
+
+1.Fix security issue: IPMIv2.0 Cipher 0 Authentication(no password) is not allowed
+Validation: User can't log in BMC from commands with parameters "-I lanplus -C 0" 
+Example: ipmitool -I lanplus -C 0 -U ADMIN mc info
+
+2.Update new Web SOL due to the fix of JDK security method. Web SOL version 0.5.6
+Validation: IPMI Web-> Remote Control-> SOL
+
+3.Prevent clock change during firmware cold reset
+Validation: 1. AC on/off test, and 2. cold reset test
+
+4.Renew SSL certificate, validated from 04/11/12 to 04/11/14
+Validation: IPMI Web-> Configuration-> SSL Certification
+
+5.Fix AD Server authentication fail.
+
+======================================================================================
+
+Filename:	SMT_249.bin	ver2.49 
+*** Skip this version due to confusion of merge of SMT_265.bin ***
+
+======================================================================================
+
+Filename:	SMT_248.bin	ver2.48 Date: 03-21-2012
+
+*** Note: Factory Default required ***
+
+Improved on IPMI SEL circular buffer for Total Event and Maximum Record ID 
+Validation:
+1. If the total event is over 512, it will delete 1 event and add 1 event, so the total event is always 512
+2. The SEL record ID will reach until 65535 then go back to 1 (ipmitool sel elist)
+3. Verify the display of Event ID in the web represent correctly the SEL record ID.
+
+======================================================================================
+Filename:	SMT_247.bin	ver2.47 Date: 02-27-2012
+
+Increase upper threshold limit of CPU VCORE
+
+======================================================================================
+
+Filename:	SMT_SX_243.bin	ver2.43 Date: 12-06-2011
+
+1. Fix set user privilege command through KCS
+   Validation: 
+	1. Create a new user by the below command flow:
+	ipmitool user set name [id] [name]
+	ipmitool user set password [id] [password]
+	ipmitool user enable [id]
+	ipmitool user priv [id] [priv] 1
+	ipmitool channel setaccess 1 [id] callin=on ipmi=on link=on privilege=[priv]
+
+	2. Log into IPMI web and check if privilege complaint with features
+
+======================================================================================
+Filename:	SMT_SX_242.bin	ver2.42 Date: 11-22-2011
+
+1. Fix iKVM alive after the web session close
+Validation: iKVM console should be timed out as web session close
+
+======================================================================================
+Filename:	SMT_241.bin	ver2.41 Date: 11-18-2011
+
+1. Bug Fix Operator priviledge can't launch KVM through IPMI GUI
+2. [H8DGU-LN4] Bug fix CPU Temp reading (IssueID: 33060) 
+
+======================================================================================
+Filename:	SMT_240.bin	ver2.40 Date: 11-11-2011
+
+1. [H8DGT, H8DGU] Adjust VTT lower threshold to be 0.608(LNC), 0.584(LC) and 0.56(LNR)
+Note: Memory can be either 1.35V or 1.5V
+
+2. Allow Operator access UID control
+
+3. Bug fix security issue on IPMI Configuration & KVM prview snapshot
+Validation:
+	IPMI Configuration is downloadable by User privilege:
+		1) save config as Administrator, and then log out
+		2) login as User
+		3) save config by the link
+		http://IP-OF-IPMI/cgi/url_redirect.cgi?url_name=save_config.bin&url_type=file
+
+	KVM preview snapshot can be accessed without authentication
+		http://IP-OF-IPMI/images/Snapshot.bmp
+
+======================================================================================
+Filename:	SMT_239.bin	ver2.39 Date: 11-02-2011
+1. Bug fix for "Chassis Intrusion Reset" button not showing up when there is event triggered.
+
+======================================================================================
+Filename:	SMT_238.bin	ver2.38 Date: 10-27-2011
+1. Bug fix Administrator's username visible to Operator privilege at IPMI Web
+
+======================================================================================
+Filename:	SMT_237.bin	ver2.37 Date: 10-11-2011
+
+1. Allowed Operator full access to KVM, Mouse Mode, and Virtual Media
+Validation: Operator should be able to change mouse mode, virtual media setting, and access KVM as well
+
+2. Bug fix undefined "SMTP SSL Auth" from Web
+
+======================================================================================
+Filename:	SMT_236.bin	ver2.36 Date: 08-25-2011
+
+1. [H8DCT-HIBQF/H8DCT-HLN4F] Remove Chassis Intrusion from SDR
+
+======================================================================================
+Filename:	SMT_235.bin	ver2.35 Date: 08-24-2011
+
+1. Bug fix: firmware revision
+
+======================================================================================
+Filename:	SMT_235.bin	ver2.35 Date: 08-23-2011
+
+1. Bug fix for discrete sensors reporting to applications (IssueID: 31173)
+   Validation: 1) turn the system off, 2) check if any false alarm of chassis intrusion or power fail
+
+2. Bug fix for H8DCT-HLN4F sensors not able to read
+
+======================================================================================
+Filename:	SMT_234.bin	ver2.34 Date: 08-18-2011
+
+1. CPU Temp reports 0xff during system off for application to know the status(IssueID: 30876)
+   Validation: check if IPMIView reports N/A during shutdown
+
+2. Add new board ID for H8DCT-HLN4F(IssusID: 31064)
+
+======================================================================================
+Filename:	SMT_233.bin	ver2.33 Date: 07-14-2011
+
+1. Bug fix Event Log description undefined from web GUI(IssusID: 30352, 30327 and 30295)
+   Validation: Server Health-> Event Log
+
+2. Bug fix Gateway IP lost
+   Validation: change network setting from static to dhcp by using ipmitool or IPMICFG
+
+3. Add iKVM privilege verification
+   Validation: virtual media can't be accessed by Operator account
+
+4. [H8DGG] add GPU models, M2090 & M2075 support
+
+======================================================================================
+Filename:	SMT_232.bin	ver2.32 Date: 06-22-2011
+
+1. Bug fix Event Log description undefined from web GUI
+   Validation: Server Health-> Event Log
+
+2. Bug fix sensor status icon missing at webpage header
+   Validation: summarized sensor status icon located at up-right corner of webpage
+
+3. Bug fix unable to delete newly added Users (IssueID=29907)
+4. Bug fix Alert Email description of CPU Overheat event (IssueID=29583)
+5. Bug fix SMASH login without password
+
+======================================================================================
+Filename:	SMT_231.bin	ver2.31 Date: 06-02-2011
+
+1. [H8DCT] Added Chassis Intrusion status monitoring(IssueID=29556)
+   Description: View chassis intrusion status at IPMI Web-> Server Health-> Sensor Reading
+
+2. Support Circular Buffer evnet logs
+   Description: Event logged as FIFO mechanism when number of logs exceeds the maximum fixed-size, 512
+
+3. Support IP Control
+   Validation: Verify IP Control feature at IPMI Web-> Configuration-> IP Control
+
+======================================================================================
+Filename:	SMT_230.bin	ver2.30 Date: 05-26-2011
+
+1. Add "All Event" category as default selection at Event Log page
+
+2. Renew SSL Certificate
+Validation:	1) enter Web GUI->Configuration->SSL Certificate, and 2) verify the certificate's validity
+*** Note:	Factory Default REQUIRED
+
+3. [H8DGG] Display Chassis Intrusion at Sensor information page
+
+======================================================================================
+Filename: SMT_229.bin ver2.29 Date: 05-12-2011
+
+1. New feature: launch SOL over SMASH
+	Validation: 1) login IPMI SMASH through SSH, 2) follow the command flow: cd system1 -> cd sol1 -> start
+	Note: only one SOL session can be launched at a time.
+
+2. Improve security for IPMI Configuration backup
+	Validation: Verify the following steps:
+		1) open IPMI web 
+		2) click on Maintenance -> IPMI Configuration 
+		3) save IPMI configuration at local drive, and 
+		4) check if the configuration can "NOT" be located at http://ipmi-ip-address/save_config.bin
+
+======================================================================================
+Filename: SMT_228.bin ver2.28 Date: 05-02-2011
+
+1. [X8DTL, X8DTN+, X8DTU-6TF, X8DTU-LN4F]  Correct DIMM Temp threshold to 75, 80 and 85 degree C
+2. [H8DGG] Fix GPU fan control issue (rev2.22 to rev2.27)
+
+======================================================================================
+Filename: SMT_227.bin ver2.27 Date: 03-29-2011
+
+1. [X8SII/X8SIE/X8SI6/X8SIT/X7SPA/X7SPE] Remove Thermal Trip event log to prevent false alarm
+
+2. Modify default FRU
+Description:Board Manufacture modified as "Supermicro" and all other entries cleared
+Note:		Required OEM command raw 0x30 0x41(wait for BMC reset) to replace with the new FRU content
+
+======================================================================================
+Filename: SMT_226.bin ver2.26 Date: 03-18-2011
+
+1. Fix Alert table blank at the webpage when enter more than 29 characters (IssueID: 95761)
+   Validation:	1. Connect to IPMI by web browser,
+		2. Go to Configuration -> Alerts and select one entry for modify,
+		3. In the Message space, enter 30 characters and then save it and then the alert table will be blank.
+
+2. H8SCM: Support thermal trip event logs (IssueID=26744) 
+
+3. H8SCM, H8DCT, H8DCL: Change CPU vcore threshold to 1.448 for CPU max vcore over 1.2V (IssueID=27374) 
+
+======================================================================================
+Filename: SMT_225.bin ver2.25 Date: 03-011-2011
+
+1. X7SPA/X7SPE: Remove thermal trip events since gpio signal is unstable
+2. Removed Air/VRD/NB Temp senors
+
+======================================================================================
+Filename: SMT_224.bin ver2.24 Date: 03-07-2011
+
+1. H8DCL: Added Chassis Intrusion status monitoring(IssueID=27711)
+   Description: View chassis intrusion status at IPMI Web-> Server Health-> Sensor Reading
+
+2. H8DCT: Fixed CPU Temp reading shows wrong information (IssueID=27791)
+   Validation: Check if the reading is changed accordingly to the real temperture   
+
+======================================================================================
+Filename: SMT_223.bin ver2.23 Date: 02-23-2011
+
+1. H8DGU-LN4, H8DGT, H8DGU, X8DTU, X8SIU, X8DTN+, X8DTU-6TF, X8DTL-i/6F, X8DTT, H8DCT, H8DCL:
+   Fix CPU Temp Overheat event log missing
+
+2. New feature: Port Configuratioin at Web GUI in Configuration category
+   Description: ports of web, web SSL, IKVM server, virtual media are modifiable through web GUI
+
+3. Fix Gateway setting can't work through different subnets 
+
+======================================================================================
+Filename: SMT_222.bin ver2.22 Date: 02-09-2011
+
+1. Correct ID for new motherboard support X8SIL-SIOM
+
+2. Fix cpu temp "Overheat" logged when the reading reports "High"
+   Description: CPU temp Overheat should be logged as the reading reaches "Overheat"
+
+3. For security issue, set the privilege of user ID1(Anonymous) with no access and clear jnlp kvm cache
+   Validation: 	1. open IPMI web, 2 click Configuration->Users, and 3 check the privilege of user shows Reserved;
+		4. launch kvm console, and 5. check if kvm jnlp file is cached after exit
+
+======================================================================================
+Filename: SMT_221.bin ver2.21 Date: 02-01-2011
+
+1. Add new motherboard support X8SIL-SIOM
+2. Add new motherboard support H8DCL
+
+======================================================================================
+Filename: SMT_V220.bin ver2.20 Date: 01-11-2011
+
+1. H8DGG: Add slot 4 M1060/M2050/M2070/M2070Q GPU support (fan speed control, shutdown and slowdown)
+2. Fix KVM slight flashes of white space while screen resolustion is below 800*640
+
+======================================================================================
+Filename: SMT_V219.bin ver2.19 Date: 12-31-2010
+
+1. H8DCT: remove VRD1 & VRD2 sensor items.
+2. Fix uninstalled fans report lower threshold events while doing system reset
+3. Fix lan1 lost connection issue while doing ipmi cold reset
+
+======================================================================================
+Filename: SMT_218.bin ver2.18 Date: 12-17-2010
+
+1. X9SCL/X9SCM: modify Fan5 to FanA
+2. X7SPT/X7SPA/X7SPE: fix wrong CPU Temp reading
+
+
+======================================================================================
+
+Filename: SMT_217.bin ver2.17 Date: 12-10-2010
+
+1. H8SCM: Removed Fan6 sensor entry
+
+======================================================================================
+
+Filename: SMT_216.bin ver2.16 Date: 12-06-2010
+
+1. Add new motherboard X7SPT support
+
+======================================================================================
+Filename: SMT_215.bin ver2.15 Date: 11-24-2010
+
+1. Bug fix on Lan1 issue
+
+======================================================================================
+Filename: SMT_214.bin ver2.14 Date: 11-12-2010
+
+1. Fix the screen splash or blank screen when doing the cold reset
+Description: please do AC on/off after firmware update. 
+
+======================================================================================
+Filename: SMT_213.bin ver2.13 Date: 11-10-2010
+
+1. Add new SSID for X9SCM
+2. Fix incorrect sensor readings
+
+======================================================================================
+Filename: SMT_212.bin ver2.12 Date: 10-25-2010
+
+1. Add new motherboard X9SCL/X9SCM support
+2. H8DCT: Bug fix Fan3 speed is monitored  
+
+======================================================================================
+
+Filename: SMT_211.bin ver2.11 Date: 10-19-2010
+
+1. Fixed Virtual Media can't mount hidden files
+
+Description: VM should be able to mount hidden files with a dollar sign in the share like "\share$\dvdimage.iso"
+
+======================================================================================
+
+
+Filename: SMT_210.bin ver2.10 Date: 10-13-2010	***CPU clock fixed at 180MHz***
+
+1. CPU clock fixed at 180MHz 
+2. X8DGG: Added device ID for GPU models, M2070 & M2070Q
+Description: GPU temperature are readable for new models. 
+
+
+======================================================================================
+
+Filename: SMT_208.bin ver2.08 Date: 09-29-2010
+
+1. Update on ECC error event logs
+2. Add support for the BIOS to set different ACPI state (S0: system on, S1: sleep, S3: hypernate and S5: system off)
+3. H8DGU(Appro): change lower thresholds of CPU Vcore & CPU DIMM VTT to fix the problem when 1.35v 8GB memory installed.
+	Note: CPU Vcore:  0.736(NR), 0.744(CT), 0.752(NC) and CPU DIMM VTT: 0.584(NR), 0.592(CT), 0.6(NC).
+4. Correct entity IDs in SDR
+5. H8DGT/H8SGL/H8SCM/H8DGU-LN4: modify upper thresholds of NB Temp to 90(NC), 100(CT) and 110(NR) degree c
+6. H8DGG: Remove sensors of GPU3 & GPU4 temp
+7. Add new motherboard H8DCT support
+
+======================================================================================
+
+Filename: SMT_207.bin ver2.07 Date: 09-15-2010
+
+For X8SIL/X8SIE/X8SII/X8SIA/X8SIU:
+1. Adjust lower thresholds of fan speed to 215, 400 and 585(rpm)
+2. Adjust upper thretholds of -12v to -10.934, -10.74 and -10.546(volts) 
+
+======================================================================================
+Filename: SMT2_206.bin ver2.06 Date: 09-08-2010
+
+Bug fixes:
+1. CPU clock follows hardware strapping 
+(to fix BMC crash by DDR using Winbond instead of Hynix chip) 
+
+======================================================================================
+Filename: SMT_206.bin ver2.06 Date: 09-03-2010
+
+Bug fixes:
+1. X8SIT: Fix event log cannot catch CPU thermal trip event log 
+(issueID=24349) and modify sensor system temperature to read 
+from RT1: Bank 2, Reg.50
+2. H8DGU-LN4+: Fix sensor CPU temperature does not show medium/high 
+(IssueID=24950)
+3. H8DGT-HF: Modify bootloader to fix memory corrupted at production (Ferrari Project)
+
+
+======================================================================================
+Filename: SMT_205.bin ver2.05 Date: 08-27-2010
+
+Bug fixes:
+1. X7SPA: Modify sensor name "Vnbcore" to "Vichcore"
+2. H8DG6-F: Fix CPU temperature reports 'Low' eventhough 
+CPU is overheating (issueID=24719) 
+3. Fix SSH login with user/password: ADMIN/C0rbisSMAdmin 
+
+
+======================================================================================
+Filename: SMT_204.bin ver2.04 Date: 08-13-2010
+
+Bug fixes:
+1. X8SIL/X8SIE/X8SIA/X8SIU: Modify system temperature to read 
+from RT1: Bank 2, Reg.50 (issueID=24254) 
+2. Add Daylight Saving Time in web gui: Configuration->Date & Time
+3. H8DGG-QF: Support Fermi GPU M2050 which can slowdown and 
+shutdown GPU when overheat 
+
+
+======================================================================================
+Filename: SMT_203_0805.bin  ver2.03  Date: 08-05-2010
+
+Bug fixes:
+1. X8DTU-6F+: Add 100ms delay for sensor polling to fix issue
+wrong sensor readings on SD3 client after overnight stress test (issueID=23803)
+
+
+======================================================================================
+Filename: SMT_203_0803.bin  ver2.03  Date: 08-03-2010
+
+Bug fixes:
+1. H8DG6: Remove GPU from sensor readings (issueID=24521)
+2. X7SPE-HF-D525: Modify +12V sensor calculation 
+
+
+=====================================================================================
+Filename: SMT_202_0727.bin  ver2.02  Date: 07-27-2010
+
+Bug fixes:
+1. H8DGU-LN4F: set GPIO34 to high to fix BIOS hangs with 
+post code '3E' or 'E1' (IssueID=24461)
+2. Add SMTP sender's email (Web gui: Configuration -> SMTP)
+
+
+=====================================================================================
+Filename: SMT_201_0721.bin  ver2.01  Date: 07-21-2010
+
+Bug fixes:
+1. Fix Lan1 issue for all motherboards with Hartwell (82574) LAN chip
+Description: Cannot connect to BMC use onboard LAN1 after upgrade to new FW.
+Validation: With default setting "failover" or default for non-dedicate LAN MB, 
+BMC connect with LAN1, SUT in OS (WS2008R2, RH5.4, or RH5.5).  Please upgrade FW 
+from previous release version to this new version using web GUI and check whether 
+BMC can connect again after FW flashing.
+
+
+=====================================================================================
+Filename: SMT_200_0720.bin  ver2.00  Date: 07-20-2010
+
+Bug fixes:
+1. X8DTU-LN4F+: Add +1.1V sensor (issueID=24334)
+2. X8DTU-F: Add sensor CPU1 DIMM and CPU2 DIMM (issueID=24269)
+3. X7SPA/X7SPE: Rename sensor name "1.05V" to "Vnbcore" to sync with BIOS
+(issueID=23092)
+

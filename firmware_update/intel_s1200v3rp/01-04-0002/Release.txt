@@ -1,0 +1,396 @@
+================================================================================
+Intel(R) Server Platform S1200V3RP System Firmware Update Package for 
+Intel(R) Deployment Assistant, Intel(R) One Boot Flash Update Utility, 
+The embedded EFI Shell, Windows* Preboot Execution Environment
+================================================================================
+Intel Enterprise Platform & Services Division - Marketing
+Intel Corporation
+2111 N.E. 25th Avenue, Hillsboro, OR 97124 USA
+================================================================================
+DATE    : January 20, 2014
+TO      : Intel(R) Server Board S1200V3RP
+SUBJECT : Release Notes for System Firmware Update Package 
+================================================================================
+                              ABOUT THIS RELEASE
+================================================================================
+BIOS   : R01.04.0002
+ME     : R03.00.05.068
+BMC    : 1.10.5637
+FRUSDR : 1.06
+================================================================================
+                           Support Platforms and Dependency
+================================================================================
+This update package is for Intel(R) Server Board S1200V3RPO_S1200V3RPL_S1200RPM
+
+Intel(R) Server Platform S1200V3RP family Processors supported: 
+  Intel(R) Xeon(R) Processor E3-1200 V3 series
+  
+Microcode update versions:
+Intel(R) Xeon processor E3-1200 V3 series A0 version: 0xffff0014 CPUID = 0x306C1
+Intel(R) Xeon processor E3-1200 V3 series B0 version: 0xffff0006 CPUID = 0x306C2
+Intel(R) Xeon processor E3-1200 V3 series C0 version: 0xffff0017 CPUID = 0x306C3
+
+On-Board Component Option ROM Versions:
+Integrated Matrox VGA               : VBE BIOS V3.8 SQ
+PXE Option ROM                      : Intel(R) Boot Agent XE v1.4.10
+iSCSI Option ROM                    : Intel(R) iSCSI Remote Boot version 2.8.25
+SATA RAID Option ROM - RSTe         : 3.8.0.1029
+UEFI SATA RAID Option ROM - RSTe    : 3.8.0.1029
+ESRT II FOR SATA                    : A.11.02151531
+Legacy Processor Video              : 2170 
+UEFI Processor Video driver         : 5.2.1002 
+
+Memory Reference Code Version       : 1.7.0.0
+Management Engine Firmware Version  : 3.0.5.068
+ACM                                 : 1.3
+
+      
+================================================================================
+                           INSTALLATION NOTES
+================================================================================
+
+WARNING:  It is very important to follow these instructions as they are written.
+Failure to update using the proper procedure may cause damage to your system.
+
+UEFI iFlash32 
+   1.  Boot the system to EFI Shell
+   2.  Copy IFlash32.efi and BIOS.CAP file to a USB Flash Drive
+       ( Do not use the *Rec.CAP file as it will clear the NVRAM and should
+         only be used for Recovery - See Recovery Instructions below )
+   3.  Map the respective storage device in the system with the command
+	   Shell> map -r
+   4.  Change the Shell to mapped device file system
+	   Example: Shell> fs0: (or fs1:)
+   5.  Run the IFlash32 utility at the prompt
+	   fs0:\> IFlash32 [File Name] /u /ni
+   6. Either reboot the system and
+      6a. Go into BIOS setup <F2>, reset defaults <F9> and save <f10> or
+      6b. After the BIOS update and before rebooting, run: fS0:> Iflash32 -rd
+   7.  Reboot system.
+
+================================================================================
+                        BIOS RECOVERY INSTRUCTIONS
+================================================================================
+
+The Recovery process can be initiated by setting the recovery jumper. (called 
+BIOS Recovery Boot Jumper)
+ 
+A BIOS recovery can be accomplished from the backup BIOS region or USB Mass Storage device. 
+Please note that recovery from USB floppy is not supported on this platform. 
+ 
+The recovery media must contain the following files under the root directory:
+   1.  DNL.ROM (optional)
+   2.  UEFI iFlash32 (including IFlash32.efi and ipmi.efi )
+   3.  *Rec.CAP
+   4.  Startup.nsh (update accordingly to use proper *Rec.CAP file)
+ 
+BIOS starts the recovery process by first loading and booting to the recovery image from the 
+backup BIOS region or file (DNL.ROM) on the root directory of the recovery media (USB disk).
+
+This process takes place before any video or console is available. Once the system boots 
+to recovery image, it will boot automatically into EFI Shell to invoke the Startup.nsh 
+script and start the flash update application (IFlash32.efi). IFlash32.efi requires the 
+supporting BIOS Capsule image file (*Rec.CAP). After the update is complete, there will 
+be a message displayed stating that the "BIOS has been updated successfully" indicating 
+the recovery process is finished. The User should then switch the recovery jumper back to
+normal operation and restart the system by performing a power cycle.
+ 
+The following steps demonstrate this recovery process:
+   1.  Power OFF the system.
+   2.  Insert recovery media.(Optional if the backup BIOS region works)
+   3.  Switch the recovery jumper. Details regarding the jumper ID and location
+       can be obtained from the Product Board TPS.
+   4.  Power ON the system.
+   5.  The BIOS POST screen will appear displaying the progress and system automatically 
+       boots to the EFI SHELL.
+   6.  Startup.nsh file executes, and initiates the flash update (IFlash32.efi)
+       with new capsule file (*Rec.CAP). The regular IFlash message will be displayed at
+       the end of the process, once the flash update succeeds.
+   7.  Power OFF the system, and revert the recovery jumper position to "normal".
+   8.  Power ON the system. 
+   9.  Do *NOT* interrupt the BIOS POST during the first boot.
+
+================================================================================
+                            KNOWN ISSUES/WORKAROUNDS
+================================================================================
+- If you want to install Linux* SUSE* 11 SP2 or boot to a pre-installed Linux* SUSE* 11 
+  SP2 OS, USB 3.0 support will need to be disabled in BIOS setup -> USB Configuration tab. 
+
+================================================================================
+                                R01.04.0002
+================================================================================
+Note: This BIOS version is able to support more CPUs which are listed in Processor
+      support list on support.intel.com
+
+- Fixed: Unexpected event logged when heating the PCH with heat gun.
+- Fixed: The system will hang at POST Code 0xB2 with add-on video card after "Primary Display" 
+         BIOS setting is changed to "Onboard Video".
+- Fixed: If process cannot support VT-d, Intel(R) VT for directed I/O Option is visible.
+- Fixed: The NIC1/NIC2 controller option cannot be saved to "Disabled" in BIOS setup menu.
+- Fixed: Internal Graphic of the Intel(R) Processor G1820T doesn't work on the Intel(R) Server Board S1200V3RPM.
+- Fixed: The read/write speed of USB3.0 device cannot reache the right speed when connected to USB3.0 port.
+- Fixed: If AC lost occurs during BIOS update, the system may not be recovered via BIOS recovery method.
+- Fixed: When windows running in S3+S5 mode and shutting down the system, the system will reboot.
+- Fixed: Sometimes the system will reboot after shutting down the system in windows.
+================================================================================
+                                R01.04.0001
+================================================================================
+- Added: Microcode 0x00000017 update
+- Added: ESRT2 legacy oprom update
+- Added: iSCSI v2.8.25 legacy oprom update
+- Added: RSTe legacy oprom and efi driver update
+- Added: Code enhancement for SRIOV support
+- Added: iGFX GOP UEFI driver update
+- Added: PCI Enumeration Complete Protocol support
+- Fixed: Slot4 PCIe device lost issue
+- Fixed: Windows 2008 R2 blue screen issue when Adaptec* 6805 controller installed in slot 7
+- Fixed: Processor1 P1 MTT - Upper Fatal error on VMWare ESXi 5.1 U1
+- Fixed: Wrong SMBIOS type 41 records for Ethernet
+- Fixed: "Turbo Boost" and "SpeedStep" don't work under Windows 2012
+
+================================================================================
+                                R01.03.0005
+================================================================================
+  - Add link retrain on slot 4 before RC code executed(For PCIe device lost issue on slot4).
+
+
+================================================================================
+                                R01.03.0004
+================================================================================
+- Fixed: System can't boot into an OS or UEFI using Intel(R) Pentium(R) processors.
+- Fixed: Red Hat* Linux* RHEL 6.4 32bit cannot be installed with 1GB DIMMs installed.
+- Fixed: Corrected help text for "USB 3.0 support".
+- Fixed: RAID mode incorrectly listed as "RST" - changed to "RSTe".
+- Fixed: "9266" error is reported with certain add-in video adapters.
+
+Other:
+Added:	 TXT ACM V1.3 integration.
+Updated: Video BIOS updated to version 2170
+
+================================================================================
+                                R01.02.0004
+================================================================================
+- Fixed: Signed driver check test fails due to an unknown device found in Windows 2012 WHQL
+         (Windows Hardware Quality Labs) certification.
+
+================================================================================
+                                R01.02.0002
+================================================================================
+- Fixed: Memory DIMM will sometimes starts throttling, even in good thermal conditions.
+- Fixed: System can't wake up from S3 via power button/USB device/Lan.
+- Fixed: System power consumption cannot be limited by Node Manager.
+- Fixed: BIOS version is not be updated accordingly in server management remote console.
+
+Others:
+ - Updated RSTe UEFI/Legacy OPROM to 3.7
+ 
+================================================================================
+                                R01.01.0006
+================================================================================
+- First production BIOS release.
+
+================================================================================
+			  ME Changes in Release 03.00.05.068
+================================================================================   
+- Fixed: "Firmware Update In Progress¡± bit does not set in FW Status register
+         during online update.
+- Fixed: ME-BIOS Interface major and minor version swapped on EFI and DOS.
+- Fixed: The Mode Manager does not support reading power from HSC, when the 
+         LM25066i chip is used.
+- Fixed: After ME reset (Cold Reset command, or any host reset in S0/S1 Only power
+         mode except host warm reset) ME returns incorrect version and CRC of mPhy
+         settings (0). This causes the BIOS to perform (unnecessary) mPhy settings 
+         update in ME, which gets rejected with 0x101E error code while it should
+         be accepted.
+- Fixed: Sporadically on some platforms ME may be reset during host booting due
+         to internal exception.
+- Fixed: ¡°Read mPhy settings¡± HECI message returns ICC_STATUS_FAILURE (0x0001)
+         in ¡°ICC Status¡± field.
+- Fixed: PCH register SECRT98 (SATA Electrical Control Register T98) has improper
+         value due to incorrect mPhy settings value in ME. As a workaround the BIOS 
+         may force update of these settings during boot.
+================================================================================
+			  ME Changes in Release 03.00.04.209
+================================================================================   
+- Fixed: Disabling spectrum spread with ICC_SET_SPREAD_SPECTRUM message over HECI
+         causes the BIOS to hang.
+- Fixed: When PSU Status sensors are disabled and one of the PSUs gets disconnected
+         from AC, ME resets due to exception, causing SPS FW Health sensor 0x17 event
+         to be stored in the BMC SEL.
+- Fixed: When Factory Defaults are restored using IPMI command, there is incorrect
+         SPS FW Health sensor 0x17 event sent to the BMC SEL.
+- Fixed: Sometimes Dynamic Core Allocation temporarily parks cores in unexpected
+- Fixed: Sometimes aggressive power policy in Domain Total is not able to limit 
+         power in specified correction time.
+
+===============================================================================
+                                01.10.5637
+===============================================================================
+- Fixed: The BMC may corrupt within 10 DC cycles on the Intel(R) Server board S1200V3RPM.
+
+===============================================================================
+                                BMC Changes in 01.08.5091
+===============================================================================
+- Fixed: No video display in BMC KVM console when SUT wakes up from S1 or S3
+         in Win2012.
+	
+===============================================================================
+                                BMC Changes in 01.07.5021
+===============================================================================
+- Fixed: After a BMC reset or BMC update a BMC watchdog SEL event is logged and
+         system will be in degraded state. Status LED will be green blinking.
+
+===============================================================================
+                                BMC Changes in 01.06.4994
+===============================================================================
+- Fixed: Update SDR of S1200RP to version 1.05.
+- Fixed: BMC update failing after 4 consecutive firmware updates.
+         BMC will no longer stay in recovery mode (uboot) after four
+         consecutive firmware updates.
+- Fixed: Repeated Pwr Unit Redund warning SEL entries when AC power removed
+         from either PS1 or PS2.
+- Fixed: Corrected Embedded Web Server help text for Serial Over LAN
+- Fixed: Updated Embedded Web Console Mouse Mode text
+- Fixed: JViewer always shows "Error reading video data" popup and a black
+         screen when mouse mode is set to relative and JViewer tries to hide
+         the cursor.
+- Fixed: The UBoot code detects a bad CRC of the Ram Image when attempting to
+         boot after getting a cold reset.
+
+===============================================================================
+                               BMC Changes in 01.05.4775
+===============================================================================
+-Fixed: Change Intel(R)RMM in EWS into RMM Dedicated Mgmt.
+-Fixed: The LCD Screen display is not clear while scrolling error events.
+-Fixed: LAN leash lost event is shown during DC cycle testing.
+-Fixed: Px DIMM Thrm Mrgn and Px DIMM Thrm Trip not decoding DIMM number
+        correctly in the Embedded Web Server SEL text log.
+-Fixed: Embedded Web Server SEL text log not decoding BIOS update versions
+        correctly.
+-Fixed: There are assert events for Mem Err Sensor 0x28 - 'DIMM Thrm Mrgn 1'
+        sensor and 'SPS FW Health' sensor after updating ME firmware.
+
+
+===============================================================================
+                                BMC Changes in 01.04.4674
+===============================================================================
+-Fixed: Update SDR to version 1.04.
+-Fixed: The BMC version information not displaying as expected in Embedded Web
+        Server after entering firmware transfer mode..
+-Fixed: The host power status show inconsistently betweeen system information
+        page and server power control page in Embedded Web Server when system
+        is in S1 or S3.
+-Fixed: There are assert and deassert events logged for PCH temp sensor 0x22 -
+        low critical and low non-critical during DC cycle stress test.
+-Fixed: System status LED is incorrect and there is no assert event logged for
+        DIMM thermal trip after DIMM thermal trip is triggered.
+-Fixed: Multiple KVM socket error and media redirection errors.
+-Fixed: Integrated BMC Web Console Keyboard Macro Cltrl+Alt+F1 not working as expected.
+
+===============================================================================
+                                BMC Changes in 01.03.4595
+===============================================================================
+-Fixed: Update SDR to version 1.03.
+-Fixed: RGMII signal integrity test failed on S1200RP.
+-Fixed: BMC shared NIC cannot be pinged successfully after BMC shared NIC IP
+        address is set in BIOS setup.
+-Fixed: The Web Console Event Log page uses IBMC.
+
+===============================================================================
+                                BMC Changes in 01.02.4452
+===============================================================================
+-Fixed: Update SDR to version 1.02.
+-Fixed: DIMM margin resolution isn't right when saving DIMM inventory into
+        extend SEL.
+-Fixed: There are four BIOS recovery boot entries in the SEL for a recovery
+        boot,only two are expected.
+-Fixed: When recovery jumper is connected to 1-2 pin(normal mode), system
+        always boots from recovery mode after programming a new BIOS offline.
+-Fixed: BMC shared NIC cannot be pinged successfully after run VLAN id set/get
+        stress test from VLAN id 0 to 4094.
+-Fixed: Source of DIMM event does not show in the SEL extended data.
+
+===============================================================================
+                                BMC Changes in 01.01.4412
+===============================================================================
+-Fixed: Update SDR to version 1.01.
+
+-Fixed: Change resolution of DIMM temp sensor reading.
+-Fixed: SUT is reset even when the timer action is "none" after getting a
+        Watchdog timeout.
+-Fixed: Sensor reading/state for DIMM Thermal Margin 1 is unavailable.
+-Fixed: Fail to generate system debug log in Embedded Web Server.
+        - Refreshing the page shows the debug log is available
+-Fixed: Embedded Web Server Power Policy numbers cannot be set to 255. Per the
+        help information 255 should be valid.
+-Fixed: There are unnecessary event logged for sensor Voltage BB +5.0V STBY
+        (#0xD3) lower non-critical during AC cycle test.
+-Fixed: Message shows as "undefined" with ff in Embedded Web Server SEL page
+        when SEL is full.
+-Fixed: Intel(R) Hybrid Cloud cannot get session ID when use BMC
+        username/password with special characters.
+
+================================================================================
+				BMC Changes in Release 00.14.4348
+================================================================================
+01.00.4348:
+- Count of currently enabled users still is changed even failed to enable users without 
+ name setting with command "set user access".
+- Wrong completion code returned by issuing "Get DIMM information" IPMI OEM command.
+- Failed to check the timer Interrupt-Action Interaction when settting pre-interrupt as NMI.
+- Lan configuration information and User configuration information change to default value
+
+ after updating BMC FW ver:00.19.4290.
+===============================================================================
+                          BMC Changes in Release R0014
+===============================================================================
+- Initial Version
+
+
+=============================================================================
+                           FRUSDR Changes in release 1.06
+=============================================================================
+ - update FRUSDR utility to 12.0 build5
+=============================================================================
+                           FRUSDR Changes in release 1.05
+=============================================================================
+ - Sensor 0xc0 name is inconsistent between EWS and EPS.
+
+=============================================================================
+                           FRUSDR Changes in release 1.04
+=============================================================================
+ - Fixed the issue of System status LED show green blinking when unplug the front panel
+
+===============================================================================
+			   FRUSDR Changes in release 1.03
+===============================================================================
+- Initial version
+
+=============================================================================
+                            LEGAL INFORMATION
+=============================================================================
+Information in this document is provided in connection with Intel products. 
+No license, express or implied, by estoppel or otherwise, to any intellectual 
+property rights is granted by this document. Except as provided in Intel's 
+Terms and Conditions of Sale for such products, Intel assumes no liability 
+whatsoever, and Intel disclaims any express or implied warranty, relating to 
+sale and/or use of Intel products including liability or warranties relating 
+to fitness for a particular purpose, merchantability, or infringement of any 
+patent, copyright or other intellectual property right. Intel Corporation may 
+have patents or pending patent applications, trademarks, copyrights, or other 
+intellectual property rights that relate to the presented subject matter.  
+The furnishing of documents and other materials and information does not 
+provide any license, express or implied, by estoppel or otherwise, to any 
+such patents, trademarks, copyrights, or other intellectual property rights.  
+Intel products are not intended for use in medical, life saving, or life 
+sustaining applications. Intel may make changes to specifications and product 
+descriptions at any time, without notice.
+
+Intel is a registered trademark of Intel Corporation. 
+*Other names and brands are the property of their respective owners.
+Copyright (c) 2013 Intel Corporation.
+
+A portion of this firmware is open source code, which falls under the
+GPL 2.0 license.  
+
+[END OF RELEASE NOTES]

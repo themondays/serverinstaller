@@ -1,0 +1,114 @@
+#!/usr/local/bin/bash
+
+# patch mirrorlist in order not to ignore already set mirror variable
+if ! grep "\${BSDINSTALL_DISTSITE}" /usr/libexec/bsdinstall/mirrorselect > /dev/null ; then
+	patch -f -p0 < /nfs/install/patches/mirrorlist.patch > /dev/null
+fi
+
+# create own auto script with postinstall option
+#if [ ! -e /usr/libexec/bsdinstall/hetzner ] ; then
+#	cp /usr/libexec/bsdinstall/auto /usr/libexec/bsdinstall/hetzner
+#	patch -f -p0 < /nfs/install/patches/auto.patch > /dev/null
+#fi
+
+# create tmpfile for dialog output
+tmpfile="$(mktemp)"
+
+BACKTITLE="Installimage via bsdinstall"
+
+# ask user for freebsd version
+dialog --backtitle "$BACKTITLE" --menu "Please select a FreeBSD version:" 12 40 5 \
+        9.3 "FreeBSD 9.3" \
+        10.0 "FreeBSD 10.0" \
+        10.1 "FreeBSD 10.1" \
+        2>$tmpfile
+
+if [ $? -eq 1 ]; then
+        echo "bsdinstallimage cancelled"
+        exit 1
+fi
+
+os_version="$(cat $tmpfile)"
+
+# ask user for arch
+dialog --backtitle "$BACKTITLE" --menu "Please select architecture:" 10 40 5 \
+	32 bit \
+	64 bit \
+	2>$tmpfile
+
+if [ $? -eq 1 ]; then
+        echo "bsdinstallimage cancelled"
+        exit 1
+fi
+
+arch_bit="$(cat $tmpfile)"
+
+rm -f $tmpfile > /dev/null
+
+# create correct arch string
+case $arch_bit in
+	64) arch="amd64" ;;
+	32) arch="i386" ;;
+esac
+
+# set mirror
+BSDINSTALL_DISTSITE="ftp://ftp.de.freebsd.org/pub/FreeBSD/releases/${arch}/${arch}/${os_version}-RELEASE"
+export BSDINSTALL_DISTSITE
+
+# set zfs flags for 10.0 and later
+os_version_int="$(echo "${os_version}" | sed 's/\.//g')"
+rescue_os_version="$(uname -r | cut -d- -f1 | sed 's/\.//g')"
+if [ $os_version_int -lt $rescue_os_version ] ; then
+  ZFSBOOT_POOL_CREATE_OPTIONS="-O compress=lz4 -O atime=off -d -o feature@async_destroy=enabled -o feature@empty_bpobj=enabled -o feature@lz4_compress=enabled"
+  ZFSBOOT_BOOT_POOL_CREATE_OPTIONS="-d -o feature@async_destroy=enabled -o feature@empty_bpobj=enabled -o feature@lz4_compress=enabled"
+  export ZFSBOOT_POOL_CREATE_OPTIONS
+  export ZFSBOOT_BOOT_POOL_CREATE_OPTIONS
+fi
+
+dialog --backtitle "$BACKTITLE" --title "Info" --msgbox "The installimage will now select the correct mirror and configure sshd to permit root-login.\n\nSelected mirror: ${BSDINSTALL_DISTSITE}" 12 60
+
+# directory for /etc config files
+tmp_etc="/tmp/bsdinstall_etc"
+
+# enable services
+services="sshd_enable=\"on\"\npowerd_enable=\"on\""
+
+# disable powerd on vserver
+if sysctl hw.model | grep -i kvm > /dev/null ; then
+  services="sshd_enable=\"on\""
+fi
+
+# write service file 5 seconds after starting bsdinstall
+# otherwise it will be removed
+(sleep 2 && echo -e "$services" > $tmp_etc/rc.conf.services)&
+
+# copy resolv.conf to bsdinstall tmp dir
+(sleep 2 && cp /etc/resolv.conf $tmp_etc)&
+
+# run bsdinstall with patched auto script
+bsdinstall auto
+
+[ $? -gt 0 ] && exit 1
+
+dialog --backtitle "$BACKTITLE" --title "Postinstallation" --msgbox "Bsdinstallimage will now perform some post-install functions." 10 30
+
+# mount installation again
+echo 10 | dialog --backtitle "$BACKTITLE" --title "Postinstallation progress ..." --gauge "Mouting filesystem ..." 7 70 0
+bsdinstall mount
+
+# do post-inst things
+echo 25 | dialog --backtitle "$BACKTITLE" --title "Postinstallation progress ..." --gauge "Copy post-install script ..." 7 70 0
+cp /nfs/install/post-install.sh /mnt/tmp/installscript
+chmod a+x /mnt/tmp/installscript
+
+echo 50 | dialog --backtitle "$BACKTITLE" --title "Postinstallation progress ..." --gauge "Running post-install script ..." 7 70 0
+chroot /mnt /tmp/installscript $@ 2>&1
+rm /mnt/tmp/installscript
+
+# umount installation
+echo 100 | dialog --backtitle "$BACKTITLE" --title "Postinstallation progress ..." --gauge "Unmounting filesystem ..." 7 70 0
+bsdinstall umount
+
+dialog --backtitle "$BACKTITLE" --title "Finished!" --msgbox "The installation was successfully done! You can now reboot to Your freshly installed system!" 10 30
+
+exit 0

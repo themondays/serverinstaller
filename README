@@ -1,0 +1,15 @@
+
+this directory contains
+
+- the rescue system
+- hardwarecheck
+- installimage
+- images
+
+and has to be exported via nfs,
+so the following entry in /etc/exports
+is needed:
+
+  /nfs  0.0.0.0/0.0.0.0(ro,no_subtree_check,async)
+
+

@@ -1,0 +1,206 @@
+================================================================================
+Intel(R) Server Platform S1200V3RP System Firmware Update Package for 
+Intel(R) Deployment Assistant, Intel(R) One Boot Flash Update Utility, 
+The embedded EFI Shell, Windows* Preboot Execution Environment
+================================================================================
+Intel Product Collaboration and Systems Division
+Intel Corporation
+2111 N.E. 25th Avenue, Hillsboro, OR 97124 USA
+================================================================================
+DATE    : May 27, 2014
+TO      : Intel(R) Server Board S1200V3RP
+SUBJECT : Release Notes for System Firmware Update Package 
+================================================================================
+                              ABOUT THIS RELEASE
+================================================================================
+BIOS   : R02.01.0004
+ME     : R03.00.05.128
+BMC    : 1.11.5801
+FRUSDR : 1.06
+================================================================================
+                           Support Platforms and Dependency
+================================================================================
+This update package is for Intel(R) Server Board S1200V3RPO_S1200V3RPL_S1200RPM
+
+Intel(R) Server Platform S1200V3RP family Processors supported: 
+  Intel(R) Xeon(R) Processor E3-1200 V3 series
+  
+Microcode update versions:
+Intel(R) Xeon processor E3-1200 V3 series A0 version: 0xffff0014 CPUID = 0x306C1
+Intel(R) Xeon processor E3-1200 V3 series B0 version: 0xffff0006 CPUID = 0x306C2
+Intel(R) Xeon processor E3-1200 V3 series C0 version: 0xffff0017 CPUID = 0x306C3
+
+On-Board Component Option ROM Versions:
+Integrated Matrox VGA               : VBE BIOS V3.8 SQ
+PXE Option ROM                      : Intel(R) Boot Agent XE v1.4.10
+iSCSI Option ROM                    : Intel(R) iSCSI Remote Boot version 2.8.25
+SATA RAID Option ROM - RSTe         : 3.8.0.1029
+UEFI SATA RAID Option ROM - RSTe    : 3.8.0.1029
+ESRT II FOR SATA                    : A.11.02151531
+Legacy Processor Video              : 2170 
+UEFI Processor Video driver         : 5.2.1002 
+
+Memory Reference Code Version       : 1.7.0.0
+Management Engine Firmware Version  : 3.0.5.128
+ACM                                 : 1.5
+================================================================================
+                  System Firmware Update Package Usage instructions                   
+================================================================================
+This package can be updated using one of the following methods:
+ - The embedded UEFI shell
+ - Intel(R) Deployment Assistant
+ - Windows* or Linux* operating system using Intel(R) One-boot Flash Update (OFU)
+   V12.0 Build 4 or later)
+ - Windows* Preboot Execution Environment (WinPE)
+
+To update from the embedded EFI Shell
+
+Update system firmware from Intel server EFI shell by the following steps:
+- Download Intel server system firmware update package from http://downloadcenter.intel.com/
+- Unzip package and copy all files to root folder in USB flash drive 
+- Insert USB flash drive to server USB port
+- Reboot server, system will start BIOS/BMC/FRUSDR update automatically
+
+  If the unzipped package is not under the root folder of USB flash drive:
+- Reboot server to EFI shell manually
+- Run command "map -r" in EFI shell to find the mount point of the USB flash drive
+- The USB flash drive may mount to fs0: or fs1: or other. 
+- Run command "fs0:" or other to change folder to USB flash drive, 
+- Change folder to the folder storing the firmware package
+- Run command "startup.nsh" to start firmware update process
+
+Please refer to "EFI_Instructions.pdf" in this firmware package for a quick guide to 
+use the EFI commands
+
+To Update from Intel(R) Deployment Assistant (IDA)
+
+The Intel(R) Deployment Assistant software is easy to use and is present on the 
+"Intel(R) Server Deployment & Management" DVD shipped with the system.
+User can download the latest version IDA CD ISO image from http://downloadcenter.intel.com/
+To use the IDA CD to update the system firmware:
+- Boot server with IDA CD
+- Select "Get System Updates" 
+- Choose one of the three options 
+
+  . From http://www.intel.com/support/
+    Automatically downloads the latest Firmware Update Package from Intel 
+    Requires Internet connection
+    Enter your local IP address and proxy configuration
+    Click "Next" to start the download and update process
+
+  . From my network
+    Download the latest Firmware Update Package from http://downloadcenter.intel.com/ and copy 
+    it to a Windows* shared folder
+    Enter your local IP address, the Windows* file server name, and a
+    Windows user name and password
+    Select the firmware package in pop-up window
+    Click "Next" to start the update process
+
+  . From USB flash drive or Hard Disk
+    Download the latest Firmware Update Package from http://downloadcenter.intel.com/ and copy it 
+    to a USB flash drive, then insert the USB flash drive into the server USB port
+    Click "Browse"
+    Select the firmware package in pop-up window
+    Click "Next" to start the update process
+    
+  Note: The Firmware Update Package is in the ZIP file format. Do not unzip 
+        before copying to a Windows* shared folder or USB flash drive.
+
+To update from Windows* and Linux* or operating systems using the Intel(R) One Boot
+Flash Update Utility (OFU)
+
+Intel(R) One boot Flash Update utility can be downloaded from http://downloadcenter.intel.com/
+and it is part of the "BIOS, Firmware Update & Configuration Utilities" for 
+Windows* and Linux*. Please refer to Intel OFU user guide about the details of 
+installation and usage of OFU.
+
+Use OFU to update system firmware by the following steps:
+- Install OFU on Windows* or Linux* system
+- Download the latest firmware update package from http://downloadcenter.intel.com/
+- Unzip package to a folder
+- Run the following command in Windows* command line/Linux* terminal window:
+  <OFU install folder name>:\flashupdt -u  <package folder name>\flashupdt.cfg
+                       
+To update from Windows* Preboot Execution Environment (WinPE)
+
+The System Firmware Update Package can be inserted to Windows* PE customized image 
+for creating a bootable Windows* PE CD. User is able to update system firmware from 
+customized WinPE CD by the following steps:
+- Boot server with customized WinPE CD
+- Run script "WinPE21_x64_Update.bat" or "WinPE20_x86_Update.bat" 
+  (name may be varied depends on your own customization)
+  
+Note:
+1. The Intel(R) OFU utility is case sensitive. Therefore, when you transfer the 
+Firmware Update Package using USB flash drive from a Microsoft Windows* system to a Linux
+environment, you must first extract under the Linux* environment. Otherwise, you 
+will need to mount the USB flash drive manually with 'vfat' option under Linux to avoid 
+conversion from upper case to lower case and vice versa.
+
+2. To make Intel(R) OFU utility run properly under x86 or x64 OS, you have to read
+OFU release notes on known issues for OFU installation.
+
+3. In this SFUP package, Intel only provide batch file "WinPE_x86_Update.bat"
+for WinPE2.0 32 bit solution "WinPE_x64_Update.bat" for WinPE2.1/3.0 64 bit 
+solution as an example. Please refer to white paper "White Paper-Intel Server 
+Utilities Procedure for WinPE.pdf" for details on building your own customized 
+WinPE CD.
+
+4. Windows PE 2.0 - built from Windows Vista SP1 32bit or EM64T
+5. Windows PE 2.1 - built from Windows Vista SP1 or Windows Server 2008, EM64T
+6. Windows PE 3.1 - built from Windows Server 2008R2, EM64T
+7. Microsoft IPMI driver is loaded by default from WinPE CD, if you want to use 
+Intel IPMI driver instead of MS IPMI driver for firmware update, you can un-install
+Microsoft IPMI driver by:
+                Devicesetup.exe ¨Cv remove *IPI0001
+                Note: IPI0001 is the device ID for Microsoft IPMI driver.
+================================================================================
+                               R02.01.0004
+================================================================================
+NOTICE:  If BIOS Rev 02.01.0002 is not pre-installed then please install that release 
+         first prior to installing this release. The BIOS Rev 02.01.0002 contains 
+         a critical update which must be present before installing this release.
+
+- This version enhances the protection of certain UEFI variables as described in 
+	Intel Security Advisory INTEL-SA-00038
+================================================================================
+			  ME Changes in Release 03.00.05.128
+================================================================================   
+- Fixed: Bit Reserved16 in PCH Strap 15 is set incorrectly. This change in Flash 
+         Descriptor was introduced in previous release and reverted in this one.
+===============================================================================
+                            BMC Changes in 01.11.5801
+===============================================================================
+- Fixed: Updated Java Signatures files in BMC to support requirement changes of JAVA
+=============================================================================
+                         FRUSDR Changes in release 1.06
+=============================================================================
+- update FRUSDR utility to 12.0 build5
+=============================================================================
+                            LEGAL INFORMATION
+=============================================================================
+Information in this document is provided in connection with Intel products. 
+No license, express or implied, by estoppel or otherwise, to any intellectual 
+property rights is granted by this document. Except as provided in Intel's 
+Terms and Conditions of Sale for such products, Intel assumes no liability 
+whatsoever, and Intel disclaims any express or implied warranty, relating to 
+sale and/or use of Intel products including liability or warranties relating 
+to fitness for a particular purpose, merchantability, or infringement of any 
+patent, copyright or other intellectual property right. Intel Corporation may 
+have patents or pending patent applications, trademarks, copyrights, or other 
+intellectual property rights that relate to the presented subject matter.  
+The furnishing of documents and other materials and information does not 
+provide any license, express or implied, by estoppel or otherwise, to any 
+such patents, trademarks, copyrights, or other intellectual property rights.  
+Intel products are not intended for use in medical, life saving, or life 
+sustaining applications. Intel may make changes to specifications and product 
+descriptions at any time, without notice.
+
+Intel is a registered trademark of Intel Corporation. 
+*Other names and brands are the property of their respective owners.
+Copyright (c) 2014 Intel Corporation.
+
+A portion of this firmware is open source code, which falls under the
+GPL 2.0 license.  
+
+[END OF RELEASE NOTES]

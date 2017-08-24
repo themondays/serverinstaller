@@ -1,0 +1,113 @@
+//****************************************************************************
+//                            INTEL CONFIDENTIAL
+//                     Copyright 2010 - 2013 Intel Corporation
+//                           All Rights Reserved.
+//
+// The source code contained or described herein and all documents related to
+// the source code ("Material") are owned by Intel Corporation or its
+// suppliers or licensors. Title to the Material remains with Intel
+// Corporation or its suppliers and licensors. The Material contains trade
+// secrets and proprietary and confidential information of Intel or its
+// suppliers and licensors. The Material is protected by worldwide copyright
+// and trade secret laws and treaty provisions. No part of the Material may be
+// used, copied, reproduced, modified, published, uploaded, posted,
+// transmitted, distributed, or disclosed in any way without Intel's prior
+// express written permission.
+//
+// No license under any patent, copyright, trade secret or other intellectual
+// property right is granted to or conferred upon you by disclosure or
+// delivery of the Materials, either expressly, by implication, inducement,
+// estoppel or otherwise. Any license under such intellectual property rights
+// must be express and approved by Intel in writing.
+//
+//****************************************************************************
+//
+//  Date:  Jun. 21, 2013
+//  Description:  Field Replaceable Unit (FRU) data file for the Intel
+//  RainbowPass baseboard.
+//
+//****************************************************************************
+
+
+_LF_NAME       'S1200RP.fru'    // Name for this load file
+_LF_VERSION    '1.00'           // Version of this load file
+_LF_FMT_VER    '1.50'           // Version of the load file format
+_IPMI_VERSION  '2.00'           // IPMI format version
+
+_FRU (
+_FRU_TITLE     'Baseboard FRU' // FRU Title
+_START_ADDR    0000        // Start Address
+_DATA_LEN      0130        // Data Length
+_NVS_TYPE      'IMBDEVICE' // Non-volatile Storage Type
+_DEV_BUS       FF          // Device Bus
+_DEV_ADDRESS   20          // Device Address
+
+_SEE_COMMON
+   01                 // Common Header Format Version
+   01                 // Internal Use Area Starting Offset (in multiples of 8 bytes)
+   02                 // Chassis Info Area Starting Offset (in multiples of 8 bytes)
+   0C                 // Board Info Area Starting Offset (in multiples of 8 bytes)
+   16                 // Product Info Area Starting Offset (in multiples of 8 bytes)
+   00                 // MultiRecord Area Starting Offset (in multiples of 8 bytes)
+   00                 // Pad
+   DA                 // Common Header Checksum
+
+_SEE_INTERNAL
+   01                 // Internal Use Format Version
+   00
+   00
+   00
+   00
+   00
+   00
+   01
+
+_SEE_CHASSIS
+   01                 // Chassis Info Area Format Version Bit Fields
+   0A                 // Chassis Info Area Length (in multiples of 8 bytes)
+   11                 // Chassis Type (Main Server Chassis)
+   D2                 // Chassis Part Number
+   '..................'
+   D2                 // Chassis Serial Number
+   '..................'
+   DE                 // Custom Chassis Info type/length byte
+   '..............................' // Custom Chassis Info Field (For OEM use)
+   C1                 // End of field marker
+
+_SEE_BOARD
+   01                 // Board Info Area Format Version Bit Fields
+   0A                 // Board Info Area Length (in multiples of 8 bytes)
+   00                 // Language Code
+   000000             // Mfg. Date/Time
+   D1                 // Board Manufacturer
+   'Intel Corporation'
+   C7                 // Board Product Name. Currently unknown at the time of this FRU file creation.
+   'S1200RP'
+   CC                 // Board Serial Number
+   '............'
+   CA                 // Board Part Number (Contains the PBA#)
+   '..........'
+   CC                 // FRU File version ID string
+   'FRU Ver 1.00'
+   C1                 // End of field marker
+
+
+_SEE_PRODUCT
+   01                 // Product Info Area Format Version Bit Fields
+   0D                 // Product Info Area Length (in multiples of 8 bytes)
+   00                 // Language Code
+   D1                 // Product Manufacturer Name
+   'Intel Corporation'
+   C7                 // Board Product Name. Currently unknown at the time of this FRU file creation
+   'S1200RP'
+   CA                 // Product Part Number (Contains the Top Assembly (TA)#)
+   '..........'
+   D4                 // Product Version (Available for OEM use)
+   '....................'
+   CC                 // Product Serial Number
+   '............'
+   D4                 // Asset Tag (Available for OEM use)
+   '....................'
+   C0                 // FRU File ID (Not used)
+   C1                 // End of field marker
+)

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo -e "\n\nWARNING:   THIS SYSTEM WILL BE SHUT DOWN NOW!\n\n" | tee /dev/stderr | wall
+/sbin/halt -p
+

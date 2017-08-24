@@ -1,0 +1,4 @@
+
+echo -e "\n\nWARNING:   THIS SYSTEM WILL BE SHUT DOWN IN ONE MINUTE!\n\n(execute 'killall sleep' to avoid shutdown)\n\n" | tee /dev/stderr | wall
+( sleep 60 && /sbin/halt -p ) &
+

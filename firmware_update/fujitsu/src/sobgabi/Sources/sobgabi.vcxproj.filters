@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Imports">
+      <UniqueIdentifier>{3904dc8b-5c8f-4b2e-917c-9bf7a976ca84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Imports\Classes">
+      <UniqueIdentifier>{961d0fb8-4db3-49b4-ab87-32c82cf1c4d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Imports\Includes">
+      <UniqueIdentifier>{02b6bc98-aeda-4692-90c1-0a4318cc9fa0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Makefile">
+      <UniqueIdentifier>{85c4745f-7792-4f92-a1fd-1f3cdb8a5a0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GPL_drivers">
+      <UniqueIdentifier>{30b005c2-9bfe-46bf-96e0-650e10e3b56b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dispatch.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gabi.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sobgabimain.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\_SHARED\Cls\sobgabi_inter.cpp">
+      <Filter>Imports\Classes</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="sobgabi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sobdev.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\_SHARED\Cls\sobgabi_inter.h">
+      <Filter>Imports\Classes</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile">
+      <Filter>Makefile</Filter>
+    </None>
+    <None Include="..\..\COPYING">
+      <Filter>GPL_drivers</Filter>
+    </None>
+    <None Include="..\..\Makefile">
+      <Filter>GPL_drivers</Filter>
+    </None>
+    <None Include="..\..\modules_installer.sh">
+      <Filter>GPL_drivers</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,36 @@
+ipmi commands for intel S1200RP
+
+- disable special services
+
+ipmitool raw 0x30 0xb1 0x01 0x80 0x00
+                         ^    ^
+                         |    |
+   0x00 - disable --------    |
+   0x01 - enable              |
+                              |
+   0x80 - SSH           -------
+   0x60 - Webinterface
+   0xa0 - both
+
+- get service status
+
+ipmitool raw 0x30 0xb2
+return:
+   - byte 1: completion code (not show)
+   - byte 2: bit-pattern
+             - 20 : Webinterface enabled
+             - 80 : SSH enabled
+             - a0 : both enabled
+
+
+freeipmi-tools
+
+--> save bmc config
+bmc-config --checkout --filename bmc.save
+--> change in bmc.save:
+Maximum_Privilege_Cipher_Suite_Id_0           Callback
+                                                |
+                                                v
+Maximum_Privilege_Cipher_Suite_Id_0           Unused
+--> reload bmc config
+bmc-config --commit --filename bmc.save (ignore the error messages)

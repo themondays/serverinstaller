@@ -1,0 +1,10 @@
+*.ext2
+images/*.bin.bz2.sig
+images/*.bin.bz2
+images/*.tar.gz.sig
+images/*.tar.gz
+check/*
+installiso/*
+images.old/*.tar.gz
+images.old/*.tar.gz.sig
+install

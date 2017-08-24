@@ -1,0 +1,184 @@
+=============================================================================
+    Intel(R) Server Platform Rainbow Pass FRU/SDR Update Release Notes
+=============================================================================
+
+INTEL Enterprise Platform & Services Marketing
+Intel Corporation
+2111 N.E. 25th Avenue, Hillsboro, OR 97124 USA
+
+=============================================================================
+
+DATE:   Dec. 10, 2014
+
+TO:     Intel(R) Server Platform Rainbow Pass customers
+
+SUBJECT:    IBMC(R) FRU/SDR update package S1200RP_FRUSDR_108 release notes
+
+=============================================================================
+                               LEGAL INFORMATION
+=============================================================================
+Information in this document is provided in connection with Intel products.
+No license, express or implied, by estoppel or otherwise, to any intellectual
+property rights is granted by this document. Except as provided in Intel's
+Terms and Conditions of Sale for such products, Intel assumes no liability
+whatsoever, and Intel disclaims any express or implied warranty, relating to
+sale and/or use of Intel products including liability or warranties relating
+to fitness for a particular purpose, merchantability, or infringement of any
+patent, copyright or other intellectual property right. Intel Corporation may
+have patents or pending patent applications, trademarks, copyrights, or other
+intellectual property rights that relate to the presented subject matter.
+The furnishing of documents and other materials and information does not
+provide any license, express or implied, by estoppel or otherwise, to any
+such patents, trademarks, copyrights, or other intellectual property rights.
+Intel products are not intended for use in medical, life saving, or life
+sustaining applications. Intel may make changes to specifications and product
+descriptions at any time, without notice.
+
+Intel is a registered trademark of Intel Corporation.
+
+*Other names and brands are the property of their respective owners.
+
+Copyright (c) 2010 - 2015 Intel Corporation.
+
+=============================================================================
+                              ABOUT THIS RELEASE
+=============================================================================
+SDR file version:                          1.08 
+Baseboard LC/RM/RO SKU FRU file version:   1.00
+Baseboard SE SKU FRU file version:         1.00
+Master configuration file version:  1.08 
+FRUSDR loader version:              V12.0_Build5(andante)
+FRU/SDR release notes:              1.08 rev 1.0
+
+=============================================================================
+        SYSTEM HARDWARE & SOFTWARE REQUIREMENTS/REVISIONS
+=============================================================================
+
+- This FRU/SDR package has only been tested on Rainbow Pass FAB1 baseboards.
+
+- BMC firmware rev 01.08.5091 (or later) MUST be preinstalled prior to installing
+  this FRU/SDR package.
+
+- BIOS R01.03.0004 or later
+
+- MB Ver FAB2
+
+=============================================================================
+                      IMPORTANT INSTALLATION NOTES
+=============================================================================
+
+- None
+
+=============================================================================
+            INSTALLATION PROCEDURE
+=============================================================================
+
+1. Ensure BMC release 01.08.5091 or later is pre-installed before attempting this
+   FRU/SDR update.
+
+2. Copy all of the files in the S1200RP_FRUSDR_106.zip archive to a USB key,
+   hard disk drive or floppy drive.
+   All of the files in this zip archive must reside in the same directory.
+
+3. Boot to EFI and then run the following command to display the
+   contents of the baseboard FRU device:
+
+    FRUSDR /d FRU
+
+   If device is empty(which is the case for all new FAB1 baseboards) or corrupted, then
+   execute the following command to program the empty FRU device:
+
+   For Rainbow Pass LC/RM/RO SKU:
+        FRUSDR /fru S1200RP.fru
+		
+   For Rainbow Pass SE SKU:
+        FRUSDR /fru S1200RP_SE.fru
+
+4. Now execute the following command to bring up the main FRU/SDR load menu:
+
+    FRUSDR /cfg master.cfg
+
+
+5. Select the option which is applicable to what you want to do. On a brand
+   new baseboard I would highly recommend to run option 3 to program both
+   the FRU and SDR. By reprogramming the FRU you will be given the option
+   to input data from the keyboard into various chassis, board and product
+   areas. Ensure that you select the correct chassis from the chassis
+   selection menu otherwise your fan sensors will not be configured
+   properly.
+
+6. Once the package has finished its installation, I would highly recommend
+   to wait about 2 minutes(NCSI discovery function is not ready). And then, 
+	 DC power off the system and cycle AC power.
+
+=============================================================================
+                           KNOWN ISSUES/WORKAROUNDS
+=============================================================================
+S1200V3RP_FRUSDR_1.08
+- None.
+
+S1200V3RP_FRUSDR_1.07
+- None.
+
+S1200V3RP_FRUSDR_1.06
+- update FRUSDR utility to 12.0 build5
+
+S1200V3RP_FRUSDR_1.05
+- None.
+
+S1200V3RP_FRUSDR_1.04
+- None.
+
+S1200V3RP_FRUSDR_1.03
+- None.
+
+=============================================================================
+                           FEATURES ADDED
+=============================================================================
+S1200V3RP_FRUSDR_1.08:
+ - None.
+
+S1200V3RP_FRUSDR_1.07:
+ - None.
+
+S1200V3RP_FRUSDR_1.06:
+ - None.
+
+S1200V3RP_FRUSDR_1.05:
+ - None.
+
+S1200V3RP_FRUSDR_1.04
+ - Fixed the issue of System status LED show green blinking when unplug the front panel
+
+S1200V3RP_FRUSDR_1.03:
+ - The first product version.
+
+=============================================================================
+                           ISSUES FIXED
+=============================================================================
+S1200V3RP_FRUSDR_1.08:
+ - Fixed-The sensor reading of P1 MTT is always 0 in EWS(Intel(R) Integrated BMC Web Console)
+
+S1200V3RP_FRUSDR_1.07:
+ - Update system Fan1 to FSC domain2, system Fan2 to domain0 in other chassis to align with schematic.
+
+S1200V3RP_FRUSDR_1.06:
+ - update FRUSDR utility to 12.0 build5
+
+S1200V3RP_FRUSDR_1.05:
+ - Sensor 0xc0 name is inconsistent between EWS and EPS.
+
+S1200V3RP_FRUSDR_1.04:
+ - Sysinfo [V12 Build2] can't capture the SDR version when flash FRUSDR with user detection as auto-detection.
+ - System status LED show green blinking when unplug the FP and update FRUSDR to other chassis.
+ - The event log show abnormally in EWS during setting CMOS battery sensor Lower non critical or critical value above the current reading.
+
+
+S1200V3RP_FRUSDR_1.03:
+ - The first product version.
+
+=============================================================================
+                             REFERENCE MATERIAL
+=============================================================================
+None.
+[END OF RELEASE NOTES]

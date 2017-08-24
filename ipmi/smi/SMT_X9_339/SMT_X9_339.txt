@@ -1,0 +1,2410 @@
+IPMI Firmware Release Note
+----------------------------
+Filename: SMT_X9_339.bin    version: 3.39    Date: 02/03/2015
+
+1. [X9SRW] 
+i. Fix the fan curver of GPU for fan control.
+ii.Add support of MUX riser card.
+
+2. [Multi-Node] 
+i. Support display schema of Node ID for FatTwin as numeric, and other non-FatTwin as alphabet.
+ii.Add the feature so that BMC can display corresponding information based on Configuration ID.
+
+3. Add the feasibility of gateway to be set as 0.0.0.0.
+
+4. Fix the KVM reset (thru Web Interface) is not functioning properly under Window OS.
+Validation Suggestion: 
+Please test this under different OS with the popular version of Java.
+
+5. Fix the Issue ID #59228, Existing BIOS date not showing during OOB BIOS update
+
+6. Fix the bug that IPv6 is not functioning.
+Validation: Setup IPv6, and check the connection.
+
+7. Fix the issue that the time is not properly displayed on Power Consumption web page.
+
+======================================================================================
+
+
+Filename: SMT_X9_338.bin    version: 3.38    Date: 01/05/2015
+
+1. [X9DRW-CT]
+   Fix the isse that NVMe not working properly for eject, locate, stop locate, inject.
+
+2. [X9DR7-TF] 
+   Fix the issue that fan control didn't take place when using M2090 GPU.
+
+======================================================================================
+
+Filename: SMT_X9_337.bin    version: 3.37    Date: 12/23/2014
+
+1. [X9DRW-CF] 
+i.  Add NVMe Support while the setup is using Riser card.
+ii. Fix the issue the duplicate entity ID exists between 1.5V and 5V sensor.
+
+2. Add feature of enable/disable services, i.e. http, http over SSL, WSMan, KVM, VM, and SSH.
+   This interface is available on web or by command line.
+
+[Command Format]
+0x30 0x70 0x67 [Data1] [Data2] [Data3] [Data4]
+
+
+Data1: Get(0)/Set(1)
+
+Data 2: Port/Service
+
+0: HTTP_PORT
+
+1: HTTPS_PORT
+
+2: IKVM_PORT
+
+3:VM_PORT
+
+4:SSH_PORT
+
+5:WSMAN_PORT
+
+6:HTTP_SERVICE
+
+7:HTTPS_SERVICE
+
+8:IKVM_SERVICE
+
+9:VM_SERVICE
+
+10:SSH_SERVICE
+
+11:WSMAN_SERVICE
+
+
+Data 3-4 :  [Set]
+
+Data 3: port number (LSB)
+
+Data 4: port number (MSB)
+
+Return:
+[Get]
+
+Data1: completion code
+
+Data2: port number (LSB)
+
+Data3: port number (MSB)
+
+
+[Set]
+Data1: completion code
+
+3. On User page, when adding/modifying user, the password field allows special character.
+  
+4. Fix the bug the I.E browser is unable to show bbp information properly.
+
+======================================================================================
+
+Filename: SMT_X9_336.bin    version: 3.36    Date: 12/04/2014
+
+1. Fix the bug that, on SMTP web page, port number is not being displayed properly
+   after refresh action is performed.
+
+2. [X9DRFF-7G+/X9DRFF-TF+/X9DR3(i)-LN4+/X9DRG-HF/X9DRG-HF+/X9SRG/X9QR7-TF+/X9DRG-HTF-II]
+   Add sensor monitoring support of Xeon Phi 31S1P.
+
+3. Add KVM reset command, raw 0x30 0x68 0x7 0x1
+
+4. Fix the bug that SMC RAKP is intermittenly turn on.
+Validation: 
+i. Setup a system using two power supply.
+ii. Let the system run for 7 days.
+iii. On 7th day, reboot the BMC.
+iv. Check if ipmitool over LAN is working.
+
+======================================================================================
+
+Filename: SMT_X9_335.bin    version: 3.35    Date: 11/20/2014
+
+1. For SSL, disable the SSLv3.
+
+2. [SMTP service] Fix the bug that receiver email got extra equal sign at the front.
+
+3. [Apply to board support NVMe]
+   Modify NVMe page such that
+   a. Add Inject function.
+   b. Add the confirmation message when Eject buttons is pressed.
+   c. Change the display naming from PCIe SSD to NVMe SSD.
+   d. Adopt to use "Insert" technical term instead of "Inject".
+
+======================================================================================
+
+Filename: SMT_X9_334.bin    version: 3.34    Date: 10/09/2014
+
+1. [X9DRD-CT+/X9DRFF-i/7G+/X9DRFF-7/i-TG+]Add sensor of LSI Ctrl Temperature and in SDR.
+
+2. Improve functionality of NVME eject.
+Validation: verify function the eject, and cancel while ejecting.
+
+3. On website update page, fix the backward display of progress bar.
+
+4. [X9DRD-CT+] Rename the NVMe sensor name to MB_NVMe Temp in sdr.
+
+5. On Health submenu, NVMe submenu will be presented if NVMe is plug in from none state.
+
+6. Fix the commands for those "Restore To Default"
+Validation: Please verify the usage of 0x30 0x40, 0x30 0x41, 0x30 0x42 again.
+
+7. Improve connection of KVM.
+Validation: Verify the active connection that can last.
+
+8. [X9DRT-P] Add feature of NVMe.
+
+9. On SMTP web page, fix the issue that error pop up message randomly display forever.
+Validation: Input any invalid value. Verify that pop up message only show up
+once per user incorrect input.
+
+10. Correct the display information on the use of Cipher 0.
+Validation: Use ipmitool lan print to check "Cipher Suite Priv Max"
+
+======================================================================================
+
+Filename: SMT_X9_333.bin    version: 3.33    Date: 09/24/2014
+
+1. [Active Directory] On AD setup, allow space entered in AD Group Name.
+
+2. [X9DRW-7TPF/X9DRW-7TPF+] Add high speed fan monitoring.
+
+3. [X9DRD-CT+]
+   i.  Add PCIeSSD Temp in SDR.
+   ii. Add CPLD NvME support.
+
+4. On firmware upgrading web page, fix the display of progress bar.
+  
+======================================================================================
+
+Filename: SMT_X9_332.bin    version: 3.32    Date: 09/10/2014
+
+1. On web page of upgrade firmware, add the display of progress bar to indicate the progress.
+
+2. Add SDR replacement option.
+
+3. [Storage Controller]
+   Add LSI HDD Media, Other and PredFail error count in series to avoid the false alarm of HDD fault error.
+
+4. [X9SRW] Add GPU support, and take GPU temp reading into account of fan control.
+
+5. [Network Time Protocol] Disable status queries and restrict informational access.
+Validation: Perform the following commands. The expected result is none of these can return valid information.
+ntpq -c rv <IP>
+ntpdc -c sysinfo <IP>
+ntpdc -n -c monlist <IP>
+
+6. Add the time stamp to iKVM and library jar file.
+
+7. Fix the issue that Java iKVM Viewer is hang when open file dialog is performed in virtual storage on Mac OS
+
+8. Add oem cmd 0x30 0x70 0x84 and 0x85 for PCIeSSD locate and stop locate
+  
+======================================================================================
+Filename: SMT_X9_331.bin    version: 3.31    Date: 07/11/2014
+
+1. [X9DRFF-7G+/X9DRFF-TF+/X9DR3(i)-LN4+/X9DRG-HF/X9DRG-HF+/X9SRG/X9QR7-TF+/X9DRG-HTF-II]
+   Add support of K80 GPU
+
+2. [Twin System, X9DRT-*] 
+   Add PUE Mode.
+
+3. [ PCIe SSD ]
+   i.  Change wording of the Dis-locate to Stop Locate.
+   ii. Fix always slot 0 HDD info
+
+4. Change the feature that network setting is always preserved when fw update.
+
+5. Fix the issue that iKVM connection is drop while doing installation of OS whose file size is
+   more than 3GB or above.
+
+======================================================================================
+Filename: SMT_X9_330.bin    version: 3.30    Date: 07/03/2014
+
+1. [X9DRD-CT] Add back the standard mode in Fan Mode.
+
+======================================================================================
+
+Filename: SMT_X9_329.bin    version: 3.29    Date: 06/23/2014
+
+1. [WS-MAN] Fix the issue that user/password is not working correctly.
+
+2. Improve function of OEM command of 0x30 0x90 to fix the SuperDoctor getting the wrong value.
+
+3. Set BBP timeout shutdown featur default disabled. 
+   Note: The customer application/OS would trigger the graceful shutdown themselves by default.
+   Validation: please plug in BBP along with power supplies, and make sure the shutdown won't be triggered by
+   bmc in 30 seconds after all the power supplies failures happen
+
+======================================================================================
+
+Filename: SMT_X9_328.bin    version: 3.28    Date: 06/05/2014
+
+1. [SSL Certification] Add the SSL key & CERT mismatch detection while deploying new certification.
+   Validation: 
+   a. upload mismatchd ssl key & cert, 
+   b. web should pop up error, SSL Certification failed..., and web server should be still working.
+
+2. [Multi Node] 
+   i.  Remove BP ID. 
+   ii. Display BP Revision starting from MCU Version of 1.06 and onward.
+
+3. [Security] Improve the security protection on storage of root user account.
+   Validation:
+   a. Ensure the login is successfully as ADMIN user :
+      i.   after update the firmware.
+      ii.  after "Restore To Default"
+      iii. after any change made to the root user account.
+
+======================================================================================
+
+Filename: SMT_X9_327.bin    version: 3.27    Date: 05/23/2014
+
+1. [X9DRD-CT+] Fix the fan control when PUE mode is being used.
+
+======================================================================================
+
+Filename: SMT_X9_326.bin    version: 3.26    Date: 05/19/2014
+
+1. [Multi Node with Twin System] Fix the issue that Node A incorrectly displalys Node B information.
+
+======================================================================================
+
+Filename: SMT_X9_325.bin    version: 3.25    Date: 05/16/2014
+
+1. [UDT with PWS-1K81P-1R] Add patch to fix the incorrect report from power supply about the power consumption.
+Validation: please verify power supply consumption reading through command raw 0x30 0xe2 0x0 0x0 0x0
+
+2. [X9DRT-P] Fix the fan curve while using Xeon Phi.
+
+3. Fix the Network Privilege settings. 
+   Validation: Please refer to SMT IPMI User manual.
+
+4.  [Multi Node] 
+i.  On Multi Node page, add BPN ID and BPN Revision data fields. The FRU page shall
+    dispaly these same data fields as well.
+ii. [X9DRT-P] Fix the auto detection of Multi Node capabality.
+
+======================================================================================
+
+
+Filename: SMT_X9_324.bin    version: 3.24    Date: 05/08/2014
+
+1. [X9DRD-CT+] 
+   Set the correct fan mode per design request, i.e Heavy I/O, Full Speed, PUE mode.
+
+2. [PCIe SSD] 
+i.  Improve detection of number of drive to display.
+ii. Add an ability to dynamically display PCIe SSD page
+    based on the presence of SSD in the system.
+
+3. [Multi Node] 
+i.   Add an ability to display Left/Right location based on Fat Twin MCU design.
+ii.  Add highlight to background and wording in legend when block display is current node.
+iii. Correct the value of input current.
+
+4. Fix http or https port number fails to change.
+   Validation: Use 10000 as port number to check if https is working.
+
+5 [X9DRG-HF/X9DRG-HF+/X9SRG/X9DRG-HTF-II]
+  Fix the right/left zone fan curve when both zone are inserted with non reconized PCI cards.
+
+6 Add wording(English) on PCIe SSD page and add Japanese wording
+  in SMC RAKP/Power Consumption pages while using Japanese setting.
+
+======================================================================================
+
+Filename: SMT_X9_323.bin    version: 3.23    Date: 04/18/2014
+
+1. Improve KVM on MAC is intermittely unable to launch after several retry of close/open on Mac OS.
+
+2. [X9DRG-HTF, X9DRG-HTFII, X9DRG-HTF+] Fix the fan control when using non-recognized PCI card is being presented left or right zone.
+
+3. [BBP Feature] 
+   i.   Fix the display of BBP is on the web page correctly. 
+   ii.  Correct the wording of Auto Discharge Timer.
+   iii. Fix the issue that Timeout Enable/Disable is not properly saved after BMC reset.
+           Note: Please test major support browser for compatibility.
+
+4. [X9DR6-LN4+] Correct threshold value for Xeon Phi 4.
+
+5. Add virtual media oem commands.
+
+6. On login page, increase max allowable length of password field to 64.
+
+7. [X9DRT-P] Add sensor support for revision 1.02 of motherboard.
+   Note: Corresponding BIOS needed.
+
+8. [X9DRD-CT] Add sensor support.
+
+9. Fix duplicated serial number 01 in SSL cert. 
+   Note: Please issue oem command to update the ssl cert.
+
+10. Add a feature that can log AC Power On event.
+    Note: For the first update from firmware that doesn't have this feature, it would log the event.
+
+11. Prevent security key being exposed while using save/restore IPMI configuration file on the web.
+    Note: Please test on funciton of saving / restoring configuratio on the web.
+          And, verify the effective setting by checking the functionalities.
+
+======================================================================================
+
+
+Filename: SMT_X9_322.bin    version: 3.22    Date: 03/21/2014
+
+1. [X9SBAA] Disable Power Consumption page on web page.
+
+2. [X9DRT_P] 
+i.  Add a feature of power monitoring on multi node.
+ii. Add GPU monitoring and its fan control.
+
+3. Setting of Daylight Savting Time can be adjusted while using OEM Get/Set Config function.
+
+4. [X9DB3-CPU_AI026] 
+i.   Make RT2 as a part of fan control.
+ii.  Fix the reporting of DIMM location while ECC Error happens.
+iii. Remove Heavy I/O Mode.
+iv.  Correct memory sensor in SDR.
+v.   Add Fan 5 and Fa 6 in sensor monitoring.
+
+5. Add feature of PCIe SSD monitoring.
+
+6. [X9DBU] Add memory temperature sensor.
+
+7. Fix the issues that values on BBP page are not able to save.
+
+8. [X9SRD] Add support of memory monitoring.
+
+======================================================================================
+
+Filename: SMT_X9_321.bin    version: 3.21    Date: 01-31-2014
+
+1. [OOB] Fix the display of Activate BIOS Product Key.
+
+2. [X9DRT-P]
+i.  Fix the "video mode only in KVM" issue.
+ii. Fix the issue that event description is missing in the email
+    alert when power failure happen.
+
+3. [X9DB3-CPU] 
+i.  Fix the +5VSB, System and Peripheral Temp reading issues.
+ii. Set the LAN mode to Share LAN as default.
+
+4. [X9DR7-LN4] Add the the support of high speed fan that is higher than 19K rpm.
+
+5. [X9DBL] Correct sensor name to "P2-DIMMD1 Temp".
+
+6. [X9DRG-OF] Fix the issue that fan speed control is not working while using Xeon Phi.
+
+7. Fix the failure of login while using AD server that is configured to have
+   longer length of user domain.
+
+8.  Fix Self-Signed Certificate works, and signed Certificate by CA.
+    [Validation]
+    i. Please use attachment certificate and key in SSL Upload.
+    ii. Verify the upload is completed and the new certification reflects the new date.
+
+======================================================================================
+Filename: SMT_X9_320.bin    version: 3.20    Date: 01-03-2014
+
+1. Description:  IPMI BMCs being abused for NTP amplification DDoS attacks
+   NTP respond to all queries, so an attacker can potentially DDOS the IPMI by sending queries
+   Affected functions:  NTP function 
+   Validation Step: 
+    Run the follow command to see if any statistics reported  from ipmi fw. 
+    ntpdc -c monlist <IPMI IP-address>
+
+2. [X9DRG-OF] Add the patch for hardware workaround that avoid polling GPU Temp,
+             and make the full speed mode always Full Speed while K10 is being used.
+
+3. [X9DRT-P] Fix the issue that PUE mode is not default fan mode, and the PUE fan speed control.
+
+4. [X9DB3-CPU-AI026] Add support of sensor monitoring.
+
+5. [X9DRW-CF] Fix the Entity ID of SDR.
+   Validation Step:
+   a. Issue the command, ipmitool -H 172.31.16.112 -U ADMIN -P ADMIN sdr elist
+   b. Verify all the return values in 4th column are unique.
+
+======================================================================================
+
+Filename: SMT_X9_319.bin    version: 3.19    Date: 12-19-2013
+
+1. [Release Note Revised on SMT_311]: # is allow.
+   Fix the security issue: Don't allow inputing the special
+   characters on the user name and password field.
+[Validation Steps]
+a. can't input the following characters on the user page(adding or modifying).
+,; &'"<>\=$|^?*~`()[]{}
+
+2. Fix the issue that SOL is not working over SMASH.
+[Validation Step]
+a. Login to SMASH, and launch SOL to check if SOL output is correctly display.
+b. exit the SMASH.
+c. Repeat Step a to Step b for 5 times, verify that SOL is working everytime.
+
+3. Fix the issue that, when using I.E broswer, on Radius Web Page, the settings
+   values are intermittenly missing.
+
+4. Fix the issue that some valid character is not accepted on LDAP web page.
+
+5. Add feature of SMC OEM RMCP, available on Miscellaneous->RAKP web page.
+[Validation]
+1. Once RAKP on the web is enable, SMCIPMITool only can be used to run any IPMI command.
+   [Note] SMCIPMITool 2.6.4 version with rakp set to on in SMCIPMItool.properties
+2. Use ipmitool to run any IPMI command, none of the command can be run.
+3. Turn the RAKP off, observe that ipmitool can be used.
+
+6. [X9DRT-P] 
+   i. Correct VDIMM CD for SD.
+   ii. Add PUE mode to fan control.
+
+7. [X9DRW-7TPF+] Add Heavy I/O mode to fan control.
+
+8. [X9DRW-CF] Enable feature of HDD monitoring.
+
+9. [X9SBAA-f] Disable featur of OOB BIOS Update.
+
+10. [X9DB3] Add memory sensor.
+
+11. [OOB BIOS Update]
+    Add bios revision when doing bios update through web and SMCIPMItool
+    [Validation] 
+    (1) make sure the bios image can support bios revision. otherwise,it is not shown.
+    (2) do bios update through web and SMCIpmitool.
+
+======================================================================================
+
+Filename: SMT_X9_318.bin    version: 3.18    Date: 12-06-2013
+
+1. Fix the security issue 
+Don't allow inputing the special characters on the user name and password field.
+[validation steps]
+1. can't input the following characters on the user page(adding or modifying).
+,; &'"<>\=$|^?#*~`()[]{}
+
+2. [GPU Boards] Add K6000 GPU Temp support. 2. 
+
+3. [X9DR6-LN4] Remove GPU from SDR, and initial constant fan speed mode as Full Speed once any GPU is preseted in the system.
+
+4. [X9DRT-P] Correct pminfo result once any of power supply is unplugged.
+
+======================================================================================
+Filename: SMT_X9_317.bin    version: 3.17    Date: 12-02-2013
+
+1. [X9DRT-P] Fix IB/10G Temp issue.
+
+2. [X9DRFF-i/7G] Add functionality that, For 6 GPU system, it uses power supply as a source of power consumption measurement.
+
+3. Ehance security function on the web.
+Validation: Test all function on the web.
+
+======================================================================================
+
+Filename: SMT_X9_316.bin    version: 3.16    Date: 11-15-2013
+
+1. Dynamic SSL Key is generated.
+
+2. [X9DRT-F/X9DRT-HF+/X9DRT-P/X9DRFF/X9DRFR/X9DRFF-7/iGP] Add 12V protection.
+
+3. [X9DRT-P] Fix 10G and IB Temperature reading.
+
+======================================================================================
+
+Filename: SMT_X9_315.bin    version: 3.15    Date: 10-31-2013
+
+Fix the issue that ADMIN account cannot be loggeg in after the passwords have been changed a few times. 
+
+[validation steps] 
+1. login to IPMI Web Gui->Configuration->User->Modify ADMIN 
+2. Change ADMIN pwd to ADMIN123 
+3. Check ipmitool remotely with new pwd
+
+======================================================================================
+
+Filename: SMT_X9_314.bin    version: 3.14    Date: 10-30-2013
+
+1. [X9DT-P] Add sensor monitoring, and Multi-PS support.
+
+2. Add signed java certification to avoid Oracle blocking the java use in the future.
+
+3. [X9DRG-OF]
+a.  Add sensor support.
+b.  Fix the temperature reading of GPU 7 and 8.
+c.  Fix the optimal fan control.
+d.  Add 10G SKU, and correct number of memory sensor.
+
+4. [X9DBL] Add memory sensor monitor.
+
+5. [X9DRG-HTF-II] Disable GPU Throttling triggered by B12 pin.
+
+6. [X9DRFF-7GP] Add GPU monitroing support up to 6 GPU.
+
+7. [X9DRD-EFUC] Correct the number of memory for sensor monitoring.
+
+8  [X9DRW-CF]
+a.  Display sensor as N/A when sensor polling priviledge is not avaiable to BMC.
+b.  Remove HDD monitoring.
+c.  10G is a factor of fan control in I/O zone.
+
+9. [X9DRL] Add memory sensor.
+
+10. [X9DRD-LF] Change it to 6 FANs from 4 FANs in sensor monitoring
+
+======================================================================================
+
+
+Filename: SMT_X9_244.bin    version: 2.44    Date: 10-21-2013
+
+1. [X9DRW-CF]
+i.  Display sensor as N/A when sensor polling priviledge is not avaiable to BMC.
+ii. Remove HDD monitoring.
+iii.10G is a factor of fan control in I/O zone.
+
+
+2. [X9DRG-OF] Add sensor monitor and fan control for 8 GPU.
+
+3. [X9DRL] Add memory sensor.
+
+4. [X9DRD-LF] Change it to 6 FANs from 4 FANs in sensor monitoring
+
+======================================================================================
+
+Filename: SMT_X9_243.bin    version: 2.43    Date: 10-11-2013
+
+1. [X9SCE] Add PUE mode (default fan dutycycle as 0%)
+
+2. [X9DT-P] Add sensor monitoring.
+
+3. [X9DRG-HTF-II] Disable GPU Throttling triggered by B12 pin.
+
+4. [X9DRFF-7GP] Add GPU monitroing support up to 6 GPU.
+
+5. [X9DRD-EFUC] Correct the number of memory for sensor monitoring.
+
+6. [OOB BIOS Update] 
+i. Correct spelling mistake from Prouct to Product
+ii. Prevent the change of MAC address causing license lose.
+
+======================================================================================
+Filename: SMT_X9_242.bin    version: 2.42    Date: 09-24-2013
+
+1. [X9DRL-7F/EF] Fix dimm temperature sensors missing
+
+======================================================================================
+Filename: SMT_X9_241.bin    version: 2.41    Date: 09-20-2013
+
+1. [X9DRL-7F/EF] Add memory sensor monitoring.
+
+2. Support OOB SMBIOS/Edit feature.
+Validation Requirement:
+Verify these OOB features: Fundamental, BIOS Update, BIOS Configuration/Setting, SMBIOS/DMI Edit.
+
+3. [X9DRH/X9DR7-LN4] Fix the issue that UID is intermittenly lit up when power up the system.
+
+4. Fix the heavy I/O mode not working well for single zone fan control.
+
+======================================================================================
+
+Filename: SMT_X9_240.bin    version: 2.40    Date: 09-09-2013
+
+1. Allow user to change ADMIN.
+   Validation: 
+   i.  Go to IPMI Web, Configuration -> Users.
+   ii. Modify the ADMIn user, and check to see if the user name can be changed.
+   iii.Once the name is changed successfully, try to use this account info for re-login.
+
+2. [X9DRFF-7G+/X9DRFF-TF+/X9DR3(i)-LN4+/X9DRG-HF/X9DRG-HF+/X9SRG/X9QR7-TF+/X9DRG-HTF-II]
+   Add GPU Temperature sensor monitoring of K40 GPU.
+
+3. [X9DRW-CF31] Fix the hi/lo limit of 1.5V for SD.
+
+4. Fix the issue that email alert is not working while using static IP mail server.
+
+5. [X9SRW] Add monitoring of memory temperature sensor.
+
+======================================================================================
+
+Filename: SMT_X9_239.bin    version: 2.39    Date: 08-19-2013
+
+1. [X9DR6/i-F] Add CPU2 memory sensor.
+
+2. [X9DRW-CT/CTF] Add HDD sensor.
+
+======================================================================================
+
+Filename: SMT_X9_238.bin    version: 2.38    Date: 08-12-2013
+
+1.[X9DRW-7TPF/X9DRW-7TPF+] Remove Heavy I/O fan mode.
+
+2.[X9DR7-TF+] Add Heavy I/O fan mode.
+
+3. Disable OOB feature for X9 Bromolow platform. 
+
+======================================================================================
+
+Filename: SMT_X9_237.bin    version: 2.37    Date: 07-30-2013
+
+1. [X9DRD-LF/X9DRD-IF] Adjust fan, memory, and chassis intru sensor.
+
+2. [X9DRX] Add HDD sensor monitoring.
+
+======================================================================================
+
+Filename: SMT_X9_236.bin    version: 2.36    Date: 07-19-2013
+
+1. Renew default SSL certificate from 7/17/2013 to 7/17/2014
+
+2. [X9DRL-IF] Add patch to fix issue #46685, Board ID Mismatch.
+
+3. [X9DRH] Add HDD Status Sensor.
+
+4. [X9DRFR] Fix low limit of VDIMM GH.
+
+======================================================================================
+
+Filename: SMT_X9_235.bin    version: 2.35    Date: 07-12-2013
+
+1. [X9DRD-EF] Add memory temperature sensor.
+
+2. [X9DR7-TF+] Fix the fan speed instable when doing stress test.
+
+3. Fix the issue that IP Access Control on the web is not working.
+
+4. [X9SRW] Fix the issue that VDIMM CD sensor is missing.
+
+5. Add the extended LAN configuration to the presevation while doing restore to default.
+
+6. [X9DRW-CF31/X9DRW-CTF31] Add sensor monitoring.
+
+======================================================================================
+
+Filename: SMT_X9_234.bin    version: 2.34    Date: 07-05-2013
+
+1. [X9DRFF-7G] Add noise filtering for fan present detection.
+
+2. [OOB issue]fix the customer issue that the smbios may be lost after upgrading bios via ipmi.
+
+Validation : X9DRD-7LN4F
+a.	BIOS X9DRD72.B21, boot to DOS and change SMBIOS string by amidedos.
+b.	Flashing BIOS X9DRD72.C19 by OOB flash, after flashing, reboot system.
+c.	Checking SMBIOS data, do all SMBIOS data preserve ?
+d.	Repeat step 1 ~ 3 but exchange BIOS X9DRD72.B21 and BIOS X9DRD72.C19
+
+3. [X9DRFR] Fix heavy mode I/O issue that fan control only takes place in single zone.
+
+4. [X9DR6-F] Add memory support.
+
+5. Change the calculation of power consumption based on AC Input Power.
+
+======================================================================================
+
+Filename: SMT_X9_233.bin    version: 2.33    Date: 06-28-2013
+
+1. Fix issue that email alert from ME is not needed.
+
+2. [X9DRL-7F/EF] Fix the issue that hdd status monitoring is missing.
+
+3. Fix issue that email alert from ME is not needed.
+
+4. [X9DRW+] Add memory sensor.
+
+5. [X9DRFR] Fix the fan control of Heavy I/O Mode.
+
+6. [X9SRH] Remove non-critical log for fan failure.
+
+======================================================================================
+
+Filename: SMT_X9_232.bin    version: 2.32    Date: 06-13-2013
+
+1. [X9DRFR] Fix issue #45909, Update BIOS through IPMI web failed with Error
+   message "BOARD ID mismatch".
+
+2. Fix the issue that email alert is not working.
+
+======================================================================================
+
+Filename: SMT_X9_231.bin    version: 2.31    Date: 06-12-2013
+
+1. [X9DRL-7F] Correct the hi/lo limit of 1.1V sensor.
+
+2. [X9DRG-HTF-II] Restore fan mode to user setting
+                  once the GPU temperature is recovered.
+
+3. [X9SRL/X9SRH7] Add Memory VRM patch for hardware design.
+
+======================================================================================
+
+Filename: SMT_X9_230.bin    version: 2.30    Date: 05-31-2013
+
+1. [X9DRT-HTF+] Fix the low limit of VDIMM GH For SD3.
+
+2. Support Delta Power Supply.
+Validation: Use Delta Made Power Supply such as PWS-1K66P-1R
+i. Check the Power Status in sensor monitor web page.
+ii. Check the error detection of Power Supply status.
+iii. Verify the reporting of power consumption.
+
+======================================================================================
+
+Filename: SMT_X9_229.bin    version: 2.29    Date: 05-24-2013
+
+1. Fix the display of Fixed Name as Fixed to ADMIN user.
+Validation:
+i. use ipmitool channel getaccess 1 2
+ii. Verify that the field of "Fixed Name" is set to "Yes"
+
+2. Fix the issue that email of SMTP sender is not shown in any alert email.
+Validation:
+i. Set sender email address in SMTP configuration page.
+ii. Send a test alert and verify the sender is match to the setting.
+
+3. [X9DRD-EF-UC014] Remove UID LED.
+
+4. [MB using 7904 HWM] Add Heavy I/O mode to Fan Mode Control.
+
+5. [X9DRT-HF+] Fix the Fan 3 and Fan 4 sensor reading.
+
+======================================================================================
+
+Filename: SMT_X9_228.bin    version: 2.28    Date: 05-16-2013
+
+1. Correct DIMM alert string for SSM.
+
+2. [X9DRG-HTF+-II & X9DRH-IF-NV] Add sensor support.
+
+3.[X9DRD-EF-UC014] R: Disable Power Consumption page.
+
+4.[OOB Update] Preserve the whole 64k block where SMIBIOS data resides.
+[Validation Steps]
+i.  Go to the bios update page 
+ii. Update bios image only with preserving SMBIOS.
+
+5. [X9DBL-If/3F/6F] Fix the issue #45389 [BIOS ECO X9DBL3.502] Can't OOB updste BIOS.
+
+======================================================================================
+
+Filename: SMT_X9_227.bin    version: 2.27    Date: 05-07-2013
+
+1. [X9DRD-EF-UC104] Add sensor supoort.
+
+2. [X9DRT-HF+] Fix the issue that VDIMM CD is missing in SSM.
+
+3. Add OOB event log.
+OOB file build date mis-match (Sensor type : 0xCA, Event Data 1)
+OOB feature initial failure (Sensor type : 0xCA, Event Data 2)
+
+4. [X9DAX] Remove non-critical event log of temperature.
+
+======================================================================================
+
+Filename: SMT_X9_226.bin    version: 2.26    Date: 04-24-2013
+
+1.Fix SMASH functionalities.
+
+2.[BIOS OOB]enable web bios update by default.
+
+3.[X9SCFF] Add default fan mode to PUE in FatTwin system, and fix PUE fan control.
+
+======================================================================================
+
+Filename: SMT_X9_225.bin    version: 2.25    Date: 04-12-2013
+
+1.Add new feature to BBP monitoring and feature of power monitoring.
+
+2.Fix the issue the bios update with SMBIOS option failed by using smcibu.
+
+3.[X9SCFF] Add PUE Fan Mode to FatTwin system.
+
+4.[X9SRG] Correct fan curve of PWM of NVidia GPU.
+
+======================================================================================
+
+Filename: SMT_X9_224.bin    version: 2.24    Date: 04-12-2013
+
+1.[X9SRG] Add support of high speed fan.
+
+2.[X9DRL-7F/EF] Add HDD monitoring.
+
+3.Enable ME Alert event.
+
+4.[X9DRD-7LN4F] Add HDD monitoring.
+
+5.[X9SBAA] Remove non-critical event log generated by temperature sensor.
+
+6.[X9SCFF] Swap RT1 and RT2 reading source.
+
+======================================================================================
+
+Filename: SMT_X9_223.bin    version: 2.23    Date: 03-29-2013
+
+1.[X9DRG-HF] Add support of high speed fan.
+
+2.[X9SRG] 
+a. Fix Issue ID=44684, KNC Reading cannot recover after IPMI cold reset.
+b. Disable KNC HW Trottle since the board doesn't support it
+
+======================================================================================
+
+Filename: SMT_X9_222.bin    version: 2.22    Date: 03-22-2013
+
+1. Allow NTP function configured through SMCIPMITool
+Validation:
+	-1. java -jar SMCIPMITool.jar [IP] ADMIN ADMIN ipmi oem getcfg conf.txt
+	-2. change NTP settings
+	-3. java -jar SMCIPMITool.jar [IP] ADMIN ADMIN ipmi oem setcfg conf.txt
+
+2. Fix system can't resume form C6 state when using iKVM
+
+3. [X9SCFF] Fix identification of hadoop or fattwin system to prevent system reboot causing firmware cold reset
+
+4. [X9QR7] Fix issue OOB BIOS update can't work
+
+5. [X9DRW-7TPF+] Add Fan Optimal Mode
+
+6. [X9SRL-F] Change Lower NC threshold as 3.136, and Upper NC threshold as 3.856 per hardware design
+
+7. [X9DRFF7G+ Hadoop] Fix duplicated PS SDR
+
+8. [X9DRFF7G+ FatTwin] Fix fan speed control can't work properly
+
+======================================================================================
+Filename: SMT_X9_221.bin    version: 2.21    Date: 03-08-2013
+
+1. Fix power control from SMASH
+	Validation: 
+	1. ssh [user_name]@[BMC_IP]
+	2. enter password
+	3. cd system1/pwrmgtsvc1
+	4. verify start/stop/reset function
+
+2. [X9SBAA] Fix issue #44118, System freeze for ~10 minutes when "Detecting IPMI..." during cburn on/off stress test
+
+3. [X9SCFF] 
+	- Support HDD status as onboard LSI RAID is configured 
+	- Fix issue #43385: display power supply status naming as "PS status" in 1U Hadoop System
+
+4. [X9DRFF-7G+] 
+	- Remove chassis intrusion in FatTwin system
+	- Add support for Hadoop or FatTwin system
+	Note: FatTwin system comes with Hot-Swap controller from backplane
+
+5. [X9DRFF-7G+/X9DRFF-TF+/X9DR3(i)-LN4+/X9DRG-HF/X9DRG-HF+/X9SRG/X9QR7-TF+]
+	- Add K520 GPU support for fan control
+
+
+6. [X9DRG-HF] Fix issue #44194, KNC Temperature reading cannot recover after IPMI factory default
+
+
+7. [X9DRW-3LN4F+/X9DRW-3TF+] Disable event log for any non-ciritical threshold of temperature sensors per thermal guide
+
+======================================================================================
+
+Filename: SMT_X9_220.bin    version: 2.20    Date: 03-01-2013
+
+1. [X9DRG-HTF] 
+a. Enable KNC HW Throttle on Board Revision 1.10 onward; Disable HW throttle on board before revision 1.10.
+b. Fix the CATERROR issue.
+
+2. [X9SCFF] Improve detection of fattwin or hadoop system.
+Note: Must be paired with BIOS
+
+3. [X9DRL-3F/iF] Combine the display of VDIMM EF and VDIMM GH to VDIMM EFGH
+
+4. [X9DRFF7-G] Add 5V Standby sensor.
+
+5. [X9DRL-7F] Change the display of FAN6 to FANA in sensor list.
+
+======================================================================================
+
+Filename: SMT_X9_219.bin    version: 2.19    Date: 02-22-2013
+
+1. [X9DRFF-7G+/X9DRFF-TF+/X9DR3(i)-LN4+/X9DRG-HF/X9DRG-HF+/X9SRG/X9QR7-TF+] (Board supporting Xeon Phi/GPU)
+   Fix the issue that fans randomly go to full speed by improving better tracking the recover of I2C 
+   Read Failure.
+
+======================================================================================
+
+Filename: SMT_X9_218.bin    version: 2.18    Date: 02-19-2013
+
+1. [X9DRD-LF] 
+a. Remove chassis intrusion and 4 fans from sensor monitoring.
+b. Fix Overheat buzzer doesn't work
+
+2. [X9DRG-HF/HTF, X9DRG-HF+/HTF+] Increase NC threshold value of VBAT to 3.5.
+
+3. [X9DRFF-7G+/X9DRFF-TF+/X9DR3(i)-LN4+/X9DRG-HF/X9DRG-HF+/X9SRG/X9QR7-TF+] (Board supporting Xeon Phi/GPU)
+a. Enable external throttle of Xeon Phi
+b. Change the deassert value of Xeon Phi HW throttling to 99 from 95
+c. Add a feature that if any GPU/XeonPhi is present, BMC triggers FAN to
+   full speed while during firmware update.
+
+4. [X9DRL-3F/IF] Add VDIMM GH in sensor monitoring.
+
+5. [X9DRL-7F/EF] 
+a. Add sensor support for X9DRL-7F
+b. Add LSI HDD Storage Monitoring support
+
+5. [X9SCFF] 
+a. Add a feature to indentify FatTwin or Hadoop system.
+b. Remove AUX Temp in fat twin setup
+
+======================================================================================
+
+Filename: SMT_X9_217.bin    version: 2.17    Date: 02-08-2013
+
+1.[New Feature] Link Speed/Duplex can be configured manually through Web/OEM commands when Dedicated LAN mode is set
+
+	OEM command format:
+	NetFn:0x30/ CMD:0x70/ SubCMD:0x63	Set Link configuration (only for Dedicated LAN mode)
+	Data 1: 0/1 [Get/Set]
+	Data 2: 
+  		0 :Auto-neogitaion 
+  		1: 10M   Half duplex
+  		2: 10M   Full duplex
+  		3:100M  Half duplex
+  		4:100M  Full duplex
+
+2. [X9DRFF-7G+/X9DRFF-TF+/X9DR3(i)-LN4+/X9DRG-HF/X9DRG-HF+/X9SRG/X9QR7-TF+] (Board supporting Xeon Phi)
+	- Add fan recovery when the status bit is clear or I2C failure is recovered
+	- Add the event log when GPU throttling happens
+	- Fix the fan randomly go to full speed
+	- Add the auto detection of Xeon Phi slave address
+	- Fix overflow of Xeon Phi temperature reading
+
+3. [X9DRD-7] 
+	- After CATErr happens, add 20ms delay to check power ok to avoid false alarm
+	- Disable event log of temperature sensors reaching Non-critical threshold per thermal guide
+
+4. [X9DB3] 
+	- Enable CPU Overheat and Fan Fail LED using GPIOE7
+	- Fix Overheat buzzer doesn't work
+	- Fix Sysmtem LAN3 MAC address can't displayed from Web GUI
+
+5. [X9DRW-7TPF] Add HDD status to sensor list
+
+======================================================================================
+Filename: SMT_X9_216.bin    version: 2.16    Date: 01-30-2013
+
+1. Fix Power FRU Reading for DMI table.
+
+2. [X9DRG-HTF+] 
+i.  Correct 10G threshold values.
+ii. Fix the issue the Left Zone of Fan Speed doesn't respond to temperature change.
+
+3. [GPU Boards] Add support of K1 GPU card monitoring.
+
+4. [X9DRT-F] Fix the IB Temp reading.
+
+5. Add a feature to upload/download IPMI Configuration File in Text Mode.
+Note: Supported version of SMCIPMITool is needed.
+
+======================================================================================
+
+Filename: SMT_X9_215.bin    version: 2.15    Date: 01-18-2013
+
+1. [X9DRG-HTF+/X9DRFF-G+/X9DR7-TF+] Add a patch to instruct CPLD to disable GPU throttling.
+
+2. [X9DRFF-7+] Add the ability to distinguish Fat Twin or Hadoop system. 
+
+3. [X9DR7-TF+] Add dynamic detection and loading of sensor monitoring based on new/old revision motherboard.
+
+4. [GPU Boards] Add failure handler that triggers fan to full speed when KNC reports 0.
+
+5. [OOB Update] Add PS OOB
+
+======================================================================================
+
+Filename: SMT_X9_214.bin    version: 2.14    Date: 01-11-2013
+
+1. Add dynamic display of storage page
+
+2. [X9DR7-TF+] Fix FAN C display.
+
+3. [X9DRFR] Fix HDD detection.
+
+======================================================================================
+
+Filename: SMT_X9_213.bin    version: 2.13    Date: 01-04-2013
+
+1. [X9DRFF-7G+] 
+  a. Fix the fan speed control.
+  b. Take GPU account for NM Power Consumption
+  c. Add the Chassis Intrusion.
+
+2. [X9SCFF] 
+  a. Add chassis intrusion.
+  b. Add an overall HDD sensor.
+  c. HDD error asserted/de-asserted to SEL with slot information.
+
+3. [X9DRD-LN4F, X9DRD-iF] Add memory temperature monitoring.
+
+======================================================================================
+
+Filename: SMT_X9_212.bin    version: 2.12    Date: 12-28-2012
+
+1. [X9DB3] Fix the issue 42087
+
+2. [BIOS OOB]change wordings to "Product key" on BIOS update page.
+
+3. [X9DR7-TF+] Add KNC reading.
+
+4. [X9DRG-HTF+] Fix KNC GPU readings.
+
+======================================================================================
+
+Filename: SMT_X9_211.bin    version: 2.11    Date: 12-12-2012
+
+1. [X9DRH] Remove HDD monitoring feature.
+
+2. [X9SRG/X9DRG-HTF/X9DRG-HTF+] Add K2 GPU Temp reading support.
+
+======================================================================================
+
+Filename: SMT_X9_210.bin    version: 2.10    Date: 12-07-2012
+
+1. Fix Swiss Keyboard can't be saved as input/physical keyboard layout; Note: Clear Java cache required.
+
+2. [X9DRD] Version cut for OOB BIOS update.
+
+3. [X9DR7-TF+] Add "Fan C" monitoring.
+
+4. [X9DRW-7TFP+] Fix sensor polling function.
+
+5. [X9DRG-HTF/X9DRG-HTF+/X9SRG] Add a feature that when any Kepler/KNC Temp reading is missing, the fan speed in that zone is set to Full Speed.
+
+======================================================================================
+
+Filename: SMT_X9_190.bin    version: 1.90    Date: 12-04-2012
+1. Add new board X9SBAA support
+
+======================================================================================
+Filename: SMT_X9_189.bin    version: 1.89    Date: 11-28-2012
+
+1. [X9SRW] Fix the missing sensor of FAN 5 on web
+
+2.
+[OOB BIOS Update]
+a.Issue ID: 5271 smcibu, fix the below smcibu issues
+b.Issue ID: 41860, We cannot allow flashing BIOS and flashing IPMI fw simultaneously. 
+c.Issue ID: 41861, IPMI needs to generate an event log when we activate the product.
+d.Issue ID: 41835, Flashing BIOS via webpage never finishes.(if doing retry, please wait 5-6 minutes)
+
+3.
+[Storage Monitoring Feature]
+Issue ID: 42106, Fix the display of vendor name in Storage web page.
+
+4.
+[X9DRH] Fix the monitoring function of HDD.
+
+======================================================================================
+
+Filename: SMT_X9_188.bin    version: 1.88    Date: 11-20-2012
+
+1. [X9DRW-7TF+] 
+	- Add the sensor reading of memory temperature
+	- Add HDD support from I2C-1
+
+
+2. [X9SCE/X9SCD/X9SRD(MicroCloud)] Correct Power supply status incorrect from command
+Validation: 	
+	1) Issue command "ipmitool sensor | grep PS"
+	2) check status is correct or not (0x1=> OK, 0x2=> Fail)
+
+
+3. [X9DRH] Fix HDD sensor status and Storage Monitoring page unavailable
+Note: Storage Monitoring page is under IPMI Web-> Sever Health
+
+
+4. [X9DB3] Add new board ID support
+
+
+5. [X9DAX] fix the BIOS OOB issue Change BIOS configuration can't be successful.
+Validation Step:
+	1) Get BIOS current setting and save to USER_SETUP.txt 
+	./smcibu -H 172.31.17.55 -U ADMIN -P ADMIN -c GetCurrentBiosCfgTextFile -f USER_SETUP.txt -O 
+	2) Change BIOS setting in the file USER_SETUP.txt
+	3) Update BIOS setting ./smcibu -H 172.31.17.55 -U ADMIN -P ADMIN -c ChangeBiosCfg -f USER_SETUP.txt -R
+
+======================================================================================
+Filename: SMT_X9_187.bin    version: 1.87    Date: 11-15-2012
+
+1. Add a feature that LEDs are restored to off and Fans are restored back to setting when perform BMC cold reset.
+
+2.
+[HDD Boards]
+-Improve stability of monitoring on HDD Storage features.
+-Fix spelling of "Raid Level Qualifier"
+-Enhance error detection mechanism.
+
+3.
+[GPU Board] Add K20X GPU support
+
+4.
+[X9DRFF-7+/X9DRFF-7G+] Add chassis intrusion sensor
+
+======================================================================================
+
+Filename: SMT_X9_186.bin    version: 1.86    Date: 11-14-2012
+1. Fix Fan Mode can't reset to default factory setting
+
+2. Add power actions in iKVM Menu (including iKVM OSD menubar)
+   Validation steps:
+	1. Please verify power actions working properly from iKVM menu
+	2. Please verify power actions working properly from iKVM OSD menubar
+
+3. Fix Network settings can't be preserved after restoring IPMI configuration through IPMI Web
+
+4. Fix the issue 'Unknown' is misspelled under Network Link Status
+
+5. Add Battery Backup Power Monitoring page (excludes multi-node supported models, FatTwin)
+validatoin: 1. plug in BBP, 2. Please verify information under IPMI Web->Server Health-> BBP Monitoring
+
+6. [X9DRT-HF/-HF+/-F(TWIN)] Remove multi-node support to fix conflict with BIOS doing re-driver
+
+7. [X9DRG-HF, X9DRD, X9DRL, X9DRFF-7+, X9DRW-7TPF, X9DR3-LN4FP, X9DR3-F, X9DR7-TF+, X9DRH]
+	- Fix logical HDD size problem
+	- Add yellow warming for Rebuild status
+	- Add space for the HDD event log between slot and enclosureID 
+	- Add partially degraded support
+
+8. [X9DRFF-7+/X9DRFF-7G+] Fix fan fail LED can't be recovered when fan fail event deasserted
+
+
+9. [X9DRW-7TPF+] Add new board support
+	- Add sensor
+	- Add HDD monitoring
+
+10. [GPU Boards] Add NVidia K340 support
+
+11. [X9DRG-HTF+] Fix sensor reading of Intel Xeon Phi
+
+12. [X9SRL] Fix the fan mode selection display on web page
+
+13. [X9SCE-F] Fix ECC error interpretation of DIMM location
+
+14. [MicroCloud/Twin/FatTwin] Fix Input Current wording on Power Monitoring Page
+
+======================================================================================
+Filename: SMT_X9_185.bin    version: 1.85    Date: 11-01-2012
+
+1. [GPU] Add K20/Xeon Phi/ AMD Woodier GPU support
+
+2. [X9SCE] Set default fan duty cycle at 65% to work around backplane issue
+
+3. [X9DRG-HF, X9DRD, X9DRL, X9DRFF-7+, X9DRW-7TPF, X9DR3-LN4FP, X9DR3-F, X9DR7-TF+, X9DRH] Add features of LSI HDD support
+Validation: please verify information under Web GUI-> Server Health-> Storage Monitoring
+
+4. [FatTwin/Twin] Fix BIOS can't Get Power Supply FRU for Multi-Node 
+
+======================================================================================
+Filename: SMT_X9_184.bin    version: 1.84    Date: 10-30-2012
+
+1. Fix the Re-Drive functionality.
+
+======================================================================================
+
+Filename: SMT_X9_183.bin    version: 1.83    Date: 10-30-2012
+
+1. [X9DRH, X9DR7-LN4] Remove intermitten ON of UID after AC On.
+
+2. Fix the fan/mouse mode settings can't be restored successfully using ipmicfg.
+
+3. Fix the security issue that FW supports SSL Medium Strength Cipher Suites.
+
+4. [X9SRG] Fix the fan control on right zone.
+
+5. [X9DRFF] fix the VTT reading is not incorrect.
+
+6. [X9SRD] Correct Entity ID/Instance for a part of VMware certification.
+
+======================================================================================
+
+Filename: SMT_X9_182.bin    version: 1.82    Date: 10-25-2012
+
+1. Fix the issue the dedicated LAN LEDs (Activity & Link LED) don't get blinking
+
+2. Change the sender rule of Alert Email:
+	- If DNS hostname is configured, it will be applied to sender email address; for example, [hostname]@X9ABC.com.
+	- Otherwise, BMC MAC address will be assiged as default, Mac002590aabbcc@X9ABC.com (BMC MAC= 00:25:90:aa:bb:cc).
+	(X9ABC is the model name)
+
+3. Support BBP(Battery Back-up) sensor (Not supported for Twin/FatTwan)
+
+4. [X9DR6/i-F] 
+	- Remove UID
+	- Remove Non-Critical Event Log for Temperature Sensor per thermal guideline
+
+5. [X9SCFF] 
+	- Rename VDIMM AB to V_DIMM
+	- Adjust Hi/Lo Limits of VCC_PCH, VTT MEM, and 5VSB for SD3
+
+6. [X9DRW-7TPF]
+	- Remove Non-Critical Event Log for Temperature Sensor per thermal guideline
+	- Remove Optimal Mode
+
+7. [X9DRFF-7G+] Fix 12V Sensor Reading
+
+8. On Power Monitoring Page(for boards supporting hot-swap controller), clarify the power consumption message by removing Input Power information
+
+======================================================================================
+Filename: SMT_X9_181.bin    version: 1.81    Date: 10-11-2012
+1. Correct system GUID for applicatioin(SD3/SMCIPMITool/IPMIView) to detect firmware vendor type
+
+2. Workaround Power Support failure false alarm when PMBus is temporarily unavailable
+
+3. Fix the issue the local system can't ping BMC
+	Validation: plug in the lan cable to the dedicated and share port 
+	In Failover mode
+	1) ping BMC from the local system.
+	2) plug out either of lan cable and ping BMC.
+	
+	In Dedicated mode  or share mode 
+	1) ping BMC from the local system
+
+	Finally, do reboot test and make sure BMC network is alive.
+
+
+4. Improve web UI for the link status: grey out the link information on the network page when it's disabled
+
+
+5. Fix SDR isn't updated with Preserve Configuration checkbox Unchecked after firmware flash
+Validation: 1. flash firmware through web, 2. check SDR is correct or not.
+
+
+6. [X9SCD/X9SCE] 
+	- Fix CPU Temp Overheat can't be recovered
+	- No CPU Temp Overheat event logs
+	- Adjust de-rating for reading power consumption from LM25066
+		Validation: check power consumptioin from Web-> Server Health-> Power Monitoring page
+
+7. [X9SCD/X9SCE] Support HDD status monitoring
+	Validation:
+	- Please check overall HDD status from Sensor list.
+	- When error happens, please check SEL for HDD slot information.
+
+
+8. [X9DBL] Fix the issue inlet temperature is not available for ME to read
+	Validation: SMCIPMITool [IP] [Username] [Password] nm20 oemgettemp
+
+
+9. Add support of GPU Temperature reading for SD3
+
+
+10. [X9DRG-HTF+] 
+	- Add Fan G and Fan H sensor support
+	- Support high speed fan
+
+11. [X9DRFF-7+] 
+	- Fix 10G Temp reading
+	- Remove 1.5V sensor monitoring
+
+12. [X9DRFF-7G+] Fix Sensor Monitoring
+
+13. [TWIN] Fix PS status can't report correct status with multi-node BPN installed
+
+14. [FatTwin] Enable Power Monitoring page under System Health
+
+======================================================================================
+Filename: SMT_X9_180.bin    version: 1.80    Date: 09-28-2012
+
+1. [X9DRFF] Increase VBAT threshold to 3.552V.
+
+2. [X9DRW-7TF+] Add memory sensor.
+
+3. [X9DRFF-7G+] Add sensor support.
+
+4. [X9DRFF-7+] 
+a. Add PUE fan control mode.
+b. Increase VBAT threshold to 3.552V.
+c. Add Fan9 and Fan 10, and correct the range of 5V STB
+
+5. [X9DRG-HTF] Support 6 GPU reading.
+
+6. Adjust GPU threshold value and Fan Control Curve for KNC.
+
+7. Update the 0x34 GPU command.
+
+8. [X9DRG-HTF+] Add K10 support.
+
+9. Add network link status information on network web page.
+
+10 Add sub oem command, "Get Network Link Status" (0x30, Cmd: 0x70, Subcmd:    0x60)
+
+11. Fix power supply failure false alarm during production eburn test
+Note: Power supply failure false alarm comes from I2C errors
+Solution: Don't log the event until 3-times errors in a row
+
+12. [TWIN/X9DRT] Add power supply multi-master support.
+
+13. [X9DRD-LN4+] ADD Memory temperature present on IPMI web page.
+
+14. Modify the Japanese wordings on Java IKVM viewer.
+
+15. Solve X9SRH-7 issue,"FAN A speed is incorrect when set FAN to Standard Speed".
+
+
+======================================================================================
+
+Filename: SMT_X9_179.bin    version: 1.79    Date: 09-11-2012
+
+1. [X9DRG-HTF+] 
+a. Adjust fan control.
+b. Fix the fan mode setting.
+c. Remove Fan G and H, and GPU3 and GPU4 Temp.
+
+2. [X9DRG-HTF+/X9DRG-HF] Add Intel KNC GPU reading.
+
+3. [X9DRW_7TPF] 
+a. Correct sensor name FanA as Fan6, 
+b. Correct Fan mode selection as Standard and Full speed mode
+
+4. Fix LAN Mode unable to Get from OEM command
+Validation:
+    LAN mode get:    
+    Input : NetFn 0x30
+            Cmd 0x70
+            Param1 0x0c
+            Param2 0  [read]
+
+    Output: Completion Code 0x00
+            Data [dedicated/onBoard/failover]
+
+5. [X9QR7-TF] Fix screen will freeze when doing IPMI coldreset test.
+
+6. [X9SCE-F] Add sensor support
+
+7. [X9SRG] Add Kepler GPU support.
+
+8. [X9SRL_CF]
+a. Add fan control
+b. Solve issue 39460, fans doesn't full swing on overheated memory 
+
+======================================================================================
+Filename: SMT_X9_178.bin    version: 1.78    Date: 08-30-2012
+1. Fix Fan mode selection unavailable from IPMI Web
+
+2. [X9DRFR] Change upper thresholds of VBAT sensor to 3.552/3.696/3.84 (UNC/UC/UNR)
+
+======================================================================================
+Filename: SMT_X9_177.bin    version: 1.77    Date: 08-28-2012
+
+1. Fix 10Gb LAN speed cannot be detected from Windos (IssueID: 39947)
+Validation: Device Manager --> Network Adapters --> LAN Properties --> LAN Speed
+
+2. [X9DRFR/X9DRFF/X9DRFF-7+] Support Multi-Node power supply status monitoring
+
+3. [X9DRFF-7+/i+, X9SCFF, and X9SRD-CF] Add sensor support, and Fan Speed Control
+
+4. [X9DRT/X9DRT-F/X9DRT-IBFF/X9DRT-IQFF] Add memory sensors 
+
+5. [X9SRL-CF] Fix No FanA sensor reading item in IPMI web (IssueID: 38788)
+
+6. [X9SRI] Correct the legth of PCH Temp sensor in SDR for VMWare certification
+
+======================================================================================
+Filename: SMT_X9_176.bin    version: 1.76    Date: 08-16-2012
+
+1. Fix issue when one of CPUs de-assertion happens, FP LED and BEEP restore back to normal state
+
+
+2. Fix SOL can't work over SMASH
+Validation Steps:
+a. SSH login to BMC
+b. Once at command prompt, cd system1/sol1 
+c. Issue command: start 
+
+
+3. [X9SCFF, X9DRW-7TPF] Add sensor support
+
+
+4. [X9SRH] 
+- Fix FAN Failure function not working (IssueID: 39678)
+- Fix FP LED not blinking when fan fail and power fail happens (IssueID: 39478)
+Note: System reset required
+
+
+5. [X9SCD-F/-HF R1.10] Support HDD1/2 Status for R1.10 and backward compatibility
+Note: Board rev info supported by BIOS is required
+
+
+6. [X9SCD-F/-HF, X9SRD] Monitor Power Status from PWRFAIL-_SENSE (GPIOE3)
+
+
+======================================================================================
+Filename: SMT_X9_175.bin    version: 1.75    Date: 08-10-2012
+
+1. Fix CPU Overheat LED/Beep is on after Thermal Trip de-assert
+
+2. Add reset to default command with FRU/LAN setting erased
+Validation: IPMICFG -fde or IPMICFG -raw 30 41
+
+3. [X9DRT7-TF+]
+- Add GPU support
+- Add memory sensor
+
+4. [X9QR7-TF] 
+- Add Kepler GPU support
+
+5. [X9SRH7]
+- Fix ¡§IPMI Sensor reading no "CPU Temp" (IssueID: 39676) 
+- Add PCH sensor
+- Add FAN Hi/Lo limit
+
+6. [X9DRT-IBFF]
+- Fix IPMI sensor did not have VDIMM EFGH (IssueID: 39377) 
+Note: Reset to default required
+
+7. [X9SCD] Fix CPU Temp reports "Not Present" when temp stays in the range of "Low"
+
+======================================================================================
+Filename: SMT_X9_174.bin    version: 1.74    Date: 08-06-2012
+
+1. Improvements on Power Supply status monitoring:
+- Fix power failure LED stopped blinking when system is still in power failure state (IssueID: 39575)
+- Fix power supply wrong index (IssueID: 39513, 39511)
+- Improve on power failure detection (IssueID: 39469)
+- When power supply module being removed or unreachable through I2C, status shows "Not present or Failure detected" from IPMI Web
+- Support get power supply individual status(0x30 0x9D) for SD3
+
+
+2. Fix "Can't Login" issue when using Active Directory over SSL
+
+3. Fix VLAN issue IP may sometimes be gone after setting up VLAN
+
+4. [X9DRFR/X9DRFF] Fix the event log of fan fail
+
+5. [X9DR3-LN4+] Add GPU support for Revision of Board 1.20
+Note: compatible BIOS required
+
+6. [X9DR7-TF+] Change Slave Address of HWM to 0x5A
+
+======================================================================================
+
+Filename: SMT_X9_173.bin    version: 1.73    Date: 07-26-2012    SVN: 797
+
+1.Support Swiss Keyboard
+
+2.Skip Hotkey F4 in the hotkeys settings of preference menu tab.
+NOTE:
+IKVM version increases as 1.69.14
+If the user configured hotkeys before, please click "Default" button to load new default hotkeys. 
+
+3. Fix Japanese Keyboard can't take "_" key
+
+4.[X9DRFF, X9DRFR] 
+a. Remove chassis intrustion.
+b. Remove non-critical event log of memory temperature.
+
+5.[X9DRG-HF]
+a. Add Kepler GPU support.
+
+6.[X9SRH7] Add sensor support, and Fan Mode Control.
+
+7.[X9QR7-TF] 
+a. Adjust Fan Speed Control Zone.
+b. Remove PCH Temp from Fan Control.
+c. Fix 10G sensor.
+
+======================================================================================
+
+Filename: SMT_X9_172.bin    version: 1.72    Date: 07-20-2012    SVN: 755
+
+1. Improve on Power Supply status monitoring 
+- Support PWS721P Power Supply status monitoring
+- Log Power Supply failure events when 3-times errors in a row
+
+2. Fix Unit Reset cannot redirect to login page (IssueID: 38449)
+
+======================================================================================
+Filename: SMT_X9_171.bin    version: 1.71    Date: 07-18-2012    SVN: 741
+
+1. Fix intermittent report of Power Supply Failure.
+
+2. Fix the IE8 compatibility issue that the display of Fan mode is missing
+
+3. [X9QR7-TF] Fix matching slot number for GPU idetification.
+
+4. [X9DRT-F] Remove FAN2 sensor.
+
+5. Provide command access to Power Supply FRU.
+
+======================================================================================
+
+Filename:	SMT_X9_170.bin	ver1.70 Date: 07-13-2012
+
+1. [X9DR3-LN4+, X9DR7-TF+, X9QR7-TF, X9DRG_HTF+]
+Fix issue BMC initialization failed when plugging 2 or more power supplies
+
+2. Fix User with privilege "No Access" can't be configured correctly from IPMI Web
+Validation: Please check user privilege by command, ipmitool -I lanplus -H [IPMI-IP] -U ADMIN -P ADMIN user list
+
+3. [X9SRE-DS018] Fix memory reports event logs when reading is not available (memory throttling disabled)
+
+4. [X9DRL-3F] Fix CPU2 VCore/VSA reports reading/event when only CPU1 is installed
+
+5. [X9DRT-HF+] Add 12V Protection feature
+
+6. [X9QR7-TF] Change slave address of HWM to 0x5A
+
+7. [X9DRT-HF] Fix CPU Temp shows N/A from IPMI Web
+
+8. [X9DRG-HTF+] Add CPU Temp reading in celsius degree
+
+======================================================================================
+Filename:	SMT_X9_169.bin	ver1.69 Date: 06-29-2012
+
+1. Fix DOS firmware update tool, dUpdate, can't preserve network settings
+Validation: issue command, "dUpdate -f SMT_X9_169.bin -r n", and verify if network setting are preserved
+
+2. Detect power supply dynamically
+Note: Support SMC power supply, standard power supply and the power supply connected to ME
+1) SMC power supply which followed PMbus Spec (slave address: 0x78 , 0x7a , 0x7c, and 0x7e)
+2) SMC old power supply (slave address: 0x70 , 0x72 , 0x74, and 0x76)
+3) Standard power supply (slave address: 0xb0, 0xb2, 0xb4, and 0xb6)
+4) power supply connected to ME, not BMC
+
+3. Filter unknown event logs from Windows with OEM event type: 0xDE 
+
+4. [Romley Platform] Display CPU Temperature in Celcius degree
+
+5. [X9SRE-DS018]
+- Add memory temperature monitoring
+- Remove fan Optimal Mode selection from IPMI Web
+
+6. [X9QR7-TF]
+- Adjust PWM of fan speed control
+- Add buzzer sound when overheat
+- Fix the sensor display on non-10G board.
+
+7. [X9DAX] Fix LED control when power fail/fan fail/overheat.
+
+8. [X9DRD/X9DBL]
+- Add buzzer sound when overheat
+- Add JOH1 LED control (Note: Setting from BIOS Needed for X9DBL-iF/3F V1.02, X9DRD-iF V1.03)
+
+9. [X9SRG/X9DRG] Add memory temperature monitoring
+
+10. [X9SRL] Increase VSB NC threshold value
+
+11. [X9DRG-HTF+]
+- Enable fan seep mode setting from IPMI Web
+- Add memory temperature monitoring
+
+12. [X9SPU] NMI triggered by GPIO9 per hardware design
+
+======================================================================================
+Filename:	SMT_X9_168.bin	ver1.68 Date: 06-19-2012
+
+1. Output GPIO7 as Open Drain when Overheat occurs, except for X9DBL, X9DBU, X9DR7-LN4F, X9DRD-iF, X9DRD-7LN4F, and X9SRE-DS018
+
+2. [X9DRD-iF, X9DRD-7LN4F, X9DRF-R, X9DRF-F] Support Fan Power Utilization Effectiveness(PUE) Mode 
+
+3. [X9DR7-TF+/X9DR3_LN4+] Display CPU Temp in celcius degree
+
+4. [X9DRW-7TFP] Add sensor support
+
+5. [X9SRG/X9DRG]
+- Fix PWM control when there is no GPU card in slots
+- Fix PWM of zone control when there is non-GPU card in slots
+Note: Need BIOS integration
+
+6. [X9DRFR]
+- Adjust Hi/Lo Limits for SDIII
+- Correct location of memory reading
+- Add the fan speed mode
+- Fix CPU Temp in negative value
+ 
+7. [X9SRE-DS108]
+- Fix 1.1V, 5V, and RT2 readings
+- Add blinking funtion of UID
+
+======================================================================================
+Filename:	SMT_X9_167.bin	ver1.67 Date: 06-01-2012
+1. [X9DRFF] Add sensor support, and fan speed mode control
+2. [X9QR7-TF]
+- Adjust fan mode of fan speed control, and add GPU Temp reading
+- Correct calculation of VCORE2 and System Temperature reading
+
+3. [X9DRFR]
+- Add CPU and memory reading in degree C
+- Remove FANB reading.
+
+4. [X9DR7-RF+] Remove 1.5V sensor
+5. [X9SPV] Correct PCH Temperature reading
+
+6. Remove PROC_HOT CPLD event because it's duplicated from CPU Overheat event
+
+======================================================================================
+Filename:	SMT_X9_166.bin	ver1.66 Date: 05-24-2012
+1. Preserve Network settings when Factory Default is executed
+2. Fix Clear Chssis Intrustion can't work intermittently
+3. [X9SPV]	- Support PCH Reading
+		- Swap FAN2 and FAN4 reading
+		- Enable front panel LED for fan/power fails
+4. [X9SRD] Add power monitoring from hot-swap controller, LM25066
+Validation: IPMI Web-> Miscellaneous-> Power Monitoring
+
+======================================================================================
+Filename:	SMT_X9_165.bin	ver1.65 Date: 05-16-2012
+1. Fix video messup issue during firmware cold reset
+
+2. In FSC Optimal mode, fix FAN(in Zone2) set to full speed when CPU Overheat happens
+
+3. Fix OEM Command for SD3 to read CPU Temp
+
+4. Correct Entity ID for VMWare Certification
+
+5. [X9DBL/X9DBU/X9SCV] Correct ECC Error DIMM location interpretation 
+
+6. [X9QR7-TF+]	
+	- Fix the fan naming
+	- Fix Fan6 and Fan7 reading
+	- Fixed fan position, VDIMM naming, and add Lan Temp
+
+7. [X9SCV] Add high/low limit for SD3
+
+8. [X9DRD_LN4]	Fix the sensor number of VDIMM
+
+9. [X9DBL]	
+	- Fix Fan Speed Control funcion
+	- Fix PCH sensor reading
+
+10. [X9DR7-TF+]	
+	- Adjust high/low limit of 10G Temp
+	- Change the name from "LAN Temp" to "10G Temp"
+
+11. [X9SRD] Remove chassis intrusion per Hardware Design
+
+======================================================================================
+Filename:	SMT_X9_164.bin	ver1.64 Date: 05-08-2012
+1. Fix CPU/PCH Temp reading shows not available sometimes
+2. [X9SPU/X9SCL/X9SCM] Add Fan Speed Mode control in IPMI Web-> Configuration-> Fan Mode
+3. [X9SCD/X9SCM/X9SPU/X9SRD/X9SRI] 
+	- Correct threshold of System and Peripheral Temp	
+	- Correct fan speed calculation
+	- Ignore NC event log of FAN per Thermal guideline
+
+4. [X9SCM] Add sensor of Peripheral Temp
+5. [X9SRD] Fix Vcore sensor reading
+
+======================================================================================
+Filename:	SMT_X9_163.bin	ver1.63 Date: 05-04-2012
+1. Operator can't lauch IPMI Web-> Remote Control-> SOL Console
+2. [X9DR7-TF] Adjust high/low limit for SuperDoctor III
+3. [X9DBL] 1. Fix the -12V reading
+	   2. Correct the System and Peripheral Temperature reading
+4. [X9SCM, X9SCL, X9SCA, X9SCM_II, X9SCD, X9SPU] 
+	- Fix ECC Error DIMM interpretation for UP Bromolow
+
+5. [X9QR7-TF]	1. Change the fan name per silk screen
+		2. Adjust Vcore3 reading calculation
+		3. Add 5V sensor
+
+6. [X9DRT-HF] Prevent system on after 12V protection is triggered
+
+======================================================================================
+Filename:	SMT_X9_162.bin	ver1.62 Date: 04-27-2012
+1. [X9SPU-F]	Change the naming of FANA to FAN5
+2. [X9SCA]	Add fan mode menu under IPMI Web-> Configuration
+3. [X9DR7-LN4F]	Adjust high/low limit for SDIII
+4. Fix BMC responded busy when the first AC on
+
+======================================================================================
+Filename:	SMT_X9_161.bin	ver1.61 Date: 04-26-2012
+1. Add new board X9QR7-TF support
+	- Update high/low limit for SD3
+
+2. Add new board X9DR7-TF+ support
+3. Add new board X9SRE-DS108 support
+
+4. [X9DRT-HF] Add 12V protection feature
+5. [X9DR7-LN4F] Fix 1.1V reading
+6. Fix the incorrect SEL time
+7. Fix IPMI Web SOL Authentication error with newly created users
+8. Fix ProcHot events filled up SEL list
+9. Fix Dedicated LAN ustable issue by adjusting PHY setup time
+
+======================================================================================
+Filename:	SMT_X9_160.bin	ver1.60 Date: 04-18-2012
+1. Add new board X9DRT-F support
+2. Add new board X9DAX support
+
+3. [X9QR7/X9DRT-F] Add Fan Mode support from IPMI Web
+Validation: IPMIWeb-> Configuration-> Fan Mode
+
+4. [X9SCM_II] Support NMI handler by GPIOE9
+5. [X9SCM_II] Fix FanA always runs at full speed
+6. [X9SPV] Add CPU Temp reading from HWM NCT6776F
+7. [X9SPV] Support Fan Speed Control
+8. [X9SCV/X9SCM_II] Adjust the upper threshold System and Peripheral Temp per Thermal guide
+9. [X9DRX] Fix BMC dedicated LAN stop working issue
+
+10. Intepret PCI Errors from Email Alert
+
+======================================================================================
+Filename:	SMT_X9_159.bin	ver1.59 Date: 04-12-2012
+1. Fix SOL unable to launch by JDK security method
+Validation: IPMI Web-> Remote Control-> SOL
+
+2. [X9DBL] Enabled Power Fail LED
+
+======================================================================================
+Filename:	SMT_X9_158.bin	ver1.58 Date: 04-11-2012
+
+1. Prevent clock change during firmware cold reset
+Validation: 1. AC on/off test, and 2. cold reset test
+
+2. Fix SOL fails to launch by cipher 1 authentication
+
+3. Fix AD Server authentication fail
+
+4. Intel Romley platform Package State is unable to enter the C6 state, stay in C2 state
+The solution: Virtual USB1.1 enters suspend mode and wake up the system by the remote Keyboard/mouse
+Validation:
+	1. boot windows 2008 Server SP1 x64
+	2. Run utility  
+	3. check Package State 
+	4. Package State more than 85% Pass
+
+5. Renew SSL certificate, validated from 04/11/12 to 04/11/14
+Validation: IPMI Web-> Configuration-> SSL Certification
+
+6. [X9SCM_II/X9SCA/X9SCD] Enabled CPU overheat beep
+
+7. [X9SRL] Remove FAN5 from sensor list
+
+8. [X9SPV] Correct High/Low limit of Pheripheral Temperature for SD3
+
+======================================================================================
+Filename:	SMT_X9_157.bin	ver1.57 Date: 04-05-2012
+
+1. Fix security issue: IPMIv2.0 Cipher 0 Authentication(no password) is not allowed
+Validation: User can't log in BMC from commands with parameters "-I lanplus -C 0" 
+Example: ipmitool -I lanplus -C 0 -U ADMIN mc info
+
+2. [X9DRT-HF+] Adjust High/Low limits of "VDIMM CD"
+
+3. [X9SCV/X9SPV] Correct VCCSA Reading
+
+======================================================================================
+Filename:	SMT_X9_156.bin	ver1.56 Date: 04-02-2012
+1. Fix SPI clock issue with new bootloader
+Note: AC cycle required
+
+2. Support logs of Web Administration at IPMI Web Maintenance -> System Event log
+Note: User log in/out & KVM log in/out status will be maintained.
+
+======================================================================================
+Filename:	SMT_X9_155.bin	ver1.55 Date: 03-29-2012
+1. Fix System informatioin missing from IPMI Web
+2. [X9DRT] PECI disabled from HWM NCT7904D per hardware design
+Note: AC cycle required.
+
+3. [X9DRT-HF+] Enable Fan Mode from IPMI Web
+
+======================================================================================
+Filename:	SMT_X9_154.bin	ver1.54 Date: 03-27-2012
+
+1. Add new board X9DRT_HF+ support
+2. Add new board X9DR7_LN4F support
+3. Correct ECC Error intepretation for X9 design
+4. Fix Gateway IP reset to 0 whenever subnet mask changes
+5. Correct IPMI Event ID match with SEL record ID
+6. [X9SCM_II] Enable Fan Mode from IPMI Web
+
+======================================================================================
+Filename:	SMT_X9_153.bin	ver1.53 Date: 03-16-2012
+
+1.	[X9DBU] Fix PCH Temp missing in the sensor list
+2.	[X9SRG] Fix GPU1/2 Temp are missing in the sensor list
+3.	[X9SRG/X9DRG]Enable slowdown and shutdown GPU
+Note: This is the procedure mentioned by X9DRG and X9SRG Thermal Guideline.
+
+To validate the slow down and shutdown functions, it is recommended to heat up the
+card with a hair dryer. Please see Figure 5 (Page 12) for slow down and shut down
+signal locations. The original 3.3V signal goes to 0V when it reaches the temperature
+threshold (slowdown at 91oC, shutdown at 96oC).
+
+======================================================================================
+Filename:	SMT_X9_152.bin	ver1.52 Date: 03-12-2012
+
+*** Note: Factory Default required ***
+1. Adjust Fan Speed reading formula and thresholds for boards using NCT7904D
+2. [X9DRW_LN4+]	Adjust VCORE upper thresholds as 1.488(UNC), 1.52(UC) & 1.552(UNR)
+3. [X9QR7]	Remove one extra entry of CPU4 Temp
+4. [X9DBU]	Add PCH Temp sensor monitoring
+5. [X9DRH]	Adjust High/Low limit of LAN Temperature
+6. [X9SRG]	Add GPU1/GPU2 Temp reading and Fan Speed Control
+7. [X9DRG]	Adjust PWM for Fan Speed Control
+8. [X9DRG]	Change the GPU Temp upper thresholds as 85(UNC), 90(UC), and 95(UNR)
+
+======================================================================================
+Filename:	SMT_X9_151.bin	ver1.51 Date: 03-01-2012
+1. Fix CPU Overheat threshold as DTS/PECI reaches up to -2
+2. [X9DRD]	Adjusted Fan Speed Control
+	- Duty cycle at initial state down to 10%, and
+	- Full speed as DTS up to -5, intead of -10 
+
+3. [X9DR3-LN4+]	Allow PROCHOT_P0/1_N and THERMTRIP_P0/1_N event triggered by GPIO Interrupts
+4. [X9DRT]	Fix IB Temp reading missing
+5. [X9DRG]	Fix GPU tempereature reading
+6. Add new motherboard X9SPU support
+
+======================================================================================
+Filename:	SMT_X9_150.bin	ver1.50 Date: 02-24-2012
+1. Correct Fan Speed formula for board using HWM NCT7904D
+2. [X9DRF] Support Fan Speed Control through PWM1/PWM2
+3. Improved on IPMI SEL circular buffer for Total Event and Maximum Record ID 
+   Validation:
+	1. If the total event is over 512, it will delete 1 event and add 1 event, so the total event is always 512
+	2. The SEL record ID will reach until 65535 then go back to 1 (ipmitool sel elist)
+
+4. Correct sensor length of CPU Temp
+   Validation:
+	Issue "ipmitool sensor list" and check if "CPU Temp" is displayed correctly
+
+======================================================================================
+Filename:	SMT_X9_149.bin	ver1.49 Date: 02-17-2012
+1. [X9DRT-HF+] Support sensor reading & power monitoring from Hotswap controller ADM1276
+*** AC cycle required
+
+2. Improve Fan Speed reading accuracy
+3. Add new motherboard X9DRF support
+4. [X9QR7] Correct CPU3/4 Temp reading
+5. [X9DRG] Matching slot number given by BIOS to support GPU Temp reading
+6. [X9DRG] Fix Fan reading unstable issue (IssueID: 34927)
+
+======================================================================================
+Filename:	SMT_X9_148.bin	ver1.48 Date: 02-09-2012
+1. Add new motherboard X9QR7 support
+2. [X9DRH]	Remove 1.1V and 15.V reading per design
+3. [X9DRG]	Fix FAN Limit for SD3
+4. [X9DRG, X9DRW, X9DRH]	Support 10G Temp reading
+5. [X9DRT]	Support Infiniband Temp reading
+6. [X9DRT-HF]	Support power monitoring from HotSwap Controller, ADM1275
+*** AC cycle required
+
+7. Fix CPU Overheat LED for motherboard using HWM NCT6776F
+
+======================================================================================
+Filename:	SMT_X9_147.bin	ver1.47 Date: 02-02-2012
+1. [X9D_] Correct Fan Control table for mb using HWM NCT7904D
+2. [X9DRT] Fix SOL issue as SP1 to SI2 config enabled
+3. Disable PMBUS_ALERT from CPLD
+	Validation:
+	1.       Use redundancy PWS, latest BIOS, IPMI FW 1.46, WS2008R2 SP1, & latest Intel PTU
+	2.       Pull out 1 PWS module and trigger a power failed condition ¡V Make sure PTU report PROCHOT# assertion
+	3.       Put PWS back to normal condition, and upgrade IPMI FW to attached one, FW 1.47beta
+	4.       Pull out 1 PWS module and trigger a power failed condition ¡V Make sure PTU DOES NOT report PROCHOT# assertion
+
+4. [X9SRW/X9SRL/X9SRG] Support OEM Commands for BIOS to set Soft Watchdog Timer
+
+======================================================================================
+Filename:	SMT_X9_146.bin	ver1.46 Date: 01-26-2012
+1. [X9SRI/E]	Enable fault LED indicator as CPU Overheat, Fan Fail, or Power Fail occurs
+2. Filter out events logged from ME with OEM Record Type 0xdd (IssueID: 33609)
+3. Log power supply failure when consecutive twice errors in a raw to prevent false alarm (IssueID: 33263)
+4. [X9DRT]	Enable SP1 to SI2 config for COM port setting
+   Validation: 1) SOL and 2) COM port
+
+======================================================================================
+Filename:	SMT_X9_145.bin	ver1.45 Date: 01-19-2012
+1. [X9SPV, X9SRD]	Add fan control page
+2. [X9DBU]		Fix 5VSB sensor reading
+3. [X9DRD_7LN4]		Allow interrupt to log CPLD events
+4. CPU Temp reading caculated from TjMax and adjust the threshold per thermal guide
+5. Support OS Boot/Stop description from Alert Email (IssueID=122321)
+
+======================================================================================
+Filename:	SMT_X9_144.bin	ver1.44 Date: 01-10-2012
+1. [X9DR6-LN4F]		Allow interrupt to log CPLD events
+2. [X9SRW]		Fix Fan4 missing issue
+3. [X9SRD, X9DBL, X9DRD-7LN4F]	Support sensor status reporting
+
+======================================================================================
+Filename:	SMT_X9_143.bin	ver1.43 Date: 01-05-2012
+1. [X9DBU] Fix Power Fail LED not working (IssueID=32913)
+
+2. [X9DRD] Fix COM2 not working with Rev1.42
+Validation:
+    1. Connect null modem cable between X9DRD MB and your computer
+    2. Enter X9DRD BIOS Setup and change Advanced -> SIO Configuration -> Serial Port 2 Configuration -> Serial Port 2 Attribute item to COM 
+    3. Run HyperTerminal on your computer
+    4. POST information in HyperTerminal
+
+
+3. [X9DRG] Fix NMI can't be triggered (ProjectID=4290)
+Validation: ipmitool -H [bmc-ip] -U ADMIN -P ADMIN power diag
+
+4. [X9DRG] Corrected PWM setting for FSC (IssueID: 31355)
+5. [X9DRG] Fix ECC Error Event discription from Alert Email (IssueID=34138)
+
+======================================================================================
+Filename:	SMT_X9_142.bin	ver1.42 Date: 12-22-2011
+1. Fix sensor reading unstable issue for board using NCT6776F (IssueID: 33138; FANA is always reading larger)
+2. [X9DRW_LN4+] Fix the missing sensor of 5VSB
+3. [X9SCM/L, X9SCA/I, X9SCD, X9SRI, X9SRL, X9SCV] Correct lower threshold of Vcore sensor for board using NCT6776F
+Note: 0.48(LNR) 0.512(LC) 0.544(LNC)
+ 
+4. [X9SRI, X9SRL, X9SRW] Add PCH Temp sensor
+5. [X9DRL, X9DRG] Fix CPU2 Overheat false alarm (IssueID=33795)
+
+======================================================================================
+Filename:	SMT_X9_141.bin	ver1.41 Date: 12-16-2011
+1. Correct formula of Vcore reading (IssueID=33791)
+2. [X9SRI/E] Fix Fan Mode selection hidden from IPMI Web
+3. [X9DRG] Fix uninstalled fan reports reading
+4. [X9DRL] Fix false alarm of CPU Overheat
+
+======================================================================================
+Filename:	SMT_X9_140.bin	ver1.40 Date: 12-14-2011
+1. Support X9SRL board
+2. Support X9SCV board
+3. Support X9DRD-7LN4F board
+4. [X9SRW] Add Fan4 for V1.01 board
+5. [X9SRI/E] HWM NCT6776F Configuration
+6. [X9SRI/E] Add Fan Mode Selection (Issue ID: 32711 and #33018)
+7. [X9SRI/E] Fix OEM command for SD3 to read sensors (Issue ID: 33304 and 33054)
+8. [X9DBU] Set high/low limits in HWM NCT7904D for applications
+9. [X9DRT, X9DRT_SG] Adjust de-rating for reading power consumption from LM25066
+10. Fix Fan Mode Seletion hidden from IPMI Web
+11. Fix CPU2 reports "Not Present" when Overheat triggered
+
+======================================================================================
+Filename:	SMT_X9_139.bin	ver1.39 Date: 12-06-2011
+
+1. Support OEM command to get PCH Temp: raw 0x30 0x95
+2. Remove un-supported Fan Mode from IPMI Web
+3. Log CPU overheat event as error occurs 3 times in a row
+Note: Avoid false alarm
+
+4. [X9DRX] Correct Fan speed reading offset of FAN1,2 & 6
+5. [X9DRX] Support OEM Command to set/get BIOS version & release date
+
+6. [HWM NCT7904D] Correct VCore threshold in HWM NCT7904D for SD2, SD3, etc
+Note: AC Cycle Required
+
+7. [HWM NCT7904D] Patch Chassis Intrusion status monitoring for HWM NCT7904D A4 chip
+Note: Chassis Intrusion status is latched in HWM NCT7904D A4 version, but read-clear in A2.
+Validation: In A4 chip, to clear chassis intrusion, user has to click on "reset chassis intrusion" button from IPMI Web.
+
+8. Fix set user privilege command through KCS
+   Validation: 
+	1. Create a new user by the below command flow:
+	ipmitool user set name [id] [name]
+	ipmitool user set password [id] [password]
+	ipmitool user enable [id]
+	ipmitool user priv [id] [priv] 1
+	ipmitool channel setaccess 1 [id] callin=on ipmi=on link=on privilege=[priv]
+
+	2. Log into IPMI web and check if privilege complaint with features
+
+======================================================================================
+Filename:	SMT_X9_138.bin	ver1.38 Date: 12-01-2011
+
+1. [X9DRT] correct de-rating value to support power consumption from LM25066
+2. [X9SRD, X9DRD_LN4] add board ID support
+
+3. [X9DR_] Remove PCH Init from HWM NCT7904D Init
+Note: PCH will be read from ME (SMLink0)
+Validation: AC Cycle required after firmware update
+
+4. [X9DRG] Correct Fan Speed Control source mapping 
+
+======================================================================================
+Filename:	SMT_X9_137.bin	ver1.37 Date: 11-29-2011
+
+1. [X9DRD] 
+	- Configure sensor high/low limits for SDHM (IssueID=33297)
+	- Fix fan speed control
+	- CPU Ovheat LED control through HWM NCT7904D (IssueID= 33090, 30630)
+
+2. [X9DR6-F] Fix HWM NCT7904D Init (IssueID=33025,30307,33297,32774,33017,33079)
+
+3. Fix iKVM quality poor issue (IssueID=31930,4486)
+
+======================================================================================
+Filename:	SMT_X9_136.bin	ver1.36 Date: 11-22-2011
+
+1. Set the fan speed threshold per Thermal Design Guide as 300, 450, 600(rpm)
+2. Make sensor name standard with SuperDoctor, VTT and VDIMM
+3. Add PCH sensor
+4. [X9DRW+] Fix the missing sensor, +5VSB
+5. [X9DRG] Add On Board LAN Temp sensor reading
+6. [X9DRD] Correct HWM address as 0x5C (IssueID: 33090, 32645, 32718 & 30599)
+7. Fix iKVM alive after the web session close
+Validation: iKVM console should be timed out as web session close
+
+8. [X9DRT_SG] Set default LAN Interface as Share LAN
+
+
+======================================================================================
+Filename:	SMT_X9_135.bin	ver1.35 Date: 11-18-2011
+
+1. Bug Fix Operator priviledge can't launch KVM through IPMI GUI (IssusID: 33001)
+2. Bug Fix unexpected strings shown on reload IPMI Config page (IssueID: 3926) 
+3. Bug Fix bridge command through KCS
+4. Add PCH temperature reading as Fan Speed Control source for mb using NCT7904D
+5. [X9DRG] 
+	- Recreate sensor list, and add PCH Temp reading
+	- Bug Fix CPU Temp reading
+	- Adjust fan mode available for X9DRG, and default setting as Optimal Mode.
+
+6. [X9DRT-D-SG007] 
+	- Power on/off through HWM 7904D
+	- Report power consumption through LM25066
+	- Bug fix sensor reading
+
+======================================================================================
+Filename:	SMT_X9_134.bin	ver1.34 Date: 11-14-2011
+
+1. [X9SRI/E] HWM NCT6776F Initialization
+2. Enable Inlet Temp reading for motherboards using HWM NCT6776F
+
+======================================================================================
+Filename:	SMT_X9_133.bin	ver1.33 Date: 11-11-2011
+
+1. [X9DRW, X9DRX] Bug fix HWM NCT7904D support
+2. [X9DRT] configure sensor high/low limits for SDHM
+3. Enable Inlet Temp reading for NM
+
+4. Bug fix security issue on IPMI Configuration & KVM prview snapshot
+Validation:
+	IPMI Configuration is downloadable by User privilege:
+		1) save config as Administrator, and then log out
+		2) login as User
+		3) save config by the link
+		http://IP-OF-IPMI/cgi/url_redirect.cgi?url_name=save_config.bin&url_type=file
+
+	KVM preview snapshot can be accessed without authentication
+		http://IP-OF-IPMI/images/Snapshot.bmp
+
+======================================================================================
+Filename:	SMT_X9_132.bin	ver1.32 Date: 11-09-2011
+
+1. Allow Operator access UID control
+2. Add hardware monitor NCT7904D support for X9DRW-LN4+, X9DRX
+3. Add Node Management support for X9SCA & X9SCM_II
+*** Required BIOS support
+
+4. Add Device/SSID for X9DRT-SG, X9SRL, X9SCV
+
+======================================================================================
+Filename:	SMT_X9_131.bin	ver1.31 Date: 10-27-2011
+
+1. [X9DR6] Bug fix CPU Temp reading problem (IssueID: 32495, 32594)
+2. [X9SRG] Bug fix Fan sensor naming doesn't match with silkscreen (IssueID=32536)
+3. [X9DBU] Adjust formula of -12V sensor reading
+4. [X9DRL] Correct sensor naming of VDIMM/EFGH & FANA/B (IssueID: 32367)
+5. Bug fix Administrator's username visible to Operator privilege at IPMI Web
+
+======================================================================================
+Filename:	SMT_X9_130.bin	ver1.30 Date: 10-19-2011
+
+1. Filter out event logged by Windows
+2. [X9SCM/X9SCA] Adjust formula of -12V sensor reading
+3. [X9DR6-F] Patched for hardware change rev 1.10 and earlier
+Note:	1) Fixed IPMB conflict after reading PCH temp(IPMI Rev1.29)
+	2) Backward compatible for hardware rev 1.10 and earlier, which doesn't support PCH temp to avoid bus hange issue
+
+4. [X9DR6-LN4+, X9DR6-F] Bug fix LED stop blinking when power or fan fail asserted
+5. Add new motherboard X9DRL, X9DRH & X9SRG support
+
+======================================================================================
+Filename:	SMT_X9_129.bin	ver1.29 Date: 10-11-2011
+
+1. [X9DR6-LN4+, X9DR6-F] Remove Clear Chassis Intrusion Button from Web for X9 using HWM NCT7904D
+
+2. [X9DR6-LN4+, X9DR6-F] Add PCH and Memory temperature reading as Fan Speed Control source
+Validation: Please update BIOS with correct setting for PCH Thermal Reading
+
+3. Bug fix undefined "SMTP SSL Auth" from Web
+
+======================================================================================
+Filename:	SMT_X9_128.bin	ver1.28 Date: 10-05-2011
+
+1. Bug fix SOL corrupted display at bios post
+
+2. [X9DR6-LN4+, X9DR6-F] Bug fix Fan Speed Control during Fan Fail asserted
+
+3. [X9DR6-LN4+, X9DR6-F] Bug fix Fan Fail LED doesn't turn on until 10s later or longer
+ 
+
+======================================================================================
+Filename:	SMT_X9_127.bin	ver1.27 Date: 09-29-2011
+
+1. [X9DR6-LN4+, X9DR6-F, X9DRT] Bug fix for Hardware monitor(NCT7904D) Init & Fan Speed Control
+***************************************************
+Validation: AC cycle required after firmware update
+***************************************************
+
+2. Add new motherboard X9SRW support
+
+3. Bug fix KVM poor quality issue
+
+======================================================================================
+Filename:	SMT_X9_126.bin	ver1.26 Date: 09-26-2011
+
+1. [X9DR6-LN4+, X9DR6-F, X9DRT] Bug fix for Fan Speed Control
+
+2. [X9DR6-F] Filtered out CPU Errors false alarms during on/off test 
+
+3. [X9DRT] Corrected sensor name of DIMM Voltage as VDIMM/ABCD and VDIMM/EFGH
+
+4. Allowed Operator full access to KVM, Mouse Mode, and Virtual Media
+Validation: Operator should be able to change mouse mode, virtual media setting, and access KVM as well
+
+======================================================================================
+Filename:	SMT_X9_125.bin	ver1.25 Date: 09-22-2011
+
+1. [X9DR6-LN4+] Turn on/off Fan Fail LED during fan fail Asserted/De-asserted
+
+2. [X9DR6-LN4+, X9DRT] Bug fix sensor reading during power on/off test 
+***************************************************
+Validation: AC cycle required after firmware update
+***************************************************
+
+3. [X9DRT] Removed Chassis Intrusion from sensor list
+
+======================================================================================
+Filename:	SMT_X9_124.bin	ver1.24 Date: 09-16-2011
+
+1. Bug fix on HW monitor init
+Validation: run system on/off test, and check the sensors are reporting correctly
+
+2. Bug fix on Fan Speed Control
+Validation: 	1) change fan mode through Web; Configuration -> Fan Mode
+		2) Full Speed after fan fail
+
+3. Allowed Operator to change Mouse Mode
+Validation: log in as an Operator, and change mouse mode through Web; Configuration -> Mouse Mode
+
+======================================================================================
+Filename:	SMT_X9_123.bin	ver1.23 Date: 09-09-2011
+
+1. Support X9DR6-LN4+ using HERMON.
+
+2. Fix the bug of chassis intrusion
+Short the chassis intrusion jumper on the board, the detection will show in the web.
+
+3. Added keyboard LED patch.
+Validation: use KVM over the web, and press “Num Lock?to check if LED is respond.  
+
+4. Enable Operator to full access of KVM.
+Validation: virtual media can be accessed by Operator account
+
+5. Add GPU reading temperature for X9DRG.
+
+6. Update Manufacturer I.D.
+Validation: use ipmitool to check the mc info, and verify the manufacturer ID is 10876
+
+======================================================================================
+
+Filename:	SMT_X9_122.bin	ver1.22 Date: 09-02-2011
+
+1. Adjust threshold of OH for X9SCD board.
+2. Add sensor list to support additional board, X9DRG.
+======================================================================================
+
+Filename:	SMT_X9_121.bin	ver1.21 Date: 08-29-2011
+
+1. Fix the bug that the virtual temperature is not updated. Thus, fan speed reaction to temperature is functional.
+2. Add sensor list to support additional board, X9DRD.
+
+======================================================================================
+Filename:	SMT_X9_120.bin	ver1.20 Date: 08-24-2011
+
+1. Restore Fan Speed setting after Fan Fail recovered
+NoTE: 1) all the fans are forced to be full-speed during fan fail asserted, 
+2) as fan fail de-asserted, fan speed control restored as the fan speed mode is.
+
+
+======================================================================================
+Filename:	SMT_X9_119.bin	ver1.19 Date: 08-23-2011
+
+1. Hardware monitor NCT7904D Initialization
+2. [X9DR6/X9DA6/X9DRT] Fan Control
+
+======================================================================================
+Filename:	SMT_X9_118.bin	ver1.18 Date: 08-16-2011
+
+1. [X9SCD] Adjust fan speed according to the fan mode after post
+2. Add new motherboard X9DRT support
+
+======================================================================================
+Filename:	SMT_X9_117.bin	ver1.17 Date: 08-10-2011
+
+1. [X9SCD] Add Fan Control
+
+======================================================================================
+Filename:	SMT_X9_116.bin	ver1.16 Date: 08-04-2011
+
+1. [X9SCD] Read CPU Temperature from ME
+
+======================================================================================
+Filename:	SMT_X9_115.bin	ver1.15 Date: 07-29-2011
+
+1. [X9DR6] Read CPU Temperature from ME
+
+======================================================================================
+Filename:	SMT_X9_114.bin	ver1.14 Date: 07-14-2011
+
+1. Bug fix Event Log description undefined from web GUI(IssusID: 30352, 30327 and 30295)
+   Validation: Server Health-> Event Log
+
+2. Bug fix Gateway IP lost
+   Validation: change network setting from static to dhcp by using ipmitool or IPMICFG
+
+3. Add iKVM privilege verification
+   Validation: virtual media can't be accessed by Operator account
+
+4. [X9DA6] add sensor readings
+
+======================================================================================
+Filename:	SMT_X9_113.bin	ver1.13 Date: 06-22-2011
+
+1. Add new motherboard X9DR6 (Support PCHHOT, CPU Error 0/1/2 Event Logs)
+
+2. Bug fix Event Log description undefined from web GUI
+   Validation: Server Health-> Event Log
+
+3. Bug fix sensor status icon missing at webpage header
+   Validation: summarized sensor status icon located at up-right corner of webpage
+
+4. Bug fix unable to delete newly added Users (IssueID=29907)
+5. Bug fix Alert Email description of CPU Overheat event (IssueID=29583)
+6. Bug fix SMASH login without password
+
+======================================================================================
+Filename:	SMT_X9_112.bin	ver1.12 Date: 06-02-2011
+
+1. Support Circular Buffer evnet logs
+   Description: Event logged as FIFO mechanism when number of logs exceeds the maximum fixed-size, 512
+
+2. Support IP Control
+   Validation: Verify IP Control feature at IPMI Web-> Configuration-> IP Control
+
+3. [X9SCD] Support Power Monitoring from LM25066 National Chip
+   Description: 1. Power Consumption, Input Current & Input Power is monitored at IPMI web-> Miscellaneous-> Power Monitoring
+		2. Power consumption is reported to ME through 0xE2 command
+
+======================================================================================
+Filename:	SMT_X9_111.bin	ver1.11 Date: 05-26-2011
+
+1. Add "All Event" category as default selection at Event Log page
+
+2. Renew SSL Certificate
+Validation:	1) enter Web GUI->Configuration->SSL Certificate, and 2) verify the certificate's validity
+*** Note:	Factory Default REQUIRED
+
+3. Change ME slave address to 0x2C in SDR record
+
+======================================================================================
+Filename: SMT_X9_110.bin ver1.10 Date: 05-12-2011
+
+1. New feature: launch SOL over SMASH
+	Validation: 1) login IPMI SMASH through SSH, 2) follow the command flow: cd system1 -> cd sol1 -> start
+	Note: only one SOL session can be launched at a time.
+
+2. Improve security for IPMI Configuration backup
+	Validation: Verify the following steps:
+		1) open IPMI web 
+		2) click on Maintenance -> IPMI Configuration 
+		3) save IPMI configuration at local drive, and 
+		4) check if the configuration can "NOT" be located at http://ipmi-ip-address/save_config.bin
+
+3. Filter out unknown events #0x17 from ME (IssueID=28839)
+	Validation: unknown events #0x17 should be screened out while doing system on/off through IPMI
+
+======================================================================================
+Filename:	SMT_X9_109.bin	ver1.09 Date: 04-29-2011
+
+1. Fix CPU overheat false alarm
+2. Add new motherboard X9SCD support
+
+======================================================================================
+Filename:	SMT_X9_108.bin	ver1.08 Date: 04-01-2011
+
+1. Official release for production
+
+======================================================================================
+Filename:	SMT_X9_107.bin	ver1.07 Date: 03-29-2011
+
+1. [X9SCL/M, X9SCA/I] Remove Thermal Trip event log to prevent false alarm
+
+2. Modify default FRU
+Description:Board Manufacture modified as "Supermicro" and all other entries cleared
+Note:		Required OEM command raw 0x30 0x41(wait for BMC reset) to replace with the new FRU content
+
+======================================================================================
+Filename:	SMT_X9_106.bin	ver1.06 Date: 03-18-2011
+
+1. Fix Alert table blank at the webpage when enter more than 29 characters (IssueID: 95761)
+   Validation:	1. Connect to IPMI by web browser,
+		2. Go to Configuration -> Alerts and select one entry for modify,
+		3. In the Message space, enter 30 characters and then save it and then the alert table will be blank.
+
+2. X9SCL/M, X9SCA/I: Support thermal trip event logs
+
+======================================================================================
+Filename:	SMT_X9_105.bin	ver1.05 Date: 03-11-2011
+
+1. X9SRI/E: correct sensor readings
+
+======================================================================================
+Filename:	SMT_X9_104.bin	ver1.04 Date: 02-23-2011
+
+1. Fix KVM issue with UEFI BIOS
+   Validation: reboot system by macro "ctrl+alt+del" and check if key-in is available
+
+2. New feature: Port Configuratioin at Web GUI in Configuration category
+   Description: ports of web, web SSL, IKVM server, virtual media are modifiable through web GUI
+
+3. Fix Gateway setting can't work through different subnets 
+
+======================================================================================
+Filename:	SMT_X9_103.bin	ver1.03 Date: 02-09-2011
+
+1. Correct size of video/graphics memory as 16MB
+*** Note: Requires AC on/off after flashing firmaware
+
+2. Fix cpu temp "Overheat" logged when the reading reports "High"
+   Description: CPU temp Overheat should be logged as the reading reaches "Overheat"
+
+3. For security issue, set the privilege of user ID1(Anonymous) with no access and clear jnlp kvm cache
+   Validation: 	1. open IPMI web, 2 click Configuration->Users, and 3 check the privilege of user shows Reserved;
+		4. launch kvm console, and 5. check if kvm jnlp file is cached after exit
+
+======================================================================================
+Filename:	SMT_X9_102.bin	ver1.02 Date: 02-01-2011
+1. Add new motherboard support X9SCA/I
+2. Add new motherboard support X9SRI/E
+
+======================================================================================
+Filename:	SMT_X9SCL_M_V101.bin	ver1.01 Date: 01-11-2010
+1. Fix KVM slight flashes of white space while screen resolustion is below 800*640
+
+======================================================================================
+Filename:	SMT_X9SCL_M_V100.bin	ver1.00 Date: 12-30-2010
+1. change memory configuration for Hynix 800 memory
+Note: Please do AC off/on after updating firmware.
+
+======================================================================================
+Filename:	SMT_218.bin		ver2.18 Date: 12-17-2010
+1. X9SCL/X9SCM: modify Fan5 to FanA
+
+======================================================================================
+
+Filename:	SMT_213.bin		ver2.13	Date: 11-10-2010
+1. Add new SSID for X9SCM
+
+======================================================================================
+
+Filename:	SMT_212.bin		ver2.12	Date: 10-25-2010
+1. Add new motherboard X9SCL/X9SCM support
+
